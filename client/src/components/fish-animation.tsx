@@ -10,10 +10,22 @@ interface Fish {
   color: string;
   secondaryColor: string;
   type: string;
+  isEating: boolean;
+  eatingTimer: number;
+}
+
+interface FeedParticle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  isBeingEaten: boolean;
 }
 
 export default function FishAnimation() {
   const [fish, setFish] = useState<Fish[]>([]);
+  const [feedParticles, setFeedParticles] = useState<FeedParticle[]>([]);
 
   useEffect(() => {
     const createFish = () => {
@@ -37,12 +49,32 @@ export default function FishAnimation() {
           size: 30 + Math.random() * 70,
           color: fishType.color,
           secondaryColor: fishType.secondaryColor,
-          type: fishType.type
+          type: fishType.type,
+          isEating: false,
+          eatingTimer: 0
         };
       });
     };
 
     setFish(createFish());
+
+    // Create feed particles randomly
+    const createFeedParticles = () => {
+      const newParticles: FeedParticle[] = [];
+      for (let i = 0; i < 15; i++) {
+        newParticles.push({
+          id: i,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          size: 2 + Math.random() * 4,
+          opacity: 0.7 + Math.random() * 0.3,
+          isBeingEaten: false
+        });
+      }
+      setFeedParticles(newParticles);
+    };
+
+    createFeedParticles();
 
     const animateFish = () => {
       setFish(prevFish => 
@@ -51,6 +83,8 @@ export default function FishAnimation() {
           let newY = f.y + f.speedY;
           let newSpeedX = f.speedX;
           let newSpeedY = f.speedY;
+          let newIsEating = f.isEating;
+          let newEatingTimer = f.eatingTimer;
 
           // Bounce off screen edges
           if (newX <= 0 || newX >= window.innerWidth - f.size) {
@@ -62,15 +96,60 @@ export default function FishAnimation() {
             newY = Math.max(0, Math.min(window.innerHeight - f.size * 0.6, newY));
           }
 
+          // Check for nearby feed particles
+          setFeedParticles(prevParticles => 
+            prevParticles.map(particle => {
+              const distance = Math.sqrt(
+                Math.pow(newX + f.size/2 - particle.x, 2) + 
+                Math.pow(newY + f.size/2 - particle.y, 2)
+              );
+              
+              if (distance < f.size/2 + 10 && !particle.isBeingEaten) {
+                newIsEating = true;
+                newEatingTimer = 30; // frames
+                return { ...particle, isBeingEaten: true, opacity: 0 };
+              }
+              return particle;
+            })
+          );
+
+          // Handle eating animation timer
+          if (newEatingTimer > 0) {
+            newEatingTimer--;
+          } else {
+            newIsEating = false;
+          }
+
           return {
             ...f,
             x: newX,
             y: newY,
             speedX: newSpeedX,
-            speedY: newSpeedY
+            speedY: newSpeedY,
+            isEating: newIsEating,
+            eatingTimer: newEatingTimer
           };
         })
       );
+
+      // Remove eaten particles and add new ones occasionally
+      setFeedParticles(prevParticles => {
+        let filtered = prevParticles.filter(p => !p.isBeingEaten);
+        
+        // Add new particles occasionally
+        if (Math.random() < 0.02) {
+          filtered.push({
+            id: Date.now(),
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            size: 2 + Math.random() * 4,
+            opacity: 0.7 + Math.random() * 0.3,
+            isBeingEaten: false
+          });
+        }
+        
+        return filtered;
+      });
     };
 
     const interval = setInterval(animateFish, 30);
@@ -96,7 +175,7 @@ export default function FishAnimation() {
             style={{
               left: f.x,
               top: f.y,
-              transform: f.speedX > 0 ? 'scaleX(-1)' : 'scaleX(1)',
+              transform: f.speedX > 0 ? 'scaleX(1)' : 'scaleX(-1)',
             }}
           >
             {/* Aquarium Fish SVG */}
@@ -104,7 +183,7 @@ export default function FishAnimation() {
               width={f.size}
               height={f.size * 0.6}
               viewBox="0 0 100 60"
-              className="drop-shadow-lg opacity-85"
+              className={`drop-shadow-lg transition-all duration-200 ${f.isEating ? 'opacity-100 scale-110' : 'opacity-85 scale-100'}`}
             >
               {/* Fish Body */}
               <ellipse
@@ -201,9 +280,26 @@ export default function FishAnimation() {
         ))}
       </div>
 
-
-
-
+      {/* Feed Particles */}
+      <div 
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 9997 }}
+      >
+        {feedParticles.map(particle => (
+          <div
+            key={particle.id}
+            className="absolute rounded-full bg-amber-600 transition-opacity duration-300"
+            style={{
+              left: particle.x,
+              top: particle.y,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              opacity: particle.opacity,
+              boxShadow: '0 0 4px rgba(245, 158, 11, 0.6)'
+            }}
+          />
+        ))}
+      </div>
     </>
   );
 }

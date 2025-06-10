@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
     // Check if already authenticated
     const isAuthenticated = localStorage.getItem("adminAuthenticated") === "true";
     if (isAuthenticated) {
-      navigate("/admin/products");
+      navigate("/admin/dashboard");
     }
   }, [navigate]);
 
@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
           title: "Login Successful",
           description: "Welcome to JK Trout Feed Admin Panel",
         });
-        navigate("/admin/products");
+        navigate("/admin/dashboard");
       } else {
         toast({
           title: "Login Failed",

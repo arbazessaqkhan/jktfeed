@@ -11,7 +11,7 @@ export default function AdminGuard({ children }: AdminGuardProps) {
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("adminAuthenticated") === "true";
     if (!isAuthenticated) {
-      navigate("/admin/login");
+      navigate("/secure-portal-jk2024");
     }
   }, [navigate]);
 

@@ -3,6 +3,8 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { initializeSecurity } from "@/lib/security";
+import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
@@ -10,8 +12,6 @@ import Products from "@/pages/products";
 import Team from "@/pages/team";
 import Contact from "@/pages/contact";
 import FeedingGuide from "@/pages/feeding-guide";
-import Dashboard from "@/pages/dashboard";
-import Analytics from "@/pages/analytics";
 import AdminProducts from "@/pages/admin-products";
 import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
@@ -29,10 +29,8 @@ function Router() {
       <Route path="/team" component={Team} />
       <Route path="/contact" component={Contact} />
       <Route path="/feeding-guide" component={FeedingGuide} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/analytics" component={Analytics} />
-      <Route path="/admin/login" component={AdminLogin} />
-      <Route path="/admin/products">
+      <Route path="/secure-portal-jk2024" component={AdminLogin} />
+      <Route path="/admin/dashboard">
         {() => (
           <AdminGuard>
             <AdminProducts />
@@ -45,6 +43,11 @@ function Router() {
 }
 
 function App() {
+  // Initialize security features on component mount
+  useEffect(() => {
+    initializeSecurity();
+  }, []);
+
   // Disable right-click context menu
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();

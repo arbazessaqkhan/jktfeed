@@ -93,11 +93,13 @@ function App() {
           style={{ userSelect: 'none' }}
         >
           <FishAnimation />
-          <div className="relative z-10">
+          <div className="relative z-10 min-h-screen">
             <Router />
           </div>
-          <WhatsAppButton />
-          <Toaster />
+          <div className="relative z-20">
+            <WhatsAppButton />
+            <Toaster />
+          </div>
         </div>
       </TooltipProvider>
     </QueryClientProvider>

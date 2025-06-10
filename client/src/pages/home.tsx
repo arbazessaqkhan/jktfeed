@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
 import About from "@/components/sections/about";
+import ShopProducts from "@/components/sections/shop-products";
 import Products from "@/components/sections/products";
 import FeedingGuide from "@/components/sections/feeding-guide";
 import Team from "@/components/sections/team";
@@ -48,6 +49,7 @@ export default function Home() {
           </div>
         </section>
         <About />
+        <ShopProducts />
         <Products />
         <FeedingGuide />
         <Team />

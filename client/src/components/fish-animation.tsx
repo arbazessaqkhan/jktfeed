@@ -26,15 +26,15 @@ export default function FishAnimation() {
         { color: "#2ECC71", secondaryColor: "#27AE60", type: "tetra" }
       ];
 
-      return Array.from({ length: 8 }, (_, i) => {
+      return Array.from({ length: 12 }, (_, i) => {
         const fishType = fishTypes[i % fishTypes.length];
         return {
           id: i,
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          speedX: (Math.random() - 0.5) * 0.8,
-          speedY: (Math.random() - 0.5) * 0.8,
-          size: 40 + Math.random() * 60,
+          speedX: (Math.random() - 0.5) * 2.5,
+          speedY: (Math.random() - 0.5) * 2.5,
+          size: 30 + Math.random() * 70,
           color: fishType.color,
           secondaryColor: fishType.secondaryColor,
           type: fishType.type
@@ -73,7 +73,7 @@ export default function FishAnimation() {
       );
     };
 
-    const interval = setInterval(animateFish, 50);
+    const interval = setInterval(animateFish, 30);
     return () => clearInterval(interval);
   }, []);
 
@@ -201,44 +201,9 @@ export default function FishAnimation() {
         ))}
       </div>
 
-      {/* Floating Bubbles */}
-      <div 
-        className="fixed inset-0 pointer-events-none"
-        style={{ zIndex: 9998 }}
-      >
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={`bubble-${i}`}
-            className="absolute rounded-full bg-blue-300 opacity-30 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${3 + Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
 
-      {/* Aquatic Background Effect */}
-      <div 
-        className="fixed inset-0 pointer-events-none opacity-5"
-        style={{ zIndex: 0 }}
-      >
-        <div 
-          className="w-full h-full animate-pulse"
-          style={{
-            background: `
-              radial-gradient(ellipse at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 75% 75%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 50%, rgba(147, 197, 253, 0.05) 0%, transparent 70%)
-            `,
-            animationDuration: '8s'
-          }}
-        />
-      </div>
+
+
     </>
   );
 }

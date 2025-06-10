@@ -13,7 +13,9 @@ import FeedingGuide from "@/pages/feeding-guide";
 import Dashboard from "@/pages/dashboard";
 import Analytics from "@/pages/analytics";
 import AdminProducts from "@/pages/admin-products";
+import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
+import AdminGuard from "@/components/admin-guard";
 
 function Router() {
   return (
@@ -27,7 +29,14 @@ function Router() {
       <Route path="/feeding-guide" component={FeedingGuide} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/analytics" component={Analytics} />
-      <Route path="/admin/products" component={AdminProducts} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/products">
+        {() => (
+          <AdminGuard>
+            <AdminProducts />
+          </AdminGuard>
+        )}
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );

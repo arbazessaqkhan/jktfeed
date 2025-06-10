@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { 
   Plus, Edit2, Trash2, Package, TrendingUp, AlertTriangle, 
-  Image as ImageIcon, Upload, Search, Filter
+  Image as ImageIcon, Upload, Search, Filter, LogOut, User
 } from "lucide-react";
 
 export default function AdminProductsPage() {
@@ -49,10 +50,21 @@ export default function AdminProductsPage() {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, navigate] = useLocation();
 
   useEffect(() => {
     document.title = "Product Management - JK Trout Feed Admin";
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminAuthenticated");
+    localStorage.removeItem("adminUser");
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    });
+    navigate("/admin/login");
+  };
 
   const { data: products, isLoading } = useQuery({
     queryKey: ['/api/products'],
@@ -216,13 +228,27 @@ export default function AdminProductsPage() {
               <h1 className="text-3xl md:text-4xl font-bold mb-4">Product Management</h1>
               <p className="text-xl text-blue-200">Manage your trout feed product catalog</p>
             </div>
-            <Button 
-              onClick={() => setIsCreateModalOpen(true)}
-              className="bg-white text-primary hover:bg-gray-100"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center text-blue-200">
+                <User className="w-4 h-4 mr-2" />
+                <span>Welcome, {localStorage.getItem("adminUser")}</span>
+              </div>
+              <Button 
+                onClick={() => setIsCreateModalOpen(true)}
+                className="bg-white text-primary hover:bg-gray-100"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Product
+              </Button>
+              <Button 
+                onClick={handleLogout}
+                variant="outline"
+                className="bg-red-500 text-white hover:bg-red-600 border-red-500"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </section>

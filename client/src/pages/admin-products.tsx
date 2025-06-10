@@ -63,7 +63,7 @@ export default function AdminProductsPage() {
       title: "Logged Out",
       description: "You have been successfully logged out.",
     });
-    navigate("/admin/login");
+    navigate("/secure-portal-jk2024");
   };
 
   const { data: products, isLoading } = useQuery({

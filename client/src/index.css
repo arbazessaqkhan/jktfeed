@@ -101,3 +101,69 @@
     --tw-gradient-to: hsl(145, 38%, 33%);
   }
 }
+
+/* Aquatic Animation Enhancements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes swim {
+  0% { transform: translateX(-100px) scaleX(-1); }
+  50% { transform: translateX(50vw) scaleX(-1); }
+  100% { transform: translateX(100vw) scaleX(1); }
+}
+
+@keyframes bubble-rise {
+  0% { 
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateY(-100px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes water-flow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.aquatic-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.aquatic-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bubble-animation {
+  animation: bubble-rise 8s infinite linear;
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 10;
+}

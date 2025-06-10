@@ -38,14 +38,17 @@ export default function FishAnimation() {
           let newY = f.y + Math.sin(f.direction) * f.speed;
           let newDirection = f.direction;
 
-          // Bounce off edges
-          if (newX <= 0 || newX >= window.innerWidth) {
+          // Bounce off edges with screen boundaries
+          const maxWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
+          const maxHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+          
+          if (newX <= 0 || newX >= maxWidth) {
             newDirection = Math.PI - f.direction;
-            newX = Math.max(0, Math.min(window.innerWidth, newX));
+            newX = Math.max(0, Math.min(maxWidth, newX));
           }
-          if (newY <= 0 || newY >= window.innerHeight) {
+          if (newY <= 0 || newY >= maxHeight) {
             newDirection = -f.direction;
-            newY = Math.max(0, Math.min(window.innerHeight, newY));
+            newY = Math.max(0, Math.min(maxHeight, newY));
           }
 
           // Occasionally change direction randomly

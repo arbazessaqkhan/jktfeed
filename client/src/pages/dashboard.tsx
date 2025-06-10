@@ -269,6 +269,15 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             </a>
+            <a href="/admin/products" className="block">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-3" />
+                  <h3 className="font-semibold mb-2">Manage Products</h3>
+                  <p className="text-sm text-neutral">Add & edit products</p>
+                </CardContent>
+              </Card>
+            </a>
           </div>
         </section>
       </div>

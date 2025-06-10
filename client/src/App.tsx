@@ -16,6 +16,7 @@ import AdminProducts from "@/pages/admin-products";
 import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
 import AdminGuard from "@/components/admin-guard";
+import FishAnimation from "@/components/fish-animation";
 
 function Router() {
   return (
@@ -46,8 +47,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Router />
+        <div className="relative">
+          <FishAnimation />
+          <Router />
+          <Toaster />
+        </div>
       </TooltipProvider>
     </QueryClientProvider>
   );

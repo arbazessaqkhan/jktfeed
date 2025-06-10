@@ -83,7 +83,7 @@ export default function FishAnimation() {
       <div 
         className="fixed inset-0 pointer-events-none"
         style={{ 
-          zIndex: 5,
+          zIndex: 9999,
           width: '100vw', 
           height: '100vh',
           overflow: 'hidden'
@@ -104,7 +104,7 @@ export default function FishAnimation() {
               width={f.size}
               height={f.size * 0.6}
               viewBox="0 0 100 60"
-              className="drop-shadow-lg opacity-75"
+              className="drop-shadow-lg opacity-85"
             >
               {/* Fish Body */}
               <ellipse
@@ -204,7 +204,7 @@ export default function FishAnimation() {
       {/* Floating Bubbles */}
       <div 
         className="fixed inset-0 pointer-events-none"
-        style={{ zIndex: 4 }}
+        style={{ zIndex: 9998 }}
       >
         {Array.from({ length: 20 }).map((_, i) => (
           <div

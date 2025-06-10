@@ -96,7 +96,7 @@ function App() {
           <div className="relative z-10 min-h-screen">
             <Router />
           </div>
-          <div className="relative z-20">
+          <div className="relative z-[9990]">
             <WhatsAppButton />
             <Toaster />
           </div>

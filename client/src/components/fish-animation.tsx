@@ -18,15 +18,15 @@ export default function FishAnimation() {
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
     const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
     
-    const initialFish: Fish[] = Array.from({ length: 4 }, (_, i) => ({
+    const initialFish: Fish[] = Array.from({ length: 6 }, (_, i) => ({
       id: i,
       x: Math.random() * screenWidth,
       y: Math.random() * screenHeight,
-      speed: 0.5 + Math.random() * 1.0,
-      size: 25 + Math.random() * 35,
+      speed: 0.2 + Math.random() * 0.4, // Much slower movement
+      size: 50 + Math.random() * 60, // Larger fish
       direction: Math.random() * Math.PI * 2,
-      color: i % 3 === 0 ? "rgba(59, 130, 246, 0.12)" : 
-             i % 3 === 1 ? "rgba(16, 185, 129, 0.12)" : "rgba(34, 197, 94, 0.12)"
+      color: i % 3 === 0 ? "rgba(59, 130, 246, 0.18)" : 
+             i % 3 === 1 ? "rgba(16, 185, 129, 0.18)" : "rgba(34, 197, 94, 0.18)"
     }));
 
     setFish(initialFish);
@@ -51,8 +51,8 @@ export default function FishAnimation() {
             newY = Math.max(0, Math.min(maxHeight, newY));
           }
 
-          // Occasionally change direction randomly
-          if (Math.random() < 0.002) {
+          // Occasionally change direction randomly (less frequent for smoother movement)
+          if (Math.random() < 0.001) {
             newDirection = Math.random() * Math.PI * 2;
           }
 
@@ -66,7 +66,7 @@ export default function FishAnimation() {
       );
     };
 
-    const interval = setInterval(animateFish, 50);
+    const interval = setInterval(animateFish, 100); // Slower animation frame rate for smoother movement
     return () => clearInterval(interval);
   }, []);
 
@@ -139,19 +139,38 @@ export default function FishAnimation() {
         </div>
       ))}
       
-      {/* Floating bubbles */}
+      {/* Enhanced Floating bubbles */}
       <div className="absolute inset-0">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <div
             key={`bubble-${i}`}
-            className="absolute rounded-full bg-blue-200 opacity-20 animate-pulse"
+            className="absolute rounded-full bg-blue-300 opacity-25 bubble-animation"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              top: `${100 + Math.random() * 20}%`, // Start below viewport
+              width: `${6 + Math.random() * 12}px`,
+              height: `${6 + Math.random() * 12}px`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${8 + Math.random() * 4}s`
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Aquatic plant-like elements */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={`plant-${i}`}
+            className="absolute bottom-0 opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              height: `${50 + Math.random() * 100}px`,
+              width: '3px',
+              background: 'linear-gradient(to top, rgba(34, 197, 94, 0.4), transparent)',
+              transform: `rotate(${-5 + Math.random() * 10}deg)`,
+              animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 3}s`
             }}
           />
         ))}

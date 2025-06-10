@@ -238,7 +238,7 @@ export default function DashboardPage() {
         {/* Quick Actions */}
         <section>
           <h2 className="text-2xl font-bold text-primary mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6 text-center">
                 <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
@@ -260,6 +260,15 @@ export default function DashboardPage() {
                 <p className="text-sm text-neutral">View and respond to inquiries</p>
               </CardContent>
             </Card>
+            <a href="/analytics" className="block">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <TrendingUp className="w-8 h-8 text-purple-600 mx-auto mb-3" />
+                  <h3 className="font-semibold mb-2">View Analytics</h3>
+                  <p className="text-sm text-neutral">Detailed business insights</p>
+                </CardContent>
+              </Card>
+            </a>
           </div>
         </section>
       </div>

@@ -1,10 +1,6 @@
+import { Link } from "wouter";
+
 export default function Footer() {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <footer className="bg-primary text-white py-12">
@@ -38,23 +34,23 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-blue-100">
-              <li><button onClick={() => scrollToSection("home")} className="hover:text-white transition-colors">Home</button></li>
-              <li><button onClick={() => scrollToSection("about")} className="hover:text-white transition-colors">About Us</button></li>
-              <li><button onClick={() => scrollToSection("products")} className="hover:text-white transition-colors">Products</button></li>
-              <li><button onClick={() => scrollToSection("feeding-guide")} className="hover:text-white transition-colors">Feeding Guide</button></li>
-              <li><button onClick={() => scrollToSection("team")} className="hover:text-white transition-colors">Team</button></li>
-              <li><button onClick={() => scrollToSection("contact")} className="hover:text-white transition-colors">Contact</button></li>
+              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link href="/products" className="hover:text-white transition-colors">Products</Link></li>
+              <li><Link href="/feeding-guide" className="hover:text-white transition-colors">Feeding Guide</Link></li>
+              <li><Link href="/team" className="hover:text-white transition-colors">Team</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-blue-100">
-              <li><a href="#" className="hover:text-white transition-colors">Quality Assurance</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Technical Specifications</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Feeding Calculator</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">FAQs</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Policy & Commitments</a></li>
+              <li><Link href="/feeding-guide" className="hover:text-white transition-colors">Feeding Calculator</Link></li>
+              <li><Link href="/products" className="hover:text-white transition-colors">Technical Specifications</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">Quality Assurance</Link></li>
+              <li><a href="#" className="hover:text-white transition-colors">Product Catalog</a></li>
+              <li><Link href="/dashboard" className="hover:text-white transition-colors text-xs">Admin Dashboard</Link></li>
             </ul>
           </div>
         </div>

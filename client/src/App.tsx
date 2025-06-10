@@ -10,6 +10,7 @@ import Products from "@/pages/products";
 import Team from "@/pages/team";
 import Contact from "@/pages/contact";
 import FeedingGuide from "@/pages/feeding-guide";
+import Dashboard from "@/pages/dashboard";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/team" component={Team} />
       <Route path="/contact" component={Contact} />
       <Route path="/feeding-guide" component={FeedingGuide} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>
   );

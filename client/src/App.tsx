@@ -45,10 +45,50 @@ function Router() {
 }
 
 function App() {
+  // Disable right-click context menu
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    return false;
+  };
+
+  // Disable F12, Ctrl+Shift+I, Ctrl+U, and other developer shortcuts
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // F12
+    if (e.key === 'F12') {
+      e.preventDefault();
+      return false;
+    }
+    // Ctrl+Shift+I (Developer Tools)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+      e.preventDefault();
+      return false;
+    }
+    // Ctrl+U (View Source)
+    if (e.ctrlKey && e.key === 'u') {
+      e.preventDefault();
+      return false;
+    }
+    // Ctrl+Shift+C (Inspect Element)
+    if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+      e.preventDefault();
+      return false;
+    }
+    // Ctrl+Shift+J (Console)
+    if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+      e.preventDefault();
+      return false;
+    }
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="relative min-h-screen">
+        <div 
+          className="relative min-h-screen"
+          onContextMenu={handleContextMenu}
+          onKeyDown={handleKeyDown}
+          style={{ userSelect: 'none' }}
+        >
           <FishAnimation />
           <div className="relative z-10">
             <Router />

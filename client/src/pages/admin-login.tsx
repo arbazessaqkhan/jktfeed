@@ -29,9 +29,9 @@ export default function AdminLoginPage() {
 
     // Simulate API call delay
     setTimeout(() => {
-      if (credentials.username === "admintanveer" && credentials.password === "Trout@2000") {
+      if (credentials.username === "admin" && credentials.password === "admintanveer123") {
         localStorage.setItem("adminAuthenticated", "true");
-        localStorage.setItem("adminUser", "admintanveer");
+        localStorage.setItem("adminUser", "admin");
         toast({
           title: "Login Successful",
           description: "Welcome to JK Trout Feed Admin Panel",

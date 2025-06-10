@@ -32,7 +32,7 @@ export default function Hero() {
             <Button 
               onClick={() => scrollToSection("contact")}
               variant="outline"
-              className="border-2 border-white text-white px-8 py-3 text-lg font-semibold hover:bg-white hover:text-primary"
+              className="border-2 border-white px-8 py-3 text-lg font-semibold hover:bg-white hover:text-primary text-[#064e87]"
             >
               Get Quote
             </Button>

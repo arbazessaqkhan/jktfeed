@@ -40,7 +40,7 @@ export default function About() {
           </div>
           <div className="space-y-4">
             <img 
-              src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=800" 
               alt="Advanced fish feed manufacturing facility" 
               className="rounded-xl shadow-lg w-full h-auto"
             />

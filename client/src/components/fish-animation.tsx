@@ -42,7 +42,7 @@ export default function FishAnimation() {
         { color: "#2ECC71", secondaryColor: "#27AE60", type: "tetra" }
       ];
 
-      return Array.from({ length: 12 }, (_, i) => {
+      return Array.from({ length: 6 }, (_, i) => {
         const fishType = fishTypes[i % fishTypes.length];
         return {
           id: i,
@@ -50,7 +50,7 @@ export default function FishAnimation() {
           y: Math.random() * window.innerHeight,
           speedX: (Math.random() - 0.5) * 1.5,
           speedY: (Math.random() - 0.5) * 1.5,
-          size: 30 + Math.random() * 70,
+          size: 20 + Math.random() * 40,
           color: fishType.color,
           secondaryColor: fishType.secondaryColor,
           type: fishType.type,
@@ -67,12 +67,12 @@ export default function FishAnimation() {
     // Create feed particles randomly - feed naturally sinks and floats
     const createFeedParticles = () => {
       const newParticles: FeedParticle[] = [];
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 4; i++) {
         newParticles.push({
           id: i,
           x: Math.random() * window.innerWidth,
           y: Math.random() * (window.innerHeight * 0.7), // Feed mostly in upper/middle areas
-          size: 3 + Math.random() * 5,
+          size: 2 + Math.random() * 3,
           opacity: 0.8 + Math.random() * 0.2,
           isBeingEaten: false
         });
@@ -216,7 +216,7 @@ export default function FishAnimation() {
         let filtered = prevParticles.filter(p => !p.isBeingEaten);
         
         // Add new particles occasionally - simulate natural feeding
-        if (Math.random() < 0.015 && filtered.length < 12) {
+        if (Math.random() < 0.008 && filtered.length < 6) {
           filtered.push({
             id: Date.now() + Math.random(),
             x: Math.random() * window.innerWidth,
@@ -231,7 +231,7 @@ export default function FishAnimation() {
       });
     };
 
-    const interval = setInterval(animateFish, 30);
+    const interval = setInterval(animateFish, 50);
     return () => clearInterval(interval);
   }, []);
 
@@ -262,10 +262,10 @@ export default function FishAnimation() {
               width={f.size}
               height={f.size * 0.6}
               viewBox="0 0 100 60"
-              className={`drop-shadow-lg transition-all duration-200 ${
-                f.isEating ? 'opacity-100 scale-110' : 
-                f.huntingMode ? 'opacity-90 scale-105' : 
-                'opacity-85 scale-100'
+              className={`drop-shadow-sm transition-all duration-300 ${
+                f.isEating ? 'opacity-50 scale-105' : 
+                f.huntingMode ? 'opacity-35 scale-102' : 
+                'opacity-25 scale-100'
               }`}
             >
               {/* Fish Body */}
@@ -390,14 +390,14 @@ export default function FishAnimation() {
         {feedParticles.map(particle => (
           <div
             key={particle.id}
-            className="absolute rounded-full bg-amber-600 transition-opacity duration-300"
+            className="absolute rounded-full bg-amber-500 transition-opacity duration-300"
             style={{
               left: particle.x,
               top: particle.y,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
-              opacity: particle.opacity,
-              boxShadow: '0 0 4px rgba(245, 158, 11, 0.6)'
+              opacity: particle.opacity * 0.4,
+              boxShadow: '0 0 2px rgba(245, 158, 11, 0.3)'
             }}
           />
         ))}

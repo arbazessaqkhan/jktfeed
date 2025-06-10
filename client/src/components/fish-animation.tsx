@@ -12,6 +12,10 @@ interface Fish {
   type: string;
   isEating: boolean;
   eatingTimer: number;
+  targetFeedX?: number;
+  targetFeedY?: number;
+  mouthOpen: boolean;
+  huntingMode: boolean;
 }
 
 interface FeedParticle {
@@ -44,30 +48,32 @@ export default function FishAnimation() {
           id: i,
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          speedX: (Math.random() - 0.5) * 2.5,
-          speedY: (Math.random() - 0.5) * 2.5,
+          speedX: (Math.random() - 0.5) * 1.5,
+          speedY: (Math.random() - 0.5) * 1.5,
           size: 30 + Math.random() * 70,
           color: fishType.color,
           secondaryColor: fishType.secondaryColor,
           type: fishType.type,
           isEating: false,
-          eatingTimer: 0
+          eatingTimer: 0,
+          mouthOpen: false,
+          huntingMode: false
         };
       });
     };
 
     setFish(createFish());
 
-    // Create feed particles randomly
+    // Create feed particles randomly - feed naturally sinks and floats
     const createFeedParticles = () => {
       const newParticles: FeedParticle[] = [];
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 8; i++) {
         newParticles.push({
           id: i,
           x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          size: 2 + Math.random() * 4,
-          opacity: 0.7 + Math.random() * 0.3,
+          y: Math.random() * (window.innerHeight * 0.7), // Feed mostly in upper/middle areas
+          size: 3 + Math.random() * 5,
+          opacity: 0.8 + Math.random() * 0.2,
           isBeingEaten: false
         });
       }
@@ -79,45 +85,114 @@ export default function FishAnimation() {
     const animateFish = () => {
       setFish(prevFish => 
         prevFish.map(f => {
-          let newX = f.x + f.speedX;
-          let newY = f.y + f.speedY;
+          let newX = f.x;
+          let newY = f.y;
           let newSpeedX = f.speedX;
           let newSpeedY = f.speedY;
           let newIsEating = f.isEating;
           let newEatingTimer = f.eatingTimer;
+          let newMouthOpen = f.mouthOpen;
+          let newHuntingMode = f.huntingMode;
+          let newTargetFeedX = f.targetFeedX;
+          let newTargetFeedY = f.targetFeedY;
+
+          // Find nearest feed particle for realistic hunting behavior
+          let nearestFeed: FeedParticle | null = null;
+          let nearestDistance = Infinity;
+          
+          feedParticles.forEach(particle => {
+            if (!particle.isBeingEaten) {
+              const distance = Math.sqrt(
+                Math.pow(f.x + f.size/2 - particle.x, 2) + 
+                Math.pow(f.y + f.size/2 - particle.y, 2)
+              );
+              if (distance < nearestDistance && distance < f.size * 2.5) {
+                nearestDistance = distance;
+                nearestFeed = particle;
+              }
+            }
+          });
+
+          // Hunting behavior - fish actively seek food
+          if (nearestFeed && !newIsEating) {
+            newHuntingMode = true;
+            newTargetFeedX = nearestFeed.x;
+            newTargetFeedY = nearestFeed.y;
+            
+            // Calculate direction to food
+            const dx = nearestFeed.x - (f.x + f.size/2);
+            const dy = nearestFeed.y - (f.y + f.size/2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 0) {
+              // Move towards food with realistic speed
+              const huntingSpeed = 2.5;
+              newSpeedX = (dx / distance) * huntingSpeed;
+              newSpeedY = (dy / distance) * huntingSpeed;
+            }
+            
+            // Open mouth when approaching food
+            if (nearestDistance < f.size * 1.2) {
+              newMouthOpen = true;
+            }
+            
+            // Eat the food when close enough
+            if (nearestDistance < f.size/2 + 8) {
+              newIsEating = true;
+              newEatingTimer = 40; // Extended eating animation
+              newMouthOpen = false;
+              newHuntingMode = false;
+              
+              // Mark particle as eaten
+              setFeedParticles(prevParticles => 
+                prevParticles.map(particle => {
+                  if (particle.id === nearestFeed!.id) {
+                    return { ...particle, isBeingEaten: true, opacity: 0 };
+                  }
+                  return particle;
+                })
+              );
+            }
+          } else if (!newIsEating) {
+            // Normal swimming behavior when not hunting
+            newHuntingMode = false;
+            newMouthOpen = false;
+            
+            // Slow down when not hunting
+            newSpeedX *= 0.98;
+            newSpeedY *= 0.98;
+            
+            // Add some randomness to movement
+            if (Math.random() < 0.05) {
+              newSpeedX += (Math.random() - 0.5) * 0.5;
+              newSpeedY += (Math.random() - 0.5) * 0.5;
+            }
+          }
+
+          // Apply movement
+          newX += newSpeedX;
+          newY += newSpeedY;
 
           // Bounce off screen edges
           if (newX <= 0 || newX >= window.innerWidth - f.size) {
-            newSpeedX = -newSpeedX;
+            newSpeedX = -newSpeedX * 0.8; // Reduce speed on bounce
             newX = Math.max(0, Math.min(window.innerWidth - f.size, newX));
+            newHuntingMode = false;
           }
           if (newY <= 0 || newY >= window.innerHeight - f.size * 0.6) {
-            newSpeedY = -newSpeedY;
+            newSpeedY = -newSpeedY * 0.8;
             newY = Math.max(0, Math.min(window.innerHeight - f.size * 0.6, newY));
+            newHuntingMode = false;
           }
-
-          // Check for nearby feed particles
-          setFeedParticles(prevParticles => 
-            prevParticles.map(particle => {
-              const distance = Math.sqrt(
-                Math.pow(newX + f.size/2 - particle.x, 2) + 
-                Math.pow(newY + f.size/2 - particle.y, 2)
-              );
-              
-              if (distance < f.size/2 + 10 && !particle.isBeingEaten) {
-                newIsEating = true;
-                newEatingTimer = 30; // frames
-                return { ...particle, isBeingEaten: true, opacity: 0 };
-              }
-              return particle;
-            })
-          );
 
           // Handle eating animation timer
           if (newEatingTimer > 0) {
             newEatingTimer--;
+            // Mouth movements during eating
+            newMouthOpen = Math.floor(newEatingTimer / 8) % 2 === 0;
           } else {
             newIsEating = false;
+            newMouthOpen = false;
           }
 
           return {
@@ -127,7 +202,11 @@ export default function FishAnimation() {
             speedX: newSpeedX,
             speedY: newSpeedY,
             isEating: newIsEating,
-            eatingTimer: newEatingTimer
+            eatingTimer: newEatingTimer,
+            targetFeedX: newTargetFeedX,
+            targetFeedY: newTargetFeedY,
+            mouthOpen: newMouthOpen,
+            huntingMode: newHuntingMode
           };
         })
       );
@@ -136,14 +215,14 @@ export default function FishAnimation() {
       setFeedParticles(prevParticles => {
         let filtered = prevParticles.filter(p => !p.isBeingEaten);
         
-        // Add new particles occasionally
-        if (Math.random() < 0.02) {
+        // Add new particles occasionally - simulate natural feeding
+        if (Math.random() < 0.015 && filtered.length < 12) {
           filtered.push({
-            id: Date.now(),
+            id: Date.now() + Math.random(),
             x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            size: 2 + Math.random() * 4,
-            opacity: 0.7 + Math.random() * 0.3,
+            y: Math.random() * (window.innerHeight * 0.6), // Feed naturally floats near surface
+            size: 3 + Math.random() * 4,
+            opacity: 0.8 + Math.random() * 0.2,
             isBeingEaten: false
           });
         }
@@ -183,7 +262,11 @@ export default function FishAnimation() {
               width={f.size}
               height={f.size * 0.6}
               viewBox="0 0 100 60"
-              className={`drop-shadow-lg transition-all duration-200 ${f.isEating ? 'opacity-100 scale-110' : 'opacity-85 scale-100'}`}
+              className={`drop-shadow-lg transition-all duration-200 ${
+                f.isEating ? 'opacity-100 scale-110' : 
+                f.huntingMode ? 'opacity-90 scale-105' : 
+                'opacity-85 scale-100'
+              }`}
             >
               {/* Fish Body */}
               <ellipse
@@ -242,6 +325,25 @@ export default function FishAnimation() {
               <circle cx="65" cy="26" r="4" fill="white" />
               <circle cx="65" cy="26" r="3" fill="black" />
               <circle cx="66" cy="25" r="1" fill="white" />
+              
+              {/* Fish Mouth - animated based on eating state */}
+              {f.mouthOpen ? (
+                <ellipse 
+                  cx="75" 
+                  cy="30" 
+                  rx="3" 
+                  ry="2" 
+                  fill="rgba(0,0,0,0.6)" 
+                  className="animate-pulse"
+                />
+              ) : (
+                <path 
+                  d="M75 30 Q77 28 79 30" 
+                  stroke="rgba(0,0,0,0.4)" 
+                  strokeWidth="1" 
+                  fill="none"
+                />
+              )}
               
               {/* Fish Patterns based on type */}
               {f.type === 'clownfish' && (

@@ -47,9 +47,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="relative">
+        <div className="relative min-h-screen">
           <FishAnimation />
-          <Router />
+          <div className="relative z-10">
+            <Router />
+          </div>
           <Toaster />
         </div>
       </TooltipProvider>

@@ -8,6 +8,8 @@ interface Fish {
   size: number;
   direction: number;
   color: string;
+  stripeColor: string;
+  fishType: string;
 }
 
 export default function FishAnimation() {
@@ -18,15 +20,26 @@ export default function FishAnimation() {
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
     const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
     
+    // Aquarium fish colors and patterns
+    const aquariumColors = [
+      { body: "#FF6B35", stripes: "#FFD23F", name: "orange-clownfish" },
+      { body: "#4ECDC4", stripes: "#45B7B8", name: "turquoise-angelfish" },
+      { body: "#FF9F43", stripes: "#FD79A8", name: "gold-guppy" },
+      { body: "#5F27CD", stripes: "#00D2D3", name: "purple-tang" },
+      { body: "#E74C3C", stripes: "#F39C12", name: "red-betta" },
+      { body: "#2ECC71", stripes: "#27AE60", name: "green-tetra" }
+    ];
+
     const initialFish: Fish[] = Array.from({ length: 6 }, (_, i) => ({
       id: i,
       x: Math.random() * screenWidth,
       y: Math.random() * screenHeight,
-      speed: 0.2 + Math.random() * 0.4, // Much slower movement
-      size: 50 + Math.random() * 60, // Larger fish
+      speed: 0.2 + Math.random() * 0.4,
+      size: 50 + Math.random() * 60,
       direction: Math.random() * Math.PI * 2,
-      color: i % 3 === 0 ? "rgba(59, 130, 246, 0.18)" : 
-             i % 3 === 1 ? "rgba(16, 185, 129, 0.18)" : "rgba(34, 197, 94, 0.18)"
+      color: aquariumColors[i % aquariumColors.length].body,
+      stripeColor: aquariumColors[i % aquariumColors.length].stripes,
+      fishType: aquariumColors[i % aquariumColors.length].name
     }));
 
     setFish(initialFish);
@@ -71,7 +84,7 @@ export default function FishAnimation() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden" style={{ minHeight: '100vh' }}>
       {fish.map(f => (
         <div
           key={f.id}
@@ -85,55 +98,118 @@ export default function FishAnimation() {
           <svg
             width={f.size}
             height={f.size * 0.6}
-            viewBox="0 0 100 60"
-            className="drop-shadow-sm"
+            viewBox="0 0 120 72"
+            className="drop-shadow-lg"
           >
-            {/* Fish body */}
+            {/* Main fish body with gradient */}
+            <defs>
+              <radialGradient id={`fishGradient-${f.id}`} cx="0.5" cy="0.3">
+                <stop offset="0%" stopColor={f.color} stopOpacity="0.9" />
+                <stop offset="70%" stopColor={f.color} stopOpacity="0.7" />
+                <stop offset="100%" stopColor={f.stripeColor} stopOpacity="0.6" />
+              </radialGradient>
+              <linearGradient id={`finGradient-${f.id}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={f.stripeColor} stopOpacity="0.8" />
+                <stop offset="100%" stopColor={f.color} stopOpacity="0.6" />
+              </linearGradient>
+            </defs>
+            
+            {/* Fish body - more realistic shape */}
             <ellipse
-              cx="40"
-              cy="30"
-              rx="25"
-              ry="12"
-              fill={f.color}
-              stroke="rgba(59, 130, 246, 0.2)"
-              strokeWidth="1"
+              cx="50"
+              cy="36"
+              rx="30"
+              ry="15"
+              fill={`url(#fishGradient-${f.id})`}
+              stroke={f.stripeColor}
+              strokeWidth="0.5"
             />
-            {/* Fish tail */}
+            
+            {/* Fish stripes/patterns */}
+            {f.fishType.includes('clownfish') && (
+              <>
+                <ellipse cx="35" cy="36" rx="3" ry="12" fill="white" opacity="0.8" />
+                <ellipse cx="50" cy="36" rx="3" ry="12" fill="white" opacity="0.8" />
+                <ellipse cx="65" cy="36" rx="3" ry="12" fill="white" opacity="0.8" />
+              </>
+            )}
+            
+            {f.fishType.includes('angelfish') && (
+              <>
+                <path d="M25 36 Q35 28 45 36 Q35 44 25 36" fill={f.stripeColor} opacity="0.6" />
+                <path d="M55 36 Q65 28 75 36 Q65 44 55 36" fill={f.stripeColor} opacity="0.6" />
+              </>
+            )}
+            
+            {/* Fish tail - forked design */}
             <path
-              d="M15 30 L5 20 L5 40 Z"
-              fill={f.color}
-              stroke="rgba(59, 130, 246, 0.2)"
-              strokeWidth="1"
+              d="M20 36 L8 24 L12 36 L8 48 Z"
+              fill={`url(#finGradient-${f.id})`}
+              stroke={f.stripeColor}
+              strokeWidth="0.5"
             />
-            {/* Fish fins */}
-            <ellipse
-              cx="35"
-              cy="20"
-              rx="8"
-              ry="4"
-              fill={f.color}
+            
+            {/* Dorsal fin */}
+            <path
+              d="M40 21 Q50 15 60 21 Q55 24 50 25 Q45 24 40 21"
+              fill={`url(#finGradient-${f.id})`}
               opacity="0.8"
             />
-            <ellipse
-              cx="35"
-              cy="40"
-              rx="8"
-              ry="4"
-              fill={f.color}
+            
+            {/* Ventral fin */}
+            <path
+              d="M40 51 Q50 57 60 51 Q55 48 50 47 Q45 48 40 51"
+              fill={`url(#finGradient-${f.id})`}
               opacity="0.8"
             />
-            {/* Fish eye */}
-            <circle
-              cx="55"
+            
+            {/* Pectoral fins */}
+            <ellipse
+              cx="42"
               cy="28"
-              r="3"
-              fill="rgba(255, 255, 255, 0.9)"
+              rx="8"
+              ry="5"
+              fill={f.stripeColor}
+              opacity="0.7"
+              transform="rotate(-20 42 28)"
+            />
+            <ellipse
+              cx="42"
+              cy="44"
+              rx="8"
+              ry="5"
+              fill={f.stripeColor}
+              opacity="0.7"
+              transform="rotate(20 42 44)"
+            />
+            
+            {/* Fish eye with reflection */}
+            <circle
+              cx="68"
+              cy="32"
+              r="4"
+              fill="white"
             />
             <circle
-              cx="56"
-              cy="27"
-              r="1.5"
-              fill="rgba(0, 0, 0, 0.8)"
+              cx="68"
+              cy="32"
+              r="3"
+              fill="black"
+            />
+            <circle
+              cx="69"
+              cy="31"
+              r="1"
+              fill="white"
+            />
+            
+            {/* Gill line */}
+            <path
+              d="M25 28 Q30 36 25 44"
+              stroke={f.stripeColor}
+              strokeWidth="1"
+              fill="none"
+              opacity="0.6"
             />
           </svg>
         </div>

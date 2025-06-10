@@ -87,9 +87,9 @@ export default function ContactPage() {
       icon: <Phone className="w-6 h-6" />,
       title: "Phone Numbers",
       details: [
-        "Sales: +91 9419 XXX XXX",
-        "Technical: +91 9419 XXX XXX",
-        "Support: +91 9419 XXX XXX"
+        "Sales: +91 9419 500 600",
+        "Technical: +91 9419 500 601", 
+        "Support: +91 9419 500 602"
       ],
       color: "text-accent"
     },
@@ -164,6 +164,23 @@ export default function ContactPage() {
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
               Get technical consultation, product information, or partnership opportunities
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => window.open('tel:+919419500600')}
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                Call Now: +91 9419 500 600
+              </Button>
+              <Button 
+                onClick={() => window.open('mailto:sales@jktroutfeed.com')}
+                variant="outline"
+                className="border-2 border-white text-white px-8 py-3 text-lg font-semibold hover:bg-white hover:text-primary"
+              >
+                <Mail className="w-5 h-5 mr-2" />
+                Email Us
+              </Button>
+            </div>
           </div>
         </div>
       </section>

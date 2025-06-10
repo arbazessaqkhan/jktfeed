@@ -17,6 +17,7 @@ import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
 import AdminGuard from "@/components/admin-guard";
 import FishAnimation from "@/components/fish-animation";
+import WhatsAppButton from "@/components/whatsapp-button";
 
 function Router() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <div className="relative z-10">
             <Router />
           </div>
+          <WhatsAppButton />
           <Toaster />
         </div>
       </TooltipProvider>

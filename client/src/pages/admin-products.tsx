@@ -234,6 +234,14 @@ export default function AdminProductsPage() {
                 <span>Welcome, {localStorage.getItem("adminUser")}</span>
               </div>
               <Button 
+                onClick={() => navigate("/admin-showcase")}
+                variant="outline"
+                className="bg-white text-primary hover:bg-gray-100"
+              >
+                <ImageIcon className="w-4 h-4 mr-2" />
+                Showcase
+              </Button>
+              <Button 
                 onClick={() => setIsCreateModalOpen(true)}
                 className="bg-white text-primary hover:bg-gray-100"
               >

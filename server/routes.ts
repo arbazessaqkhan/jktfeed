@@ -253,6 +253,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Showcase Images Management Routes
+  app.get("/api/showcase-images", async (req, res) => {
+    try {
+      const images = await storage.getShowcaseImages();
+      res.json(images);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch showcase images" });
+    }
+  });
+
+  app.get("/api/showcase-images/:id", async (req, res) => {
+    try {
+      const imageId = parseInt(req.params.id);
+      const image = await storage.getShowcaseImage(imageId);
+      if (!image) {
+        return res.status(404).json({ error: "Showcase image not found" });
+      }
+      res.json(image);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch showcase image" });
+    }
+  });
+
+  app.post("/api/showcase-images", async (req, res) => {
+    try {
+      const imageData = insertShowcaseImageSchema.parse(req.body);
+      const image = await storage.createShowcaseImage(imageData);
+      res.json({ success: true, image });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid image data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Failed to create showcase image" });
+      }
+    }
+  });
+
+  app.put("/api/showcase-images/:id", async (req, res) => {
+    try {
+      const imageId = parseInt(req.params.id);
+      const updateData = insertShowcaseImageSchema.partial().parse(req.body);
+      const image = await storage.updateShowcaseImage(imageId, updateData);
+      res.json({ success: true, image });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid image data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Failed to update showcase image" });
+      }
+    }
+  });
+
+  app.delete("/api/showcase-images/:id", async (req, res) => {
+    try {
+      const imageId = parseInt(req.params.id);
+      await storage.deleteShowcaseImage(imageId);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete showcase image" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

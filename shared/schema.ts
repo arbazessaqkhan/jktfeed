@@ -92,6 +92,17 @@ export const inventory = pgTable("inventory", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const showcaseImages = pgTable("showcase_images", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  imageUrl: text("image_url").notNull(),
+  order: integer("order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -130,6 +141,12 @@ export const insertInventorySchema = createInsertSchema(inventory).omit({
   createdAt: true,
 });
 
+export const insertShowcaseImageSchema = createInsertSchema(showcaseImages).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertContact = z.infer<typeof insertContactSchema>;
@@ -144,3 +161,5 @@ export type InsertCart = z.infer<typeof insertCartSchema>;
 export type CartItem = typeof cart.$inferSelect;
 export type InsertInventory = z.infer<typeof insertInventorySchema>;
 export type Inventory = typeof inventory.$inferSelect;
+export type InsertShowcaseImage = z.infer<typeof insertShowcaseImageSchema>;
+export type ShowcaseImage = typeof showcaseImages.$inferSelect;

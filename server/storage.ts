@@ -1,9 +1,9 @@
 import { 
-  users, contacts, products, orders, orderItems, cart, inventory,
+  users, contacts, products, orders, orderItems, cart, inventory, showcaseImages,
   type User, type InsertUser, type Contact, type InsertContact,
   type Product, type InsertProduct, type Order, type InsertOrder,
   type OrderItem, type InsertOrderItem, type CartItem, type InsertCart,
-  type Inventory, type InsertInventory
+  type Inventory, type InsertInventory, type ShowcaseImage, type InsertShowcaseImage
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -44,6 +44,13 @@ export interface IStorage {
   getInventoryMovements(productId?: number): Promise<Inventory[]>;
   createInventoryMovement(movement: InsertInventory): Promise<Inventory>;
   updateProductStock(productId: number, quantity: number): Promise<void>;
+  
+  // Showcase image management
+  getShowcaseImages(): Promise<ShowcaseImage[]>;
+  getShowcaseImage(id: number): Promise<ShowcaseImage | undefined>;
+  createShowcaseImage(image: InsertShowcaseImage): Promise<ShowcaseImage>;
+  updateShowcaseImage(id: number, image: Partial<InsertShowcaseImage>): Promise<ShowcaseImage>;
+  deleteShowcaseImage(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -225,6 +232,43 @@ export class DatabaseStorage implements IStorage {
       .update(products)
       .set({ stockQuantity: quantity, updatedAt: new Date() })
       .where(eq(products.id, productId));
+  }
+
+  // Showcase image management
+  async getShowcaseImages(): Promise<ShowcaseImage[]> {
+    return await db
+      .select()
+      .from(showcaseImages)
+      .orderBy(showcaseImages.order, desc(showcaseImages.createdAt));
+  }
+
+  async getShowcaseImage(id: number): Promise<ShowcaseImage | undefined> {
+    const [image] = await db
+      .select()
+      .from(showcaseImages)
+      .where(eq(showcaseImages.id, id));
+    return image;
+  }
+
+  async createShowcaseImage(insertImage: InsertShowcaseImage): Promise<ShowcaseImage> {
+    const [image] = await db
+      .insert(showcaseImages)
+      .values(insertImage)
+      .returning();
+    return image;
+  }
+
+  async updateShowcaseImage(id: number, updateData: Partial<InsertShowcaseImage>): Promise<ShowcaseImage> {
+    const [image] = await db
+      .update(showcaseImages)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(showcaseImages.id, id))
+      .returning();
+    return image;
+  }
+
+  async deleteShowcaseImage(id: number): Promise<void> {
+    await db.delete(showcaseImages).where(eq(showcaseImages.id, id));
   }
 }
 

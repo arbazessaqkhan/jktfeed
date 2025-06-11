@@ -48,8 +48,8 @@ export default function FishAnimation() {
           id: i,
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          speedX: (Math.random() - 0.5) * 1.5,
-          speedY: (Math.random() - 0.5) * 1.5,
+          speedX: (Math.random() - 0.5) * 3,
+          speedY: (Math.random() - 0.5) * 3,
           size: 20 + Math.random() * 40,
           color: fishType.color,
           secondaryColor: fishType.secondaryColor,
@@ -126,7 +126,7 @@ export default function FishAnimation() {
             
             if (distance > 0) {
               // Move towards food with realistic speed
-              const huntingSpeed = 2.5;
+              const huntingSpeed = 4;
               newSpeedX = (dx / distance) * huntingSpeed;
               newSpeedY = (dy / distance) * huntingSpeed;
             }

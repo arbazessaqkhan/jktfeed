@@ -14,6 +14,7 @@ import Contact from "@/pages/contact";
 import FeedingGuide from "@/pages/feeding-guide";
 import AdminProducts from "@/pages/admin-products";
 import AdminShowcase from "@/pages/admin-showcase";
+import AdminDashboard from "@/pages/admin-dashboard";
 import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
 import AdminGuard from "@/components/admin-guard";
@@ -31,6 +32,13 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/feeding-guide" component={FeedingGuide} />
       <Route path="/secure-portal-jk2024" component={AdminLogin} />
+      <Route path="/admin/dashboard">
+        {() => (
+          <AdminGuard>
+            <AdminDashboard />
+          </AdminGuard>
+        )}
+      </Route>
       <Route path="/admin-products">
         {() => (
           <AdminGuard>

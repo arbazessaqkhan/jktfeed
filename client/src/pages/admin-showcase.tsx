@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import NotificationSystem from "@/components/notification-system";
 import { 
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger 
 } from "@/components/ui/dialog";
@@ -185,6 +186,7 @@ export default function AdminShowcasePage() {
                 <User className="w-4 h-4 mr-2" />
                 <span>Welcome, {localStorage.getItem("adminUser")}</span>
               </div>
+              <NotificationSystem />
               <Button 
                 onClick={() => navigate("/admin-products")}
                 variant="outline"

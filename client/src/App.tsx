@@ -57,7 +57,13 @@ function Router() {
           </AdminGuard>
         )}
       </Route>
-
+      <Route path="/admin-contacts">
+        {() => (
+          <AdminGuard>
+            <AdminContacts />
+          </AdminGuard>
+        )}
+      </Route>
       <Route path="/admin-orders">
         {() => (
           <AdminGuard>

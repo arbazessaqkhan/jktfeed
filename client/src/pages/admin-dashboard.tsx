@@ -40,6 +40,14 @@ export default function AdminDashboard() {
     },
 
     {
+      title: "Contact Management",
+      description: "View and respond to customer inquiries",
+      icon: Users,
+      path: "/admin-contacts",
+      color: "bg-green-500",
+      stats: "Customer Support"
+    },
+    {
       title: "Order Management",
       description: "Track and process customer orders",
       icon: ShoppingCart,

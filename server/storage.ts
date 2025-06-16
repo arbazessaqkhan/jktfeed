@@ -1,9 +1,11 @@
 import { 
-  users, contacts, products, orders, orderItems, cart, inventory, showcaseImages,
+  users, contacts, products, orders, orderItems, cart, inventory, showcaseImages, messages, notifications, settings,
   type User, type InsertUser, type Contact, type InsertContact,
   type Product, type InsertProduct, type Order, type InsertOrder,
   type OrderItem, type InsertOrderItem, type CartItem, type InsertCart,
-  type Inventory, type InsertInventory, type ShowcaseImage, type InsertShowcaseImage
+  type Inventory, type InsertInventory, type ShowcaseImage, type InsertShowcaseImage,
+  type Message, type InsertMessage, type Notification, type InsertNotification,
+  type Setting, type InsertSetting
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -51,6 +53,22 @@ export interface IStorage {
   createShowcaseImage(image: InsertShowcaseImage): Promise<ShowcaseImage>;
   updateShowcaseImage(id: number, image: Partial<InsertShowcaseImage>): Promise<ShowcaseImage>;
   deleteShowcaseImage(id: number): Promise<void>;
+  
+  // Messaging system
+  getMessages(contactId?: number): Promise<Message[]>;
+  createMessage(message: InsertMessage): Promise<Message>;
+  markMessageAsRead(id: number): Promise<Message>;
+  getContactWithMessages(contactId: number): Promise<Contact & { messages: Message[] } | undefined>;
+  
+  // Notifications
+  getNotifications(): Promise<Notification[]>;
+  createNotification(notification: InsertNotification): Promise<Notification>;
+  markNotificationAsRead(id: number): Promise<Notification>;
+  
+  // Settings
+  getSettings(): Promise<Setting[]>;
+  getSetting(key: string): Promise<Setting | undefined>;
+  updateSetting(key: string, value: string): Promise<Setting>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -269,6 +287,104 @@ export class DatabaseStorage implements IStorage {
 
   async deleteShowcaseImage(id: number): Promise<void> {
     await db.delete(showcaseImages).where(eq(showcaseImages.id, id));
+  }
+
+  // Messaging system
+  async getMessages(contactId?: number): Promise<Message[]> {
+    if (contactId) {
+      return await db
+        .select()
+        .from(messages)
+        .where(eq(messages.contactId, contactId))
+        .orderBy(desc(messages.createdAt));
+    }
+    return await db.select().from(messages).orderBy(desc(messages.createdAt));
+  }
+
+  async createMessage(insertMessage: InsertMessage): Promise<Message> {
+    const [message] = await db
+      .insert(messages)
+      .values(insertMessage)
+      .returning();
+    return message;
+  }
+
+  async markMessageAsRead(id: number): Promise<Message> {
+    const [message] = await db
+      .update(messages)
+      .set({ isRead: true })
+      .where(eq(messages.id, id))
+      .returning();
+    return message;
+  }
+
+  async getContactWithMessages(contactId: number): Promise<Contact & { messages: Message[] } | undefined> {
+    const [contact] = await db
+      .select()
+      .from(contacts)
+      .where(eq(contacts.id, contactId));
+    
+    if (!contact) return undefined;
+
+    const contactMessages = await this.getMessages(contactId);
+    return { ...contact, messages: contactMessages };
+  }
+
+  // Notifications
+  async getNotifications(): Promise<Notification[]> {
+    return await db
+      .select()
+      .from(notifications)
+      .orderBy(desc(notifications.createdAt));
+  }
+
+  async createNotification(insertNotification: InsertNotification): Promise<Notification> {
+    const [notification] = await db
+      .insert(notifications)
+      .values(insertNotification)
+      .returning();
+    return notification;
+  }
+
+  async markNotificationAsRead(id: number): Promise<Notification> {
+    const [notification] = await db
+      .update(notifications)
+      .set({ isRead: true })
+      .where(eq(notifications.id, id))
+      .returning();
+    return notification;
+  }
+
+  // Settings
+  async getSettings(): Promise<Setting[]> {
+    return await db.select().from(settings);
+  }
+
+  async getSetting(key: string): Promise<Setting | undefined> {
+    const [setting] = await db
+      .select()
+      .from(settings)
+      .where(eq(settings.key, key));
+    return setting;
+  }
+
+  async updateSetting(key: string, value: string): Promise<Setting> {
+    const existing = await this.getSetting(key);
+    
+    if (existing) {
+      const [setting] = await db
+        .update(settings)
+        .set({ value, updatedAt: new Date() })
+        .where(eq(settings.key, key))
+        .returning();
+      return setting;
+    } else {
+      const [setting] = await db
+        .insert(settings)
+        .values({ key, value })
+        .returning();
+      return setting;
+    }
   }
 }
 

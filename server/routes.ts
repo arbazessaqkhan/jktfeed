@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactSchema, insertProductSchema, insertOrderSchema, insertCartSchema, insertShowcaseImageSchema } from "@shared/schema";
+import { insertContactSchema, insertProductSchema, insertOrderSchema, insertCartSchema, insertShowcaseImageSchema, insertMessageSchema, insertNotificationSchema, insertSettingSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -312,6 +312,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to delete showcase image" });
+    }
+  });
+
+  // Messaging Routes
+  app.get("/api/messages", async (req, res) => {
+    try {
+      const contactId = req.query.contactId ? parseInt(req.query.contactId as string) : undefined;
+      const messages = await storage.getMessages(contactId);
+      res.json(messages);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch messages" });
+    }
+  });
+
+  app.post("/api/messages", async (req, res) => {
+    try {
+      const messageData = insertMessageSchema.parse(req.body);
+      const message = await storage.createMessage(messageData);
+      res.json({ success: true, message });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid message data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Failed to create message" });
+      }
+    }
+  });
+
+  app.put("/api/messages/:id/read", async (req, res) => {
+    try {
+      const messageId = parseInt(req.params.id);
+      const message = await storage.markMessageAsRead(messageId);
+      res.json({ success: true, message });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to mark message as read" });
+    }
+  });
+
+  app.get("/api/contacts/:id/messages", async (req, res) => {
+    try {
+      const contactId = parseInt(req.params.id);
+      const contactWithMessages = await storage.getContactWithMessages(contactId);
+      if (!contactWithMessages) {
+        return res.status(404).json({ error: "Contact not found" });
+      }
+      res.json(contactWithMessages);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch contact messages" });
+    }
+  });
+
+  // Notifications Routes
+  app.get("/api/notifications", async (req, res) => {
+    try {
+      const notifications = await storage.getNotifications();
+      res.json(notifications);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch notifications" });
+    }
+  });
+
+  app.post("/api/notifications", async (req, res) => {
+    try {
+      const notificationData = insertNotificationSchema.parse(req.body);
+      const notification = await storage.createNotification(notificationData);
+      res.json({ success: true, notification });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid notification data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Failed to create notification" });
+      }
+    }
+  });
+
+  app.put("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const notificationId = parseInt(req.params.id);
+      const notification = await storage.markNotificationAsRead(notificationId);
+      res.json({ success: true, notification });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to mark notification as read" });
+    }
+  });
+
+  // Settings Routes
+  app.get("/api/settings", async (req, res) => {
+    try {
+      const settings = await storage.getSettings();
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch settings" });
+    }
+  });
+
+  app.get("/api/settings/:key", async (req, res) => {
+    try {
+      const setting = await storage.getSetting(req.params.key);
+      if (!setting) {
+        return res.status(404).json({ error: "Setting not found" });
+      }
+      res.json(setting);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch setting" });
+    }
+  });
+
+  app.put("/api/settings/:key", async (req, res) => {
+    try {
+      const { value } = req.body;
+      const setting = await storage.updateSetting(req.params.key, value);
+      res.json({ success: true, setting });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update setting" });
     }
   });
 

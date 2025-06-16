@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Package, Image as ImageIcon, LogOut, User, 
-  BarChart3, Users, ShoppingCart, Settings
+  BarChart3, Users, ShoppingCart, Settings, MessageCircle
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -38,6 +38,22 @@ export default function AdminDashboard() {
       stats: "Manage Catalog"
     },
     {
+      title: "Messages & Support",
+      description: "Customer inquiries and communication management",
+      icon: MessageCircle,
+      path: "/admin-messages",
+      color: "bg-green-500",
+      stats: "Customer Support"
+    },
+    {
+      title: "Order Management",
+      description: "Track and process customer orders",
+      icon: ShoppingCart,
+      path: "/admin-orders",
+      color: "bg-yellow-500",
+      stats: "Order Processing"
+    },
+    {
       title: "Showcase Gallery",
       description: "Upload and manage homepage showcase images",
       icon: ImageIcon,
@@ -46,20 +62,20 @@ export default function AdminDashboard() {
       stats: "Image Gallery"
     },
     {
-      title: "Analytics",
-      description: "View sales reports and customer insights",
+      title: "Analytics Dashboard",
+      description: "Business insights and performance metrics",
       icon: BarChart3,
       path: "/admin-analytics",
-      color: "bg-green-500",
-      stats: "Coming Soon"
+      color: "bg-red-500",
+      stats: "Business Analytics"
     },
     {
-      title: "Customers",
-      description: "Manage customer accounts and orders",
-      icon: Users,
-      path: "/admin-customers",
-      color: "bg-orange-500",
-      stats: "Coming Soon"
+      title: "System Settings",
+      description: "Configure business preferences and system settings",
+      icon: Settings,
+      path: "/admin-settings",
+      color: "bg-gray-500",
+      stats: "Configuration"
     }
   ];
 
@@ -148,7 +164,7 @@ export default function AdminDashboard() {
         {/* Admin Modules */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Management Modules</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {adminModules.map((module) => {
               const IconComponent = module.icon;
               return (

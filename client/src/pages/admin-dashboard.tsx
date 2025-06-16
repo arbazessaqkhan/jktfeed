@@ -5,9 +5,10 @@ import Footer from "@/components/layout/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import NotificationSystem from "@/components/notification-system";
 import { 
   Package, Image as ImageIcon, LogOut, User, 
-  BarChart3, Users, ShoppingCart, Settings, MessageCircle
+  BarChart3, Users, ShoppingCart, Settings
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -37,14 +38,7 @@ export default function AdminDashboard() {
       color: "bg-blue-500",
       stats: "Manage Catalog"
     },
-    {
-      title: "Messages & Support",
-      description: "Customer inquiries and communication management",
-      icon: MessageCircle,
-      path: "/admin-messages",
-      color: "bg-green-500",
-      stats: "Customer Support"
-    },
+
     {
       title: "Order Management",
       description: "Track and process customer orders",
@@ -96,6 +90,7 @@ export default function AdminDashboard() {
                 <User className="w-4 h-4 mr-2" />
                 <span>Welcome, {localStorage.getItem("adminUser")}</span>
               </div>
+              <NotificationSystem />
               <Button 
                 onClick={handleLogout}
                 variant="outline"

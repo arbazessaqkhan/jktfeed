@@ -15,7 +15,7 @@ import FeedingGuide from "@/pages/feeding-guide";
 import AdminProducts from "@/pages/admin-products";
 import AdminShowcase from "@/pages/admin-showcase";
 import AdminDashboard from "@/pages/admin-dashboard";
-import AdminMessages from "@/pages/admin-messages";
+import AdminContacts from "@/pages/admin-contacts";
 import AdminOrders from "@/pages/admin-orders";
 import AdminAnalytics from "@/pages/admin-analytics";
 import AdminSettings from "@/pages/admin-settings";
@@ -57,13 +57,7 @@ function Router() {
           </AdminGuard>
         )}
       </Route>
-      <Route path="/admin-messages">
-        {() => (
-          <AdminGuard>
-            <AdminMessages />
-          </AdminGuard>
-        )}
-      </Route>
+
       <Route path="/admin-orders">
         {() => (
           <AdminGuard>

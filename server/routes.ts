@@ -10,6 +10,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const contactData = insertContactSchema.parse(req.body);
       const contact = await storage.createContact(contactData);
+      
+      // Create notification for admin
+      await storage.createNotification({
+        title: "New Contact Form Submission",
+        message: `${contact.name} submitted a contact form about "${contact.subject}"`,
+        type: "info"
+      });
+      
       res.json({ success: true, contact });
     } catch (error) {
       if (error instanceof z.ZodError) {

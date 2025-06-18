@@ -23,24 +23,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-primary">JK Trout Feed</h1>
-              <p className="text-xs text-neutral -mt-1">GREEN GLOBE AGAIN</p>
+            <Link href="/" className="flex-shrink-0 hover-glow click-ripple smooth-transition">
+              <h1 className="text-2xl font-bold text-primary text-glow">JK Trout Feed</h1>
+              <p className="text-xs text-neutral -mt-1 fade-in">GREEN GLOBE AGAIN</p>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.slice(0, -1).map((item) => (
+              {navItems.slice(0, -1).map((item, index) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors hover-glow click-ripple btn-bounce smooth-transition ${
                     location === item.href 
-                      ? "text-primary bg-blue-50" 
+                      ? "text-primary bg-blue-50 pulse-bg" 
                       : "text-neutral hover:text-primary"
                   }`}
+                  style={{animationDelay: `${index * 0.1}s`}}
                 >
                   {item.label}
                 </Link>

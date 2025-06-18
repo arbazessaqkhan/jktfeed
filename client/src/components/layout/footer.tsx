@@ -15,26 +15,26 @@ export default function Footer() {
               Advanced manufacturing facility producing premium trout feed with superior nutritional profiles and proven results in aquaculture.
             </p>
             <div className="flex space-x-4">
-              <a href="mailto:info@jktroutfeed.com" className="text-blue-200 hover:text-white transition-colors" title="Email Us">
-                <Mail className="w-6 h-6" />
+              <a href="mailto:info@jktroutfeed.com" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Email Us">
+                <Mail className="w-6 h-6 float-gentle" />
               </a>
-              <a href="tel:+91-123-456-7890" className="text-blue-200 hover:text-white transition-colors" title="Call Us">
-                <Phone className="w-6 h-6" />
+              <a href="tel:+91-123-456-7890" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Call Us">
+                <Phone className="w-6 h-6 float-gentle" />
               </a>
-              <a href="https://wa.me/923369976123" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors" title="WhatsApp">
-                <MessageCircle className="w-6 h-6" />
+              <a href="https://wa.me/923369976123" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="WhatsApp">
+                <MessageCircle className="w-6 h-6 float-gentle" />
               </a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors" title="Facebook">
-                <Facebook className="w-6 h-6" />
+              <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Facebook">
+                <Facebook className="w-6 h-6 float-gentle" />
               </a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors" title="Instagram">
-                <Instagram className="w-6 h-6" />
+              <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Instagram">
+                <Instagram className="w-6 h-6 float-gentle" />
               </a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors" title="Twitter">
-                <Twitter className="w-6 h-6" />
+              <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Twitter">
+                <Twitter className="w-6 h-6 float-gentle" />
               </a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors" title="Pinterest">
-                <FaPinterest className="w-6 h-6" />
+              <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Pinterest">
+                <FaPinterest className="w-6 h-6 float-gentle" />
               </a>
             </div>
           </div>

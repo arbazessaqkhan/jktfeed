@@ -42,7 +42,9 @@ export default function AdminOrdersPage() {
 
   const { data: orders, isLoading } = useQuery({
     queryKey: ['/api/orders'],
-    queryFn: () => fetch('/api/orders').then(res => res.json())
+    queryFn: () => fetch('/api/orders').then(res => res.json()),
+    refetchInterval: 3000, // Refresh every 3 seconds for real-time updates
+    refetchIntervalInBackground: true
   });
 
   const updateOrderStatusMutation = useMutation({

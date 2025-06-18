@@ -30,6 +30,23 @@ export default function ShopProducts() {
     setIsSubmitting(true);
     
     try {
+      // Create proper order data for orders API
+      const orderData = {
+        customerName: customerForm.name,
+        customerEmail: customerForm.email,
+        customerPhone: customerForm.phone,
+        customerAddress: customerForm.address,
+        totalAmount: buyNowProduct.price * customerForm.quantity,
+        status: "pending",
+        orderNotes: customerForm.message || "",
+        items: [{
+          productId: buyNowProduct.id,
+          quantity: customerForm.quantity,
+          unitPrice: buyNowProduct.price,
+          totalPrice: buyNowProduct.price * customerForm.quantity
+        }]
+      };
+
       // Create contact entry for admin notifications
       const contactData = {
         name: customerForm.name,
@@ -55,6 +72,15 @@ ${customerForm.message || "No additional message"}`
         isRead: false
       };
 
+      // Submit order to orders API
+      const orderResponse = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+      });
+
       // Submit contact for admin notification
       const contactResponse = await fetch('/api/contact', {
         method: 'POST',
@@ -72,7 +98,7 @@ ${customerForm.message || "No additional message"}`
         body: JSON.stringify(notificationData)
       });
 
-      if (contactResponse.ok && notificationResponse.ok) {
+      if (orderResponse.ok && contactResponse.ok && notificationResponse.ok) {
         // Reset form and show success
         setCustomerForm({
           name: "",

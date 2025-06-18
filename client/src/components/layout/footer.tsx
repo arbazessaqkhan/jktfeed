@@ -119,8 +119,146 @@ export default function Footer() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/15"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent animate-pulse" style={{animationDelay: '3s', animationDuration: '8s'}}></div>
       
+      {/* Enhanced Underwater Scene */}
+      <div className="absolute inset-0 opacity-30">
+        {/* Large Rock Formations */}
+        <div className="absolute bottom-0 left-12 w-16 h-12 bg-gradient-to-t from-gray-700/60 via-gray-600/50 to-gray-500/40 rounded-t-3xl transform rotate-6 shadow-2xl"></div>
+        <div className="absolute bottom-0 right-24 w-20 h-16 bg-gradient-to-t from-slate-800/65 via-slate-700/55 to-slate-600/45 rounded-t-full transform -rotate-8 shadow-2xl"></div>
+        <div className="absolute bottom-0 left-1/3 w-12 h-10 bg-gradient-to-t from-stone-700/60 via-stone-600/50 to-stone-500/40 rounded-t-2xl transform rotate-12 shadow-xl"></div>
+        
+        {/* Coral Reef Formations */}
+        <div className="absolute bottom-4 left-28 w-10 h-14 bg-gradient-to-t from-orange-700/50 via-orange-600/40 to-pink-500/30 rounded-t-3xl transform rotate-5 shadow-lg animate-pulse" style={{animationDelay: '2s', animationDuration: '7s'}}></div>
+        <div className="absolute bottom-3 right-32 w-8 h-12 bg-gradient-to-t from-red-700/45 via-pink-600/35 to-orange-500/25 rounded-t-2xl transform -rotate-8 shadow-lg animate-pulse" style={{animationDelay: '3.5s', animationDuration: '6.5s'}}></div>
+        <div className="absolute bottom-5 left-2/5 w-6 h-10 bg-gradient-to-t from-purple-700/40 via-pink-600/30 to-orange-500/20 rounded-t-xl transform rotate-15 shadow-md animate-pulse" style={{animationDelay: '1.5s', animationDuration: '8s'}}></div>
+        <div className="absolute bottom-2 right-2/5 w-7 h-9 bg-gradient-to-t from-violet-700/45 via-purple-600/35 to-pink-500/25 rounded-t-lg transform -rotate-12 shadow-md animate-pulse" style={{animationDelay: '4s', animationDuration: '6s'}}></div>
+        
+        {/* Branching Coral */}
+        <div className="absolute bottom-6 left-40 w-12 h-8 bg-gradient-to-r from-orange-600/40 via-red-500/30 to-pink-400/20 rounded-full transform rotate-20 shadow-lg animate-pulse" style={{animationDelay: '5s', animationDuration: '9s'}}></div>
+        <div className="absolute bottom-4 right-40 w-10 h-6 bg-gradient-to-l from-purple-600/35 via-pink-500/25 to-orange-400/15 rounded-full transform -rotate-25 shadow-lg animate-pulse" style={{animationDelay: '6s', animationDuration: '7.5s'}}></div>
+        
+        {/* Sea Anemones */}
+        <div className="absolute bottom-1 left-36 w-6 h-4 bg-gradient-to-t from-green-600/40 via-teal-500/30 to-cyan-400/20 rounded-full transform rotate-10 animate-pulse" style={{animationDelay: '3s', animationDuration: '5s'}}></div>
+        <div className="absolute bottom-2 right-36 w-5 h-3 bg-gradient-to-t from-blue-600/35 via-purple-500/25 to-pink-400/15 rounded-full transform -rotate-15 animate-pulse" style={{animationDelay: '4.5s', animationDuration: '6.5s'}}></div>
+        
+        {/* Underwater Vegetation */}
+        <div className="absolute bottom-1 left-48 w-14 h-8 bg-gradient-to-t from-green-600/35 via-green-500/25 to-transparent rounded-t-full transform rotate-25 animate-pulse plant-sway" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
+        <div className="absolute bottom-2 right-48 w-12 h-6 bg-gradient-to-t from-emerald-600/30 via-emerald-500/20 to-transparent rounded-t-3xl transform -rotate-30 animate-pulse plant-sway" style={{animationDelay: '2.5s', animationDuration: '4.5s'}}></div>
+        <div className="absolute bottom-1 left-3/5 w-10 h-5 bg-gradient-to-t from-green-500/25 via-green-400/15 to-transparent rounded-t-2xl transform rotate-35 animate-pulse plant-sway" style={{animationDelay: '3.8s', animationDuration: '3.8s'}}></div>
+        <div className="absolute bottom-2 right-3/5 w-8 h-4 bg-gradient-to-t from-teal-500/30 via-teal-400/20 to-transparent rounded-t-xl transform -rotate-40 animate-pulse plant-sway" style={{animationDelay: '5.2s', animationDuration: '4.2s'}}></div>
+        
+        {/* Starfish on Rocks */}
+        <div className="absolute bottom-3 left-44 w-4 h-4 bg-gradient-to-br from-orange-600/50 to-red-500/40 rounded-full transform rotate-45 animate-pulse" style={{animationDelay: '7s', animationDuration: '10s'}}></div>
+        <div className="absolute bottom-4 right-44 w-3 h-3 bg-gradient-to-br from-purple-600/45 to-pink-500/35 rounded-full transform rotate-30 animate-pulse" style={{animationDelay: '8.5s', animationDuration: '11s'}}></div>
+        
+        {/* Additional Swimming Fish - Tropical Varieties */}
+        <div className="absolute top-32 left-0 w-7 h-3.5 opacity-55">
+          <div className="fish-swim-right">
+            <svg viewBox="0 0 24 12" className="w-7 h-3.5 fill-yellow-400/45">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+              <circle cx="18" cy="6" r="1" className="fill-black/20"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-36 right-0 w-6 h-3 opacity-60">
+          <div className="fish-swim-left-slow">
+            <svg viewBox="0 0 24 12" className="w-6 h-3 fill-emerald-400/50 transform scale-x-[-1]">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+              <circle cx="6" cy="6" r="1" className="fill-black/20"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-26 left-1/5 w-5 h-2.5 opacity-65">
+          <div className="fish-swim-right-slow">
+            <svg viewBox="0 0 24 12" className="w-5 h-2.5 fill-violet-400/55">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+              <circle cx="18" cy="6" r="0.8" className="fill-black/25"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-30 right-1/5 w-4.5 h-2.2 opacity-70">
+          <div className="fish-swim-left">
+            <svg viewBox="0 0 24 12" className="w-4.5 h-2.2 fill-rose-400/60 transform scale-x-[-1]">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+              <circle cx="6" cy="6" r="0.8" className="fill-black/25"/>
+            </svg>
+          </div>
+        </div>
+        
+        {/* School of Small Fish */}
+        <div className="absolute top-18 left-2/3 w-3 h-1.5 opacity-50">
+          <div className="fish-swim-right">
+            <svg viewBox="0 0 24 12" className="w-3 h-1.5 fill-cyan-300/40">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div className="absolute top-19 left-2/3 w-2.5 h-1.2 opacity-45">
+          <div className="fish-swim-right" style={{animationDelay: '0.2s'}}>
+            <svg viewBox="0 0 24 12" className="w-2.5 h-1.2 fill-cyan-300/35">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        <div className="absolute top-20 left-2/3 w-2.8 h-1.4 opacity-50">
+          <div className="fish-swim-right" style={{animationDelay: '0.4s'}}>
+            <svg viewBox="0 0 24 12" className="w-2.8 h-1.4 fill-cyan-300/40">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        
+        {/* Jellyfish */}
+        <div className="absolute top-10 left-1/4 w-8 h-12 opacity-40">
+          <div className="animate-pulse" style={{animationDelay: '2s', animationDuration: '6s'}}>
+            <svg viewBox="0 0 16 20" className="w-8 h-12 fill-pink-300/30">
+              <ellipse cx="8" cy="6" rx="6" ry="4"/>
+              <path d="M4 10 Q4 16 6 18 M8 10 Q8 17 8 19 M12 10 Q12 16 10 18" stroke="currentColor" strokeWidth="0.5" fill="none" className="stroke-pink-300/25"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-6 right-1/3 w-6 h-9 opacity-35">
+          <div className="animate-pulse" style={{animationDelay: '4s', animationDuration: '7s'}}>
+            <svg viewBox="0 0 16 20" className="w-6 h-9 fill-cyan-300/25">
+              <ellipse cx="8" cy="5" rx="5" ry="3"/>
+              <path d="M5 8 Q5 14 7 16 M8 8 Q8 15 8 17 M11 8 Q11 14 9 16" stroke="currentColor" strokeWidth="0.4" fill="none" className="stroke-cyan-300/20"/>
+            </svg>
+          </div>
+        </div>
+        
+        {/* Sea Urchins */}
+        <div className="absolute bottom-1 left-52 w-3 h-3 opacity-50">
+          <div className="bg-purple-700/40 rounded-full animate-pulse" style={{animationDelay: '6s', animationDuration: '8s'}}>
+            <div className="absolute inset-0 bg-gradient-radial from-purple-600/30 to-transparent rounded-full"></div>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-2 right-52 w-2.5 h-2.5 opacity-45">
+          <div className="bg-violet-700/35 rounded-full animate-pulse" style={{animationDelay: '7.5s', animationDuration: '9s'}}>
+            <div className="absolute inset-0 bg-gradient-radial from-violet-600/25 to-transparent rounded-full"></div>
+          </div>
+        </div>
+        
+        {/* Floating Plankton/Particles */}
+        <div className="absolute top-8 left-1/6 w-1 h-1 bg-green-400/30 rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
+        <div className="absolute top-22 right-1/8 w-0.5 h-0.5 bg-cyan-400/25 rounded-full animate-bounce" style={{animationDelay: '3s', animationDuration: '5s'}}></div>
+        <div className="absolute top-15 left-3/4 w-1.5 h-1.5 bg-blue-400/20 rounded-full animate-bounce" style={{animationDelay: '5s', animationDuration: '6s'}}></div>
+        <div className="absolute top-25 right-3/4 w-0.8 h-0.8 bg-teal-400/30 rounded-full animate-bounce" style={{animationDelay: '2.5s', animationDuration: '4.5s'}}></div>
+        
+        {/* Water Current Lines */}
+        <div className="absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent animate-pulse" style={{animationDelay: '4s', animationDuration: '12s'}}></div>
+        <div className="absolute top-28 left-0 w-full h-0.3 bg-gradient-to-r from-transparent via-blue-400/8 to-transparent animate-pulse" style={{animationDelay: '8s', animationDuration: '15s'}}></div>
+        
+        {/* Additional Coral Details */}
+        <div className="absolute bottom-1 left-60 w-4 h-3 bg-gradient-to-t from-orange-500/30 via-yellow-400/20 to-transparent rounded-full transform rotate-45 animate-pulse" style={{animationDelay: '9s', animationDuration: '11s'}}></div>
+        <div className="absolute bottom-2 right-60 w-3.5 h-2.5 bg-gradient-to-t from-red-500/25 via-pink-400/15 to-transparent rounded-full transform -rotate-30 animate-pulse" style={{animationDelay: '10s', animationDuration: '12s'}}></div>
+      </div>
+      
       {/* Content Backdrop for Readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-900/60 via-blue-800/40 to-blue-950/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-blue-800/50 to-blue-950/70"></div>
       
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

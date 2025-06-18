@@ -70,7 +70,7 @@ export default function Footer() {
             <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity mr-1">
               <img src={logoImage} alt="QuantaFONS" className="h-4 w-auto inline-block" />
             </a>
-            <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-100 transition-colors underline">
+            <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-100 transition-colors">
               QuantaFONS
             </a>
           </div>

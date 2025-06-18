@@ -63,16 +63,18 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-blue-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
-          <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4 mt-2 md:mt-0">
-            <p className="text-blue-200 text-sm">Manufacturing Excellence in Jammu & Kashmir</p>
+        <div className="border-t border-blue-800 mt-8 pt-8 flex flex-col space-y-3">
+          <div className="flex justify-center items-center">
             <div className="flex items-center text-blue-200 text-sm">
               <span className="mr-2">Designed by</span>
               <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                 <img src={logoImage} alt="QuantaFONS" className="h-4 w-auto inline-block" />
               </a>
             </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+            <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
+            <p className="text-blue-200 text-sm">Manufacturing Excellence in Jammu & Kashmir</p>
           </div>
         </div>
       </div>

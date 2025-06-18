@@ -129,6 +129,33 @@ export const settings = pgTable("settings", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+export const visitors = pgTable("visitors", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  referrer: text("referrer"),
+  country: text("country"),
+  city: text("city"),
+  device: text("device"),
+  browser: text("browser"),
+  os: text("os"),
+  visitedPages: text("visited_pages").array(),
+  timeOnSite: integer("time_on_site"),
+  isReturning: boolean("is_returning").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
+
+export const pageViews = pgTable("page_views", {
+  id: serial("id").primaryKey(),
+  visitorId: integer("visitor_id").references(() => visitors.id),
+  page: text("page").notNull(),
+  title: text("title"),
+  timeSpent: integer("time_spent"),
+  timestamp: timestamp("timestamp").defaultNow().notNull()
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -186,6 +213,17 @@ export const insertNotificationSchema = createInsertSchema(notifications).omit({
 export const insertSettingSchema = createInsertSchema(settings).omit({
   id: true,
   updatedAt: true,
+});
+
+export const insertVisitorSchema = createInsertSchema(visitors).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPageViewSchema = createInsertSchema(pageViews).omit({
+  id: true,
+  timestamp: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

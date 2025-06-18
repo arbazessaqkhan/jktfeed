@@ -66,37 +66,42 @@ Please provide more details and availability.`;
       const specifications = buyNowProduct.specifications;
       const features = Object.entries(specifications || {}).map(([key, value]) => `${key}: ${value}`).join(", ");
       
+      // Create order data for orders API
       const orderData = {
+        customerName: customerForm.name,
+        customerEmail: customerForm.email,
+        customerPhone: customerForm.phone,
+        customerAddress: customerForm.address,
+        totalAmount: buyNowProduct.price * customerForm.quantity,
+        status: "pending",
+        orderNotes: customerForm.message || "",
+        items: [{
+          productId: buyNowProduct.id,
+          quantity: customerForm.quantity,
+          unitPrice: buyNowProduct.price,
+          totalPrice: buyNowProduct.price * customerForm.quantity
+        }]
+      };
+
+      // Also create contact entry for admin notifications
+      const contactData = {
         name: customerForm.name,
         email: customerForm.email,
         phone: customerForm.phone,
-        subject: `Buy Now Order: ${buyNowProduct.name}`,
-        message: `NEW ORDER REQUEST:
+        subject: `New Order: ${buyNowProduct.name}`,
+        message: `NEW ORDER PLACED:
 
-Customer Details:
-Name: ${customerForm.name}
-Email: ${customerForm.email}
-Phone: ${customerForm.phone}
+Customer: ${customerForm.name}
+Product: ${buyNowProduct.name}
+Quantity: ${customerForm.quantity}
+Total: ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}
 Address: ${customerForm.address}
 
-Product Details:
-Product: ${buyNowProduct.name}
-Category: ${buyNowProduct.category}
-Price: ₹${buyNowProduct.price.toLocaleString()}
-Weight: ${buyNowProduct.weight}
-SKU: ${buyNowProduct.sku}
-Quantity: ${customerForm.quantity}
-Total Amount: ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}
-Specifications: ${features}
-
-Description: ${buyNowProduct.description}
-
-Additional Message: ${customerForm.message || "None"}
-
-STATUS: PENDING ORDER - Please contact customer to confirm and process.`
+${customerForm.message || "No additional message"}`
       };
 
-      const response = await fetch('/api/contact', {
+      // Submit order to orders API
+      const orderResponse = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +109,16 @@ STATUS: PENDING ORDER - Please contact customer to confirm and process.`
         body: JSON.stringify(orderData)
       });
 
-      if (response.ok) {
+      // Submit contact for admin notification
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData)
+      });
+
+      if (response.ok && orderResponse.ok) {
         // Reset form and close modal
         setCustomerForm({
           name: "",
@@ -116,9 +130,10 @@ STATUS: PENDING ORDER - Please contact customer to confirm and process.`
         });
         setBuyNowProduct(null);
         
-        // Show success message and redirect to admin portal
-        alert('Order submitted successfully! You will be contacted soon.');
-        window.open('/secure-portal-jk2024', '_blank');
+        // Show success message
+        alert('Order submitted successfully! You will be contacted soon for confirmation.');
+      } else {
+        throw new Error('Failed to submit order');
       }
     } catch (error) {
       console.error('Failed to submit order:', error);

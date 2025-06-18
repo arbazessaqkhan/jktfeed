@@ -49,8 +49,8 @@ export default function Products() {
     <section id="products" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Products</h2>
-          <p className="text-lg text-neutral max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 hover-rubber">Our Products</h2>
+          <p className="text-lg text-neutral max-w-3xl mx-auto hover-fade">
             We produce three standard compositions of feed designed for different growth stages, ensuring optimal nutrition throughout the fish lifecycle.
           </p>
         </div>

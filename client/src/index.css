@@ -103,6 +103,137 @@ input, textarea, [contenteditable="true"] {
   background: rgba(0, 0, 0, 0.5);
 }
 
+/* Diverse Hover Animations */
+@keyframes wiggle {
+  0%, 7% { transform: rotateZ(0); }
+  15% { transform: rotateZ(-15deg); }
+  20% { transform: rotateZ(10deg); }
+  25% { transform: rotateZ(-10deg); }
+  30% { transform: rotateZ(6deg); }
+  35% { transform: rotateZ(-4deg); }
+  40%, 100% { transform: rotateZ(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes heartbeat {
+  0%, 50%, 100% { transform: scale(1); }
+  25%, 75% { transform: scale(1.1); }
+}
+
+@keyframes flip {
+  0% { transform: perspective(400px) rotateY(0); }
+  40% { transform: perspective(400px) translateZ(150px) rotateY(170deg); }
+  50% { transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1); }
+  80% { transform: perspective(400px) rotateY(360deg) scale(0.95); }
+  100% { transform: perspective(400px) scale(1); }
+}
+
+@keyframes rubber {
+  0% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.8s ease-in-out;
+}
+
+.hover-shake:hover {
+  animation: shake 0.5s ease-in-out;
+}
+
+.hover-heartbeat:hover {
+  animation: heartbeat 1s ease-in-out;
+}
+
+.hover-flip:hover {
+  animation: flip 0.6s ease-in-out;
+}
+
+.hover-rubber:hover {
+  animation: rubber 1s ease-in-out;
+}
+
+.hover-rotate:hover {
+  animation: rotate360 0.6s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.hover-tilt:hover {
+  transform: rotate(3deg) scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.hover-zoom:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.hover-slide-right:hover {
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
+}
+
+.hover-slide-left:hover {
+  transform: translateX(-10px);
+  transition: transform 0.3s ease;
+}
+
+.hover-fade:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.hover-brightness:hover {
+  filter: brightness(1.2);
+  transition: filter 0.3s ease;
+}
+
+.hover-saturate:hover {
+  filter: saturate(1.5);
+  transition: filter 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-border:hover {
+  border: 2px solid hsl(207, 90%, 28%);
+  transition: border 0.3s ease;
+}
+
+.hover-gradient:hover {
+  background: linear-gradient(45deg, hsl(207, 90%, 28%), hsl(145, 38%, 33%));
+  color: white;
+  transition: all 0.3s ease;
+}
+
 @layer base {
   * {
     @apply border-border;

@@ -1,9 +1,27 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Star, Truck } from "lucide-react";
+import { MessageCircle, Star, Truck } from "lucide-react";
 
 export default function ShopProducts() {
+  // WhatsApp function to share product details
+  const shareOnWhatsApp = (product: any) => {
+    const whatsappNumber = "923369976123"; // Your WhatsApp number
+    const message = `Hi! I'm interested in your product:
+
+*${product.name}*
+Category: ${product.category}
+Price: ₹${product.price.toLocaleString()}
+Features: ${product.features.join(", ")}
+
+${product.description}
+
+Please provide more details and availability.`;
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const shopProducts = [
     {
       id: 1,
@@ -152,12 +170,12 @@ export default function ShopProducts() {
                 </div>
 
                 <Button 
-                  className="w-full" 
+                  className="w-full bg-green-600 hover:bg-green-700 text-white" 
                   disabled={!product.inStock}
-                  variant={product.inStock ? "default" : "secondary"}
+                  onClick={() => shareOnWhatsApp(product)}
                 >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  {product.inStock ? "Add to Cart" : "Notify Me"}
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  {product.inStock ? "Order on WhatsApp" : "Inquire on WhatsApp"}
                 </Button>
               </CardContent>
             </Card>

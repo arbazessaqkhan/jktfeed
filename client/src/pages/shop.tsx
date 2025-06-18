@@ -15,7 +15,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
 } from "@/components/ui/select";
 import { 
-  ShoppingCart, Plus, Minus, Eye, Filter, Search, 
+  MessageCircle, Eye, Filter, Search, 
   Package, Star, Truck, Shield
 } from "lucide-react";
 
@@ -23,12 +23,31 @@ export default function ShopPage() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
-  const [cartItems, setCartItems] = useState<any[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random()}`);
 
   const { toast } = useToast();
-  const queryClient = useQueryClient();
+
+  // WhatsApp function to share product details
+  const shareOnWhatsApp = (product: any) => {
+    const whatsappNumber = "923369976123"; // Your WhatsApp number
+    const specifications = product.specifications;
+    const features = Object.entries(specifications || {}).map(([key, value]) => `${key}: ${value}`).join(", ");
+    
+    const message = `Hi! I'm interested in your product:
+
+*${product.name}*
+Category: ${product.category}
+Price: ₹${product.price.toLocaleString()}
+Weight: ${product.weight}
+SKU: ${product.sku}
+Specifications: ${features}
+
+${product.description}
+
+Please provide more details and availability.`;
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   useEffect(() => {
     document.title = "Shop Premium Trout Feed - JK Trout Feed";
@@ -37,30 +56,6 @@ export default function ShopPage() {
   const { data: products, isLoading } = useQuery({
     queryKey: ['/api/products'],
     queryFn: () => fetch('/api/products').then(res => res.json())
-  });
-
-  const { data: cart } = useQuery({
-    queryKey: ['/api/cart', sessionId],
-    queryFn: () => fetch(`/api/cart/${sessionId}`).then(res => res.json()),
-    enabled: !!sessionId
-  });
-
-  const addToCartMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("POST", "/api/cart", data),
-    onSuccess: () => {
-      toast({
-        title: "Added to Cart",
-        description: "Product has been added to your cart.",
-      });
-      queryClient.invalidateQueries({ queryKey: ['/api/cart', sessionId] });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to add product to cart.",
-        variant: "destructive",
-      });
-    }
   });
 
   const updateCartMutation = useMutation({

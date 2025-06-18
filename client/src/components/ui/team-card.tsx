@@ -24,7 +24,7 @@ export default function TeamCard({
         alt={`Professional headshot of ${name}`}
         className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg hover-zoom hover-saturate float-gentle"
       />
-      <h3 className={`text-2xl font-bold ${color} mb-2 hover-rubber`}>{name}</h3>
+      <h3 className="text-2xl font-bold mb-2 hover-rubber text-[#17a34a]">{name}</h3>
       <p className="text-neutral mb-4 hover-fade">{position}</p>
       {/* Social Media Icons in a row */}
       <div className="flex justify-center space-x-4 mb-4">
@@ -54,7 +54,6 @@ export default function TeamCard({
           </svg>
         </a>
       </div>
-
       {/* WhatsApp Button */}
       <div className="mt-4">
         <a 

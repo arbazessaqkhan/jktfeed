@@ -20,10 +20,26 @@ export default function NotificationSystem() {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: notifications, isLoading } = useQuery({
+  const { data: notifications, isLoading, error } = useQuery({
     queryKey: ['/api/notifications'],
-    queryFn: () => fetch('/api/notifications').then(res => res.json()),
-    refetchInterval: 5000 // Poll every 5 seconds for new notifications
+    queryFn: async () => {
+      try {
+        const res = await fetch('/api/notifications');
+        if (!res.ok) {
+          console.warn('Notifications API not available');
+          return [];
+        }
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        console.warn('Failed to fetch notifications:', error);
+        return [];
+      }
+    },
+    refetchInterval: 5000,
+    retry: false,
+    enabled: true,
+    initialData: []
   });
 
   const markAsReadMutation = useMutation({
@@ -34,7 +50,7 @@ export default function NotificationSystem() {
     }
   });
 
-  const unreadCount = notifications?.filter((n: Notification) => !n.isRead).length || 0;
+  const unreadCount = Array.isArray(notifications) ? notifications.filter((n: Notification) => !n.isRead).length : 0;
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -114,7 +130,7 @@ export default function NotificationSystem() {
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
                 <p className="mt-2 text-sm text-gray-600">Loading notifications...</p>
               </div>
-            ) : notifications?.length > 0 ? (
+            ) : Array.isArray(notifications) && notifications.length > 0 ? (
               <div className="divide-y divide-gray-100">
                 {notifications.map((notification: Notification) => (
                   <div

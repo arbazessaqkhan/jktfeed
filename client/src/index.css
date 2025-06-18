@@ -538,6 +538,42 @@ input, textarea, [contenteditable="true"] {
   animation: swim-left-slow 35s linear infinite;
 }
 
+/* Aquarium Water Caustics Effect */
+@keyframes water-caustics {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%;
+    opacity: 0.1;
+  }
+  25% { 
+    background-position: 20% 10%, 80% 90%;
+    opacity: 0.15;
+  }
+  50% { 
+    background-position: 40% 20%, 60% 80%;
+    opacity: 0.2;
+  }
+  75% { 
+    background-position: 60% 10%, 40% 90%;
+    opacity: 0.15;
+  }
+}
+
+.water-caustics {
+  animation: water-caustics 12s ease-in-out infinite;
+}
+
+/* Aquarium Plant Sway Animation */
+@keyframes plant-sway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(2deg) scale(1.02); }
+  50% { transform: rotate(-1deg) scale(0.98); }
+  75% { transform: rotate(1deg) scale(1.01); }
+}
+
+.plant-sway {
+  animation: plant-sway 6s ease-in-out infinite;
+}
+
 /* Advanced Click Animations */
 .click-ripple {
   position: relative;

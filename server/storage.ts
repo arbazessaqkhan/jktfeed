@@ -1,14 +1,15 @@
 import { 
-  users, contacts, products, orders, orderItems, cart, inventory, showcaseImages, messages, notifications, settings,
+  users, contacts, products, orders, orderItems, cart, inventory, showcaseImages, messages, notifications, settings, visitors, pageViews,
   type User, type InsertUser, type Contact, type InsertContact,
   type Product, type InsertProduct, type Order, type InsertOrder,
   type OrderItem, type InsertOrderItem, type CartItem, type InsertCart,
   type Inventory, type InsertInventory, type ShowcaseImage, type InsertShowcaseImage,
   type Message, type InsertMessage, type Notification, type InsertNotification,
-  type Setting, type InsertSetting
+  type Setting, type InsertSetting, type Visitor, type InsertVisitor,
+  type PageView, type InsertPageView
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 
 export interface IStorage {
   // User management
@@ -69,6 +70,23 @@ export interface IStorage {
   getSettings(): Promise<Setting[]>;
   getSetting(key: string): Promise<Setting | undefined>;
   updateSetting(key: string, value: string): Promise<Setting>;
+  
+  // Visitor Analytics
+  createVisitor(visitor: InsertVisitor): Promise<Visitor>;
+  getVisitors(): Promise<Visitor[]>;
+  updateVisitor(id: number, data: Partial<InsertVisitor>): Promise<Visitor>;
+  createPageView(pageView: InsertPageView): Promise<PageView>;
+  getPageViews(visitorId?: number): Promise<PageView[]>;
+  getAnalyticsData(): Promise<{
+    totalVisitors: number;
+    uniqueVisitors: number;
+    pageViews: number;
+    avgTimeOnSite: number;
+    topPages: Array<{page: string; views: number}>;
+    visitorsByCountry: Array<{country: string; count: number}>;
+    deviceStats: Array<{device: string; count: number}>;
+    browserStats: Array<{browser: string; count: number}>;
+  }>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -385,6 +403,125 @@ export class DatabaseStorage implements IStorage {
         .returning();
       return setting;
     }
+  }
+
+  // Visitor Analytics implementation
+  async createVisitor(insertVisitor: InsertVisitor): Promise<Visitor> {
+    const result = await db.insert(visitors)
+      .values(insertVisitor)
+      .returning();
+    return result[0];
+  }
+
+  async getVisitors(): Promise<Visitor[]> {
+    return await db.select().from(visitors).orderBy(desc(visitors.createdAt));
+  }
+
+  async updateVisitor(id: number, updateData: Partial<InsertVisitor>): Promise<Visitor> {
+    const result = await db.update(visitors)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(visitors.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async createPageView(insertPageView: InsertPageView): Promise<PageView> {
+    const result = await db.insert(pageViews)
+      .values(insertPageView)
+      .returning();
+    return result[0];
+  }
+
+  async getPageViews(visitorId?: number): Promise<PageView[]> {
+    if (visitorId) {
+      return await db.select().from(pageViews)
+        .where(eq(pageViews.visitorId, visitorId))
+        .orderBy(desc(pageViews.timestamp));
+    }
+    return await db.select().from(pageViews).orderBy(desc(pageViews.timestamp));
+  }
+
+  async getAnalyticsData(): Promise<{
+    totalVisitors: number;
+    uniqueVisitors: number;
+    pageViews: number;
+    avgTimeOnSite: number;
+    topPages: Array<{page: string; views: number}>;
+    visitorsByCountry: Array<{country: string; count: number}>;
+    deviceStats: Array<{device: string; count: number}>;
+    browserStats: Array<{browser: string; count: number}>;
+  }> {
+    // Get total visitors
+    const totalVisitorsResult = await db.select({ count: sql<number>`count(*)` }).from(visitors);
+    const totalVisitors = totalVisitorsResult[0]?.count || 0;
+
+    // Get unique visitors (non-returning)
+    const uniqueVisitorsResult = await db.select({ count: sql<number>`count(*)` })
+      .from(visitors)
+      .where(eq(visitors.isReturning, false));
+    const uniqueVisitors = uniqueVisitorsResult[0]?.count || 0;
+
+    // Get total page views
+    const pageViewsResult = await db.select({ count: sql<number>`count(*)` }).from(pageViews);
+    const pageViewsCount = pageViewsResult[0]?.count || 0;
+
+    // Get average time on site
+    const avgTimeResult = await db.select({ avg: sql<number>`avg(time_on_site)` })
+      .from(visitors)
+      .where(sql`time_on_site IS NOT NULL`);
+    const avgTimeOnSite = Math.round(avgTimeResult[0]?.avg || 0);
+
+    // Get top pages
+    const topPagesResult = await db.select({
+      page: pageViews.page,
+      views: sql<number>`count(*)`
+    })
+    .from(pageViews)
+    .groupBy(pageViews.page)
+    .orderBy(sql`count(*) desc`)
+    .limit(10);
+
+    // Get visitors by country
+    const countryResult = await db.select({
+      country: visitors.country,
+      count: sql<number>`count(*)`
+    })
+    .from(visitors)
+    .where(sql`country IS NOT NULL`)
+    .groupBy(visitors.country)
+    .orderBy(sql`count(*) desc`)
+    .limit(10);
+
+    // Get device stats
+    const deviceResult = await db.select({
+      device: visitors.device,
+      count: sql<number>`count(*)`
+    })
+    .from(visitors)
+    .where(sql`device IS NOT NULL`)
+    .groupBy(visitors.device)
+    .orderBy(sql`count(*) desc`);
+
+    // Get browser stats
+    const browserResult = await db.select({
+      browser: visitors.browser,
+      count: sql<number>`count(*)`
+    })
+    .from(visitors)
+    .where(sql`browser IS NOT NULL`)
+    .groupBy(visitors.browser)
+    .orderBy(sql`count(*) desc`);
+
+    return {
+      totalVisitors,
+      uniqueVisitors,
+      pageViews: pageViewsCount,
+      avgTimeOnSite,
+      topPages: topPagesResult.map(r => ({ page: r.page, views: r.views })),
+      visitorsByCountry: countryResult.map(r => ({ country: r.country || 'Unknown', count: r.count })),
+      deviceStats: deviceResult.map(r => ({ device: r.device || 'Unknown', count: r.count })),
+      browserStats: browserResult.map(r => ({ browser: r.browser || 'Unknown', count: r.count }))
+    };
   }
 }
 

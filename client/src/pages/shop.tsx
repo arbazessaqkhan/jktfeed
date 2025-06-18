@@ -32,6 +32,7 @@ export default function ShopPage() {
     quantity: 1,
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // WhatsApp function to share product details
   const shareOnWhatsApp = (product: any) => {
@@ -61,6 +62,8 @@ Please provide more details and availability.`;
     e.preventDefault();
     
     if (!buyNowProduct) return;
+    
+    setIsSubmitting(true);
     
     try {
       const specifications = buyNowProduct.specifications;
@@ -159,6 +162,8 @@ ${customerForm.message || "No additional message"}`
     } catch (error) {
       console.error('Failed to submit order:', error);
       alert('Failed to submit order. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -572,10 +577,27 @@ ${customerForm.message || "No additional message"}`
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white touch-manipulation"
+                  disabled={isSubmitting}
+                  style={{ 
+                    WebkitTapHighlightColor: 'transparent',
+                    WebkitTouchCallout: 'none',
+                    WebkitUserSelect: 'none',
+                    touchAction: 'manipulation'
+                  }}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    if (!isSubmitting) {
+                      const form = e.currentTarget.closest('form');
+                      if (form) {
+                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                      }
+                    }
+                  }}
                 >
                   <Package className="w-4 h-4 mr-2" />
-                  Submit Order
+                  {isSubmitting ? 'Submitting...' : 'Submit Order'}
                 </Button>
               </div>
 

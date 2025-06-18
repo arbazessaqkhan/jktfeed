@@ -449,8 +449,24 @@ Please provide more details and availability.`;
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white touch-manipulation"
                   disabled={isSubmitting}
+                  style={{ 
+                    WebkitTapHighlightColor: 'transparent',
+                    WebkitTouchCallout: 'none',
+                    WebkitUserSelect: 'none',
+                    touchAction: 'manipulation'
+                  }}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    if (!isSubmitting) {
+                      const form = e.currentTarget.closest('form');
+                      if (form) {
+                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                      }
+                    }
+                  }}
                 >
                   <Package className="w-4 h-4 mr-2" />
                   {isSubmitting ? 'Submitting...' : 'Submit Order'}

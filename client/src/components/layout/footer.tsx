@@ -72,6 +72,38 @@ export default function Footer() {
           </div>
         </div>
         
+        {/* Banking Partners Section */}
+        <div className="mt-8 pt-8 border-t border-blue-600">
+          <div className="text-center">
+            <h4 className="text-lg font-semibold mb-4 text-blue-100">Banking Partners</h4>
+            <div className="bg-white rounded-lg p-6 inline-block">
+              <div className="flex items-center justify-center space-x-6">
+                {/* Social Media Icons */}
+                <div className="flex space-x-3">
+                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors" title="Facebook">
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors" title="Instagram">
+                    <Instagram className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors" title="Twitter">
+                    <Twitter className="w-6 h-6" />
+                  </a>
+                </div>
+                
+                {/* J&K Bank Logo */}
+                <div className="border-l border-gray-300 pl-6">
+                  <img 
+                    src="/attached_assets/1657774001103_1750247968354.png" 
+                    alt="J&K Bank" 
+                    className="h-8 w-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div className="mt-8 pt-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
           <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
           <div className="flex items-center text-blue-200 text-sm">

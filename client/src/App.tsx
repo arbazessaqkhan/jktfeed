@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { initializeSecurity } from "@/lib/security";
+import VisitorTracker from "@/components/visitor-tracker";
 import { useEffect } from "react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
@@ -112,6 +113,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-background text-foreground page-transition">
+          <VisitorTracker />
           <Router />
           <FishAnimation />
           <WhatsAppButton />

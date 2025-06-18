@@ -183,31 +183,8 @@ Please provide more details and availability.`;
                       className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" 
                       disabled={!product.inStock}
                       onClick={() => {
-                        // Send product inquiry to admin portal
-                        const inquiryData = {
-                          name: "Product Inquiry",
-                          email: "customer@inquiry.com",
-                          phone: "",
-                          subject: `Product Inquiry: ${product.name}`,
-                          message: `Customer interested in:
-
-Product: ${product.name}
-Category: ${product.category}
-Price: ₹${product.price.toLocaleString()}
-Features: ${product.features.join(", ")}
-
-${product.description}
-
-Customer requested more details and availability.`
-                        };
-
-                        fetch('/api/contact', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify(inquiryData)
-                        }).then(() => {
-                          window.open('/secure-portal-jk2024', '_blank');
-                        });
+                        // Navigate to shop page for buy now form
+                        window.location.href = '/shop';
                       }}
                     >
                       <Package className="w-4 h-4 mr-2" />

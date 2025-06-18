@@ -21,6 +21,15 @@ export default function ShopPage() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
+  const [buyNowProduct, setBuyNowProduct] = useState<any>(null);
+  const [customerForm, setCustomerForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    quantity: 1,
+    message: ""
+  });
 
   // WhatsApp function to share product details
   const shareOnWhatsApp = (product: any) => {
@@ -45,29 +54,44 @@ Please provide more details and availability.`;
     window.open(whatsappUrl, '_blank');
   };
 
-  // Function to send product inquiry to admin portal
-  const sendToAdmin = async (product: any) => {
+  // Function to handle buy now form submission
+  const handleBuyNowSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!buyNowProduct) return;
+    
     try {
-      const specifications = product.specifications;
+      const specifications = buyNowProduct.specifications;
       const features = Object.entries(specifications || {}).map(([key, value]) => `${key}: ${value}`).join(", ");
       
-      const inquiryData = {
-        name: "Product Inquiry",
-        email: "customer@inquiry.com",
-        phone: "",
-        subject: `Product Inquiry: ${product.name}`,
-        message: `Customer interested in:
+      const orderData = {
+        name: customerForm.name,
+        email: customerForm.email,
+        phone: customerForm.phone,
+        subject: `Buy Now Order: ${buyNowProduct.name}`,
+        message: `NEW ORDER REQUEST:
 
-Product: ${product.name}
-Category: ${product.category}
-Price: ₹${product.price.toLocaleString()}
-Weight: ${product.weight}
-SKU: ${product.sku}
+Customer Details:
+Name: ${customerForm.name}
+Email: ${customerForm.email}
+Phone: ${customerForm.phone}
+Address: ${customerForm.address}
+
+Product Details:
+Product: ${buyNowProduct.name}
+Category: ${buyNowProduct.category}
+Price: ₹${buyNowProduct.price.toLocaleString()}
+Weight: ${buyNowProduct.weight}
+SKU: ${buyNowProduct.sku}
+Quantity: ${customerForm.quantity}
+Total Amount: ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}
 Specifications: ${features}
 
-Description: ${product.description}
+Description: ${buyNowProduct.description}
 
-Customer requested more details and availability.`
+Additional Message: ${customerForm.message || "None"}
+
+STATUS: PENDING ORDER - Please contact customer to confirm and process.`
       };
 
       const response = await fetch('/api/contact', {
@@ -75,15 +99,28 @@ Customer requested more details and availability.`
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(inquiryData)
+        body: JSON.stringify(orderData)
       });
 
       if (response.ok) {
-        // Redirect to admin portal after successful submission
+        // Reset form and close modal
+        setCustomerForm({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          quantity: 1,
+          message: ""
+        });
+        setBuyNowProduct(null);
+        
+        // Show success message and redirect to admin portal
+        alert('Order submitted successfully! You will be contacted soon.');
         window.open('/secure-portal-jk2024', '_blank');
       }
     } catch (error) {
-      console.error('Failed to send inquiry:', error);
+      console.error('Failed to submit order:', error);
+      alert('Failed to submit order. Please try again.');
     }
   };
 
@@ -239,7 +276,7 @@ Customer requested more details and availability.`
                           </Button>
                           <Button
                             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                            onClick={() => sendToAdmin(product)}
+                            onClick={() => setBuyNowProduct(product)}
                             disabled={product.stockQuantity === 0}
                           >
                             <Package className="w-4 h-4 mr-2" />
@@ -358,7 +395,7 @@ Customer requested more details and availability.`
                   <Button
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={() => {
-                      sendToAdmin(selectedProduct);
+                      setBuyNowProduct(selectedProduct);
                       setSelectedProduct(null);
                     }}
                     disabled={selectedProduct.stockQuantity === 0}
@@ -369,6 +406,145 @@ Customer requested more details and availability.`
                 </div>
               </div>
             </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Buy Now Form Modal */}
+      <Dialog open={!!buyNowProduct} onOpenChange={(open) => !open && setBuyNowProduct(null)}>
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Order: {buyNowProduct?.name}</DialogTitle>
+            <p className="text-sm text-neutral">Fill in your details to place an order</p>
+          </DialogHeader>
+          
+          {buyNowProduct && (
+            <form onSubmit={handleBuyNowSubmit} className="space-y-4">
+              {/* Product Summary */}
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-medium">{buyNowProduct.name}</h3>
+                  <Badge variant="secondary">{buyNowProduct.category}</Badge>
+                </div>
+                <p className="text-sm text-neutral mt-1">{buyNowProduct.weight}</p>
+                <p className="text-lg font-bold text-primary mt-2">
+                  ₹{buyNowProduct.price.toLocaleString()} per unit
+                </p>
+              </div>
+
+              {/* Customer Details */}
+              <div className="space-y-3">
+                <div>
+                  <Label htmlFor="customer-name">Full Name *</Label>
+                  <Input
+                    id="customer-name"
+                    value={customerForm.name}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="customer-email">Email Address *</Label>
+                  <Input
+                    id="customer-email"
+                    type="email"
+                    value={customerForm.email}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, email: e.target.value }))}
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="customer-phone">Phone Number *</Label>
+                  <Input
+                    id="customer-phone"
+                    value={customerForm.phone}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, phone: e.target.value }))}
+                    placeholder="Enter your phone number"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="customer-address">Delivery Address *</Label>
+                  <Textarea
+                    id="customer-address"
+                    value={customerForm.address}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, address: e.target.value }))}
+                    placeholder="Enter complete delivery address"
+                    required
+                    rows={3}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="quantity">Quantity *</Label>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value={customerForm.quantity}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, quantity: parseInt(e.target.value) || 1 }))}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="customer-message">Additional Message (Optional)</Label>
+                  <Textarea
+                    id="customer-message"
+                    value={customerForm.message}
+                    onChange={(e) => setCustomerForm(prev => ({ ...prev, message: e.target.value }))}
+                    placeholder="Any special requirements or questions?"
+                    rows={2}
+                  />
+                </div>
+              </div>
+
+              {/* Order Summary */}
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="flex justify-between items-center text-sm">
+                  <span>Quantity:</span>
+                  <span>{customerForm.quantity} units</span>
+                </div>
+                <div className="flex justify-between items-center text-sm mt-1">
+                  <span>Unit Price:</span>
+                  <span>₹{buyNowProduct.price.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center font-bold text-lg mt-2 pt-2 border-t">
+                  <span>Total Amount:</span>
+                  <span className="text-primary">
+                    ₹{(buyNowProduct.price * customerForm.quantity).toLocaleString()}
+                  </span>
+                </div>
+              </div>
+
+              {/* Submit Buttons */}
+              <div className="flex gap-2 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setBuyNowProduct(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <Package className="w-4 h-4 mr-2" />
+                  Submit Order
+                </Button>
+              </div>
+
+              <p className="text-xs text-gray-500 text-center mt-2">
+                Your order will be sent to our admin portal. We'll contact you soon to confirm and process.
+              </p>
+            </form>
           )}
         </DialogContent>
       </Dialog>

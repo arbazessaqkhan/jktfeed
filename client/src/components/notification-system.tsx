@@ -46,7 +46,9 @@ export default function NotificationSystem() {
     mutationFn: (notificationId: number) => 
       apiRequest("PUT", `/api/notifications/${notificationId}/read`),
     onSuccess: () => {
+      // Immediately refetch to update the UI
       queryClient.invalidateQueries({ queryKey: ['/api/notifications'] });
+      queryClient.refetchQueries({ queryKey: ['/api/notifications'] });
     }
   });
 
@@ -95,12 +97,9 @@ export default function NotificationSystem() {
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <Badge 
-            variant="destructive" 
-            className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-          >
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center min-w-[20px] z-10">
             {unreadCount > 99 ? "99+" : unreadCount}
-          </Badge>
+          </span>
         )}
       </Button>
 

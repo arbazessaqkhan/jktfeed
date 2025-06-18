@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-blue-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+        <div className="mt-8 pt-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
           <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
           <div className="flex items-center text-blue-200 text-sm">
             <span className="mr-2">Designed by</span>

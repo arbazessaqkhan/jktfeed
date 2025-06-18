@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { 
   Dialog, DialogContent, DialogHeader, DialogTitle 
 } from "@/components/ui/dialog";
@@ -23,8 +21,6 @@ export default function ShopPage() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
-
-  const { toast } = useToast();
 
   // WhatsApp function to share product details
   const shareOnWhatsApp = (product: any) => {
@@ -58,67 +54,20 @@ Please provide more details and availability.`;
     queryFn: () => fetch('/api/products').then(res => res.json())
   });
 
-  const updateCartMutation = useMutation({
-    mutationFn: ({ id, quantity }: { id: number, quantity: number }) => 
-      apiRequest("PUT", `/api/cart/${id}`, { quantity }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/cart', sessionId] });
-    }
-  });
-
-  const removeFromCartMutation = useMutation({
-    mutationFn: (id: number) => apiRequest("DELETE", `/api/cart/${id}`),
-    onSuccess: () => {
-      toast({
-        title: "Removed from Cart",
-        description: "Product has been removed from your cart.",
-      });
-      queryClient.invalidateQueries({ queryKey: ['/api/cart', sessionId] });
-    }
-  });
-
-  const handleAddToCart = (product: any, quantity: number = 1) => {
-    addToCartMutation.mutate({
-      sessionId,
-      productId: product.id,
-      quantity
-    });
-  };
-
   const filteredProducts = products?.filter((product: any) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === "all" || product.category === filterCategory;
-    const isActive = product.isActive;
-    return matchesSearch && matchesCategory && isActive;
+    return matchesSearch && matchesCategory;
   }) || [];
 
-  const getCategoryInfo = (category: string) => {
-    const categoryMap = {
-      early: { 
-        name: "Early Stage", 
-        description: "For fry and young fingerlings (0.3-25g)",
-        color: "bg-blue-100 text-blue-800"
-      },
-      small: { 
-        name: "Small Stage", 
-        description: "For growing fingerlings (25-200g)",
-        color: "bg-green-100 text-green-800"
-      },
-      stock: { 
-        name: "Stock Stage", 
-        description: "For mature stock fish (200g+)",
-        color: "bg-purple-100 text-purple-800"
-      }
-    };
-    return categoryMap[category as keyof typeof categoryMap] || { name: category, description: "", color: "bg-gray-100 text-gray-800" };
+  const categories = Array.from(new Set(products?.map((p: any) => p.category) || []));
+
+  const getStockStatus = (stock: number) => {
+    if (stock === 0) return { label: "Out of Stock", color: "bg-red-100 text-red-800" };
+    if (stock < 10) return { label: "Low Stock", color: "bg-yellow-100 text-yellow-800" };
+    return { label: "In Stock", color: "bg-green-100 text-green-800" };
   };
-
-  const cartTotal = cart?.reduce((sum: number, item: any) => {
-    const product = products?.find((p: any) => p.id === item.productId);
-    return sum + (product ? parseFloat(product.price) * item.quantity : 0);
-  }, 0) || 0;
-
-  const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -128,152 +77,122 @@ Please provide more details and availability.`;
       <section className="bg-gradient-to-r from-primary to-secondary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Premium Trout Feed Store</h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              Professional-grade nutrition for every stage of trout development
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Premium Trout Feed Shop</h1>
+            <p className="text-xl text-blue-200 max-w-3xl mx-auto">
+              Discover our complete range of high-quality trout feed products with detailed specifications and competitive pricing
             </p>
-            <div className="flex justify-center items-center space-x-8 text-blue-200">
-              <div className="flex items-center">
-                <Truck className="w-5 h-5 mr-2" />
-                <span>Free Delivery on Orders Above ₹5,000</span>
-              </div>
-              <div className="flex items-center">
-                <Shield className="w-5 h-5 mr-2" />
-                <span>Quality Guaranteed</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Shopping Cart Button */}
-      <div className="fixed top-20 right-4 z-40">
-        <Button 
-          onClick={() => setIsCartOpen(true)}
-          className="bg-primary text-white shadow-lg hover:bg-secondary relative"
-          size="lg"
-        >
-          <ShoppingCart className="w-5 h-5 mr-2" />
-          Cart ({cartItemCount})
-          {cartItemCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-              {cartItemCount}
-            </span>
-          )}
-        </Button>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Search and Filters */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral w-4 h-4" />
-                  <Input
-                    placeholder="Search products..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <div className="w-full md:w-48">
-                <Select value={filterCategory} onValueChange={setFilterCategory}>
-                  <SelectTrigger>
-                    <Filter className="w-4 h-4 mr-2" />
-                    <SelectValue placeholder="Filter by stage" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Stages</SelectItem>
-                    <SelectItem value="early">Early Stage</SelectItem>
-                    <SelectItem value="small">Small Stage</SelectItem>
-                    <SelectItem value="stock">Stock Stage</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Search and Filter */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral w-4 h-4" />
+            <Input
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Select value={filterCategory} onValueChange={setFilterCategory}>
+            <SelectTrigger className="w-full md:w-48">
+              <Filter className="w-4 h-4 mr-2" />
+              <SelectValue placeholder="Filter by category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-        {/* Product Grid */}
+        {/* Products Grid */}
         {isLoading ? (
-          <div className="text-center py-16">
+          <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-neutral">Loading products...</p>
           </div>
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map((product: any) => {
-              const categoryInfo = getCategoryInfo(product.category);
-              const isInStock = product.stockQuantity > 0;
-              
+              const stockStatus = getStockStatus(product.stockQuantity);
               return (
-                <Card key={product.id} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="relative">
-                    <div className="h-48 bg-gray-200 flex items-center justify-center">
-                      {product.images?.length > 0 ? (
-                        <img 
-                          src={product.images[0]} 
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <Package className="w-16 h-16 text-gray-400" />
-                      )}
+                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300">
+                  <CardHeader className="p-0 relative">
+                    <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-teal-100 flex items-center justify-center rounded-t-lg">
+                      <Package className="w-16 h-16 text-primary opacity-50" />
                     </div>
-                    <Badge className={`absolute top-2 left-2 ${categoryInfo.color}`}>
-                      {categoryInfo.name}
+                    <Badge 
+                      className={`absolute top-3 right-3 ${stockStatus.color}`}
+                    >
+                      {stockStatus.label}
                     </Badge>
-                    {!isInStock && (
-                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <Badge variant="destructive">Out of Stock</Badge>
-                      </div>
-                    )}
-                  </div>
+                  </CardHeader>
                   
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-                    <p className="text-neutral text-sm mb-3 line-clamp-2">{product.description}</p>
-                    
-                    <div className="flex items-center mb-3">
-                      <div className="flex text-yellow-400 mr-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
-                        ))}
-                      </div>
-                      <span className="text-sm text-neutral">(4.8) • {product.weight}</span>
+                  <CardContent className="p-6 space-y-4">
+                    <div>
+                      <Badge variant="secondary" className="mb-2">
+                        {product.category}
+                      </Badge>
+                      <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                        {product.name}
+                      </CardTitle>
+                      <p className="text-neutral mt-2 line-clamp-2">
+                        {product.description}
+                      </p>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-2 text-xs text-neutral mb-4">
-                      <div>Protein: {product.specifications.protein}</div>
-                      <div>Size: {product.specifications.pelletSize}</div>
-                      <div>Energy: {product.specifications.energy}</div>
-                      <div>Stock: {product.stockQuantity}</div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-2xl font-bold text-primary">₹{product.price}</span>
-                        <span className="text-sm text-neutral ml-1">/{product.weight}</span>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-neutral">Weight:</span>
+                        <span className="font-medium">{product.weight}</span>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-neutral">SKU:</span>
+                        <span className="font-medium">{product.sku}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-neutral">Stock:</span>
+                        <span className="font-medium">{product.stockQuantity} units</span>
+                      </div>
+                    </div>
+
+                    <div className="border-t pt-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <span className="text-2xl font-bold text-primary">
+                            ₹{product.price.toLocaleString()}
+                          </span>
+                          <div className="flex items-center text-sm text-green-600 mt-1">
+                            <Truck className="w-3 h-3 mr-1" />
+                            Free delivery available
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2">
                         <Button
                           variant="outline"
-                          size="sm"
+                          className="flex-1"
                           onClick={() => setSelectedProduct(product)}
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Details
                         </Button>
                         <Button
-                          size="sm"
-                          onClick={() => handleAddToCart(product)}
-                          disabled={!isInStock || addToCartMutation.isPending}
-                          className="bg-primary text-white hover:bg-secondary"
+                          className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                          onClick={() => shareOnWhatsApp(product)}
+                          disabled={product.stockQuantity === 0}
                         >
-                          <Plus className="w-4 h-4 mr-1" />
-                          Add to Cart
+                          <MessageCircle className="w-4 h-4 mr-2" />
+                          Order Now
                         </Button>
                       </div>
                     </div>
@@ -283,198 +202,111 @@ Please provide more details and availability.`;
             })}
           </div>
         ) : (
-          <div className="text-center py-16">
-            <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-            <h3 className="text-xl font-semibold mb-2">No products found</h3>
-            <p className="text-neutral">Try adjusting your search or filter criteria</p>
+          <div className="text-center py-12">
+            <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <p className="text-neutral text-lg">No products found</p>
+            <p className="text-sm text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
           </div>
         )}
 
-        {/* Product Detail Modal */}
-        <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-          <DialogContent className="max-w-4xl">
-            {selectedProduct && (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-2xl">{selectedProduct.name}</DialogTitle>
-                </DialogHeader>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
-                      {selectedProduct.images?.length > 0 ? (
-                        <img 
-                          src={selectedProduct.images[0]} 
-                          alt={selectedProduct.name}
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                      ) : (
-                        <Package className="w-16 h-16 text-gray-400" />
-                      )}
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {selectedProduct.images?.slice(1, 4).map((image: string, index: number) => (
-                        <img 
-                          key={index}
-                          src={image} 
-                          alt={`${selectedProduct.name} ${index + 2}`}
-                          className="w-full h-16 object-cover rounded"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Badge className={getCategoryInfo(selectedProduct.category).color}>
-                      {getCategoryInfo(selectedProduct.category).name}
-                    </Badge>
-                    
-                    <div className="flex items-center my-4">
-                      <div className="flex text-yellow-400 mr-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 fill-current" />
-                        ))}
-                      </div>
-                      <span className="text-neutral">(4.8) • 127 reviews</span>
-                    </div>
-                    
-                    <p className="text-neutral mb-6">{selectedProduct.description}</p>
-                    
-                    <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                      <h4 className="font-semibold mb-3">Nutritional Specifications</h4>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>Protein: <span className="font-semibold">{selectedProduct.specifications.protein}</span></div>
-                        <div>Fat: <span className="font-semibold">{selectedProduct.specifications.fat}</span></div>
-                        <div>Fiber: <span className="font-semibold">{selectedProduct.specifications.fiber}</span></div>
-                        <div>Moisture: <span className="font-semibold">{selectedProduct.specifications.moisture}</span></div>
-                        <div>Energy: <span className="font-semibold">{selectedProduct.specifications.energy}</span></div>
-                        <div>Pellet Size: <span className="font-semibold">{selectedProduct.specifications.pelletSize}</span></div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <span className="text-3xl font-bold text-primary">₹{selectedProduct.price}</span>
-                        <span className="text-neutral ml-2">per {selectedProduct.weight}</span>
-                      </div>
-                      <div className="text-sm text-neutral">
-                        Stock: {selectedProduct.stockQuantity} units
-                      </div>
-                    </div>
-                    
-                    <Button
-                      onClick={() => {
-                        handleAddToCart(selectedProduct);
-                        setSelectedProduct(null);
-                      }}
-                      disabled={selectedProduct.stockQuantity === 0}
-                      className="w-full bg-primary text-white hover:bg-secondary"
-                      size="lg"
-                    >
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Add to Cart
-                    </Button>
-                  </div>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
+        {/* Trust Indicators */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 p-8 bg-white rounded-xl shadow-sm">
+          <div className="text-center">
+            <Shield className="w-12 h-12 text-green-600 mx-auto mb-4" />
+            <h3 className="font-semibold text-lg mb-2">Quality Guaranteed</h3>
+            <p className="text-neutral text-sm">Premium quality trout feed with nutritional certification</p>
+          </div>
+          <div className="text-center">
+            <Truck className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="font-semibold text-lg mb-2">Fast Delivery</h3>
+            <p className="text-neutral text-sm">Quick delivery across India with proper packaging</p>
+          </div>
+          <div className="text-center">
+            <MessageCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
+            <h3 className="font-semibold text-lg mb-2">WhatsApp Support</h3>
+            <p className="text-neutral text-sm">Direct communication for orders and support</p>
+          </div>
+        </div>
+      </div>
 
-        {/* Shopping Cart Modal */}
-        <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle className="flex items-center">
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Shopping Cart ({cartItemCount} items)
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="max-h-96 overflow-y-auto">
-              {cart && cart.length > 0 ? (
-                <div className="space-y-4">
-                  {cart.map((item: any) => {
-                    const product = products?.find((p: any) => p.id === item.productId);
-                    if (!product) return null;
-                    
-                    return (
-                      <div key={item.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-                        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
-                          {product.images?.length > 0 ? (
-                            <img 
-                              src={product.images[0]} 
-                              alt={product.name}
-                              className="w-full h-full object-cover rounded-lg"
-                            />
-                          ) : (
-                            <Package className="w-8 h-8 text-gray-400" />
-                          )}
-                        </div>
-                        
-                        <div className="flex-1">
-                          <h4 className="font-semibold">{product.name}</h4>
-                          <p className="text-sm text-neutral">{product.weight}</p>
-                          <p className="text-primary font-semibold">₹{product.price}</p>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => updateCartMutation.mutate({ 
-                              id: item.id, 
-                              quantity: Math.max(1, item.quantity - 1) 
-                            })}
-                          >
-                            <Minus className="w-4 h-4" />
-                          </Button>
-                          <span className="w-8 text-center">{item.quantity}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => updateCartMutation.mutate({ 
-                              id: item.id, 
-                              quantity: item.quantity + 1 
-                            })}
-                          >
-                            <Plus className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => removeFromCartMutation.mutate(item.id)}
-                            className="text-red-600 hover:text-red-700"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })}
+      {/* Product Details Modal */}
+      <Dialog open={!!selectedProduct} onOpenChange={(open) => !open && setSelectedProduct(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Product Details</DialogTitle>
+          </DialogHeader>
+          
+          {selectedProduct && (
+            <div className="space-y-6">
+              <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-teal-100 flex items-center justify-center rounded-lg">
+                <Package className="w-20 h-20 text-primary opacity-50" />
+              </div>
+              
+              <div>
+                <Badge variant="secondary" className="mb-2">
+                  {selectedProduct.category}
+                </Badge>
+                <h2 className="text-2xl font-bold">{selectedProduct.name}</h2>
+                <p className="text-neutral mt-2">{selectedProduct.description}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-neutral">Price</label>
+                  <p className="text-xl font-bold text-primary">₹{selectedProduct.price.toLocaleString()}</p>
                 </div>
-              ) : (
-                <div className="text-center py-8">
-                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                  <p className="text-neutral">Your cart is empty</p>
+                <div>
+                  <label className="text-sm font-medium text-neutral">Weight</label>
+                  <p className="text-lg">{selectedProduct.weight}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-neutral">SKU</label>
+                  <p className="text-lg">{selectedProduct.sku}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-neutral">Stock</label>
+                  <p className="text-lg">{selectedProduct.stockQuantity} units</p>
+                </div>
+              </div>
+
+              {selectedProduct.specifications && (
+                <div>
+                  <label className="text-sm font-medium text-neutral">Specifications</label>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    {Object.entries(selectedProduct.specifications).map(([key, value]) => (
+                      <div key={key} className="bg-gray-50 p-2 rounded">
+                        <span className="text-xs text-neutral capitalize">{key}:</span>
+                        <span className="ml-2 font-medium">{value as string}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
-            </div>
-            
-            {cart && cart.length > 0 && (
-              <div className="border-t pt-4">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-lg font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-primary">₹{cartTotal.toFixed(2)}</span>
-                </div>
-                <Button className="w-full bg-primary text-white hover:bg-secondary" size="lg">
-                  Proceed to Checkout
+
+              <div className="flex gap-2 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setSelectedProduct(null)}
+                >
+                  Close
+                </Button>
+                <Button
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                  onClick={() => {
+                    shareOnWhatsApp(selectedProduct);
+                    setSelectedProduct(null);
+                  }}
+                  disabled={selectedProduct.stockQuantity === 0}
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Order on WhatsApp
                 </Button>
               </div>
-            )}
-          </DialogContent>
-        </Dialog>
-      </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

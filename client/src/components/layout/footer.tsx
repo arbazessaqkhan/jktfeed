@@ -71,7 +71,7 @@ export default function Footer() {
               <img src={logoImage} alt="QuantaFONS" className="h-4 w-auto inline-block" />
             </a>
           </div>
-          <p className="text-blue-200 text-sm">Manufacturing Excellence in Jammu & Kashmir</p>
+          <p className="text-blue-200 text-sm">Manufacturing Excellence in Kashmir</p>
         </div>
       </div>
     </footer>

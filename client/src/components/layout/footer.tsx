@@ -22,9 +22,7 @@ export default function Footer() {
               <a href="tel:+91-123-456-7890" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Call Us">
                 <Phone className="w-6 h-6" />
               </a>
-              <a href="https://wa.me/923369976123" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="WhatsApp">
-                <MessageCircle className="w-6 h-6" />
-              </a>
+              
               <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Facebook">
                 <Facebook className="w-6 h-6" />
               </a>
@@ -59,7 +57,17 @@ export default function Footer() {
               <li><Link href="/products" className="hover:text-white transition-colors">Technical Specifications</Link></li>
               <li><Link href="/about" className="hover:text-white transition-colors">Quality Assurance</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Product Catalog</a></li>
-              <li><a href="https://wa.me/923369976123" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp Support</a></li>
+              <li>
+                <a 
+                  href="https://wa.me/923369976123" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 hover-glow"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  WhatsApp Support
+                </a>
+              </li>
             </ul>
           </div>
         </div>

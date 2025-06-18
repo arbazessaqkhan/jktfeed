@@ -50,6 +50,16 @@ export default function AdminAnalyticsPage() {
     queryFn: () => fetch('/api/showcase-images').then(res => res.json())
   });
 
+  const { data: analyticsData } = useQuery({
+    queryKey: ['/api/analytics-data'],
+    queryFn: () => fetch('/api/analytics-data').then(res => res.json())
+  });
+
+  const { data: visitors } = useQuery({
+    queryKey: ['/api/visitors'],
+    queryFn: () => fetch('/api/visitors').then(res => res.json())
+  });
+
   // Calculate analytics data
   const analytics = {
     totalRevenue: orders?.reduce((sum: number, order: any) => sum + parseFloat(order.totalAmount), 0) || 0,
@@ -61,7 +71,13 @@ export default function AdminAnalyticsPage() {
     completedOrders: orders?.filter((o: any) => o.status === "delivered").length || 0,
     activeShowcaseImages: showcaseImages?.filter((img: any) => img.isActive).length || 0,
     averageOrderValue: orders?.length ? (orders?.reduce((sum: number, order: any) => sum + parseFloat(order.totalAmount), 0) / orders.length) : 0,
-    conversionRate: contacts?.length ? ((orders?.length || 0) / contacts.length * 100) : 0
+    conversionRate: contacts?.length ? ((orders?.length || 0) / contacts.length * 100) : 0,
+    // Visitor analytics
+    totalVisitors: analyticsData?.totalVisitors || 0,
+    uniqueVisitors: analyticsData?.uniqueVisitors || 0,
+    totalPageViews: analyticsData?.pageViews || 0,
+    avgTimeOnSite: analyticsData?.avgTimeOnSite || 0,
+    returningVisitors: visitors?.filter((v: any) => v.isReturning).length || 0
   };
 
   // Recent activity data

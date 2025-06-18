@@ -437,6 +437,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Visitor Analytics endpoints
+  app.post("/api/visitors", async (req, res) => {
+    try {
+      const visitorData = {
+        sessionId: req.body.sessionId || req.sessionID,
+        ipAddress: req.ip || req.connection.remoteAddress,
+        userAgent: req.get('User-Agent'),
+        referrer: req.get('Referer'),
+        country: req.body.country,
+        city: req.body.city,
+        device: req.body.device,
+        browser: req.body.browser,
+        os: req.body.os,
+        visitedPages: req.body.visitedPages || [],
+        timeOnSite: req.body.timeOnSite,
+        isReturning: req.body.isReturning || false
+      };
+      
+      const visitor = await storage.createVisitor(visitorData);
+      res.json({ success: true, visitor });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create visitor record" });
+    }
+  });
+
+  app.get("/api/visitors", async (req, res) => {
+    try {
+      const visitors = await storage.getVisitors();
+      res.json(visitors);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch visitors" });
+    }
+  });
+
+  app.post("/api/page-views", async (req, res) => {
+    try {
+      const pageView = await storage.createPageView(req.body);
+      res.json({ success: true, pageView });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create page view record" });
+    }
+  });
+
+  app.get("/api/analytics-data", async (req, res) => {
+    try {
+      const analyticsData = await storage.getAnalyticsData();
+      res.json(analyticsData);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch analytics data" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

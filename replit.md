@@ -151,6 +151,9 @@ A comprehensive corporate website for JK Trout Feed with a full-featured admin m
 - ✓ Removed float-gentle animation from footer social media icons
 - ✓ Replaced QuantaFONS text with company logo in footer
 - ✓ Reorganized footer layout with centered logo between copyright and manufacturing text
+- ✓ Added QuantaFONS text as hyperlink after logo without underline
+- ✓ Removed blue border separator line from footer
+- ✓ Replaced floating WhatsApp button with integrated WhatsApp Support link in footer Resources section
 
 ## User Preferences
 - Fast-swimming fish animation requested and implemented

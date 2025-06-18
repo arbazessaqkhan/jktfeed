@@ -730,14 +730,4 @@ input, textarea, [contenteditable="true"] {
   }
 }
 
-/* WhatsApp Button Fix */
-.whatsapp-button {
-  position: fixed !important;
-  bottom: 1.5rem !important;
-  right: 1.5rem !important;
-  z-index: 9999 !important;
-  pointer-events: auto !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
+

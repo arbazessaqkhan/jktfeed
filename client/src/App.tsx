@@ -24,7 +24,6 @@ import AdminLogin from "@/pages/admin-login";
 import Shop from "@/pages/shop";
 import AdminGuard from "@/components/admin-guard";
 import FishAnimation from "@/components/fish-animation";
-import WhatsAppButton from "@/components/whatsapp-button";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -116,7 +115,6 @@ function App() {
           <VisitorTracker />
           <Router />
           <FishAnimation />
-          <WhatsAppButton />
           <Toaster />
         </div>
       </TooltipProvider>

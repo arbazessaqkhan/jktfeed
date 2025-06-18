@@ -6,8 +6,66 @@ import logoImage from "@assets/rect5_1750246217514.png";
 export default function Footer() {
 
   return (
-    <footer className="bg-primary text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative bg-gradient-to-b from-blue-900 via-blue-800 to-blue-950 text-white py-12 overflow-hidden">
+      {/* Aquarium Background Effects */}
+      <div className="absolute inset-0 opacity-20">
+        {/* Water Ripple Effect */}
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-blue-400/10 to-transparent animate-pulse"></div>
+        
+        {/* Floating Bubbles */}
+        <div className="absolute bottom-0 left-1/4 w-2 h-2 bg-white/30 rounded-full animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}></div>
+        <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-white/25 rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
+        <div className="absolute bottom-0 right-1/3 w-3 h-3 bg-white/20 rounded-full animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
+        <div className="absolute bottom-0 left-1/6 w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce" style={{animationDelay: '0.5s', animationDuration: '3.5s'}}></div>
+        <div className="absolute bottom-0 right-1/4 w-2.5 h-2.5 bg-white/15 rounded-full animate-bounce" style={{animationDelay: '1.5s', animationDuration: '4.5s'}}></div>
+        <div className="absolute bottom-0 right-1/6 w-1 h-1 bg-white/35 rounded-full animate-bounce" style={{animationDelay: '2.5s', animationDuration: '3.2s'}}></div>
+        
+        {/* Seaweed/Kelp Effects */}
+        <div className="absolute bottom-0 left-0 w-8 h-32 bg-gradient-to-t from-green-600/40 via-green-500/30 to-transparent rounded-t-full transform rotate-12 animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-6 h-24 bg-gradient-to-t from-green-700/30 via-green-600/20 to-transparent rounded-t-full transform -rotate-12 animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-0 left-1/5 w-4 h-20 bg-gradient-to-t from-green-500/25 via-green-400/15 to-transparent rounded-t-full transform rotate-6 animate-pulse" style={{animationDelay: '2s'}}></div>
+        
+        {/* Sand Bottom Effect */}
+        <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-r from-amber-800/20 via-amber-700/15 to-amber-800/20"></div>
+        
+        {/* Swimming Fish */}
+        <div className="absolute top-8 left-0 w-6 h-3 opacity-60">
+          <div className="fish-swim-right">
+            <svg viewBox="0 0 24 12" className="w-6 h-3 fill-cyan-300/40">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-16 right-0 w-5 h-2.5 opacity-50">
+          <div className="fish-swim-left">
+            <svg viewBox="0 0 24 12" className="w-5 h-2.5 fill-blue-300/40 transform scale-x-[-1]">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-24 left-1/3 w-4 h-2 opacity-70">
+          <div className="fish-swim-right-slow">
+            <svg viewBox="0 0 24 12" className="w-4 h-2 fill-teal-300/50">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div className="absolute top-12 right-1/4 w-3 h-1.5 opacity-60">
+          <div className="fish-swim-left-slow">
+            <svg viewBox="0 0 24 12" className="w-3 h-1.5 fill-cyan-400/40 transform scale-x-[-1]">
+              <path d="M2 6 L8 2 L16 6 L8 10 Z M16 6 L20 4 L22 6 L20 8 Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      {/* Aquarium Glass Effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/20"></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-2xl font-bold mb-4">JK Trout Feed</h3>

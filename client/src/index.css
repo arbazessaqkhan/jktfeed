@@ -500,6 +500,44 @@ input, textarea, [contenteditable="true"] {
   }
 }
 
+/* Aquarium Fish Animation Keyframes */
+@keyframes swim-right {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(calc(100vw + 100px)); }
+}
+
+@keyframes swim-left {
+  0% { transform: translateX(calc(100vw + 100px)); }
+  100% { transform: translateX(-100px); }
+}
+
+@keyframes swim-right-slow {
+  0% { transform: translateX(-80px); }
+  100% { transform: translateX(calc(100vw + 80px)); }
+}
+
+@keyframes swim-left-slow {
+  0% { transform: translateX(calc(100vw + 80px)); }
+  100% { transform: translateX(-80px); }
+}
+
+/* Aquarium Fish Animation Classes */
+.fish-swim-right {
+  animation: swim-right 20s linear infinite;
+}
+
+.fish-swim-left {
+  animation: swim-left 25s linear infinite;
+}
+
+.fish-swim-right-slow {
+  animation: swim-right-slow 30s linear infinite;
+}
+
+.fish-swim-left-slow {
+  animation: swim-left-slow 35s linear infinite;
+}
+
 /* Advanced Click Animations */
 .click-ripple {
   position: relative;

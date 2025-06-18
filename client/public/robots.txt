@@ -1,0 +1,43 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jktroutfeed.com/sitemap.xml
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
+
+# Specific directives for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block admin areas from public indexing
+User-agent: *
+Disallow: /admin/
+Disallow: /secure-portal-jk2024
+
+# Allow specific important pages
+Allow: /
+Allow: /about
+Allow: /products
+Allow: /shop
+Allow: /team
+Allow: /contact
+Allow: /feeding-guide
+
+# Block common non-public directories
+Disallow: /api/
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /dist/
+Disallow: /build/

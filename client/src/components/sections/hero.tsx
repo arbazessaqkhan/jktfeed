@@ -9,7 +9,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative bg-gradient-to-r from-primary to-secondary text-white py-20 overflow-hidden">
+    <section id="home" className="relative bg-gradient-to-r from-primary to-secondary text-white py-20 overflow-hidden" itemScope itemType="https://schema.org/WebPageElement" itemProp="mainContentOfPage">
       {/* Video Background */}
       <div className="absolute inset-0">
         <video 

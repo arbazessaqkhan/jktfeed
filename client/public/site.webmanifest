@@ -1,0 +1,39 @@
+{
+  "name": "JK Trout Feed - Premium Aquaculture Feed Manufacturing",
+  "short_name": "JK Trout Feed",
+  "description": "Kashmir's leading manufacturer of premium trout feed with advanced nutritional profiles for all stages of trout development",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1e5a8b",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["business", "agriculture", "manufacturing", "aquaculture"],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-narrow.png", 
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

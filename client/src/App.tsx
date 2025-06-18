@@ -111,7 +111,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="min-h-screen bg-background text-foreground page-transition">
           <Router />
           <FishAnimation />
           <WhatsAppButton />

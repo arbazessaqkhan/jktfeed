@@ -151,14 +151,14 @@ STATUS: PENDING ORDER - Please contact customer to confirm and process.`
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 page-enter">
       <Navbar />
       
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary to-secondary text-white py-16">
+      <section className="bg-gradient-to-r from-primary to-secondary text-white py-16 fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Premium Trout Feed Shop</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 scale-in">Premium Trout Feed Shop</h1>
             <p className="text-xl text-blue-200 max-w-3xl mx-auto">
               Discover our complete range of high-quality trout feed products with detailed specifications and competitive pricing
             </p>
@@ -202,10 +202,10 @@ STATUS: PENDING ORDER - Please contact customer to confirm and process.`
           </div>
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product: any) => {
+            {filteredProducts.map((product: any, index: number) => {
               const stockStatus = getStockStatus(product.stockQuantity);
               return (
-                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300">
+                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 card-hover stagger-animation" style={{animationDelay: `${index * 0.1}s`}}>
                   <CardHeader className="p-0 relative">
                     <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-teal-100 flex items-center justify-center rounded-t-lg">
                       <Package className="w-16 h-16 text-primary opacity-50" />

@@ -12,11 +12,11 @@ import Contact from "@/components/sections/contact";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-enter">
       <Navbar />
       <main>
         <Hero />
-        <section className="py-16 bg-white/70 backdrop-blur-sm">
+        <section className="py-16 bg-white/70 backdrop-blur-sm fade-in">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">

@@ -33,34 +33,68 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Frequently Asked Questions</h2>
-          <p className="text-lg text-neutral">Expert answers to common questions about trout feeding and aquaculture practices.</p>
-        </div>
+    <>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-neutral">Expert answers to common questions about trout feeding and aquaculture practices.</p>
+          </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <Card key={index} className="shadow-lg overflow-hidden">
-              <button
-                onClick={() => toggleFaq(index)}
-                className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-lg font-semibold text-primary">{faq.question}</span>
-                <ChevronDown 
-                  className={`transform transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
-                />
-              </button>
-              {openFaq === index && (
-                <CardContent className="px-8 pb-6">
-                  <p className="text-neutral">{faq.answer}</p>
-                </CardContent>
-              )}
-            </Card>
-          ))}
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="shadow-lg overflow-hidden">
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                >
+                  <span className="text-lg font-semibold text-primary">{faq.question}</span>
+                  <ChevronDown 
+                    className={`transform transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {openFaq === index && (
+                  <CardContent className="px-8 pb-6">
+                    <p className="text-neutral">{faq.answer}</p>
+                  </CardContent>
+                )}
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Banking Partners Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Banking Partners</h2>
+            <p className="text-lg text-neutral">Trusted financial partnerships supporting our business operations.</p>
+          </div>
+
+          <div className="bg-gray-50 rounded-xl p-8 border border-gray-200">
+            <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8">
+              {/* Bank Logo */}
+              <div className="flex-shrink-0">
+                <img 
+                  src="/attached_assets/1657774001103_1750248099539.png" 
+                  alt="J&K Bank" 
+                  className="h-16 w-auto"
+                />
+              </div>
+              
+              {/* Bank Details */}
+              <div className="text-center md:text-left">
+                <h3 className="text-xl font-bold text-primary mb-2">J&K Bank</h3>
+                <div className="text-neutral space-y-1">
+                  <p>Poloview, Srinagar</p>
+                  <p>Kashmir, 190001</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

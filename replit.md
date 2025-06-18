@@ -157,7 +157,7 @@ A comprehensive corporate website for JK Trout Feed with a full-featured admin m
 - ✓ Converted WhatsApp Support text link to graphical button with icon and enhanced styling
 - ✓ Fixed notification system with enhanced badge visibility and real-time updates
 - ✓ Connected order submission to create instant admin notifications
-- ✓ Added Banking Partners section with social media icons and J&K Bank logo in white container
+- ✓ Added Banking Partners section with J&K Bank information and logo below FAQ section
 
 ## User Preferences
 - Fast-swimming fish animation requested and implemented

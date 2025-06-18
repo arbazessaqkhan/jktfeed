@@ -36,7 +36,7 @@ export const products = pgTable("products", {
     moisture: string;
     energy: string;
     pelletSize: string;
-  }>().default({}),
+  }>(),
   isActive: boolean("is_active").notNull().default(true),
   weight: text("weight").notNull(), // e.g., "25kg", "50kg"
   sku: text("sku").notNull().unique(),

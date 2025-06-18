@@ -278,7 +278,7 @@ export default function Footer() {
       <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-blue-800/60 to-blue-950/80"></div>
       
       {/* Text Content Background */}
-      <div className="absolute inset-x-0 top-0 bottom-0 bg-black/20 backdrop-blur-[1px]"></div>
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
       
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

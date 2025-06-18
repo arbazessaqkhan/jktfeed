@@ -574,6 +574,80 @@ input, textarea, [contenteditable="true"] {
   animation: plant-sway 6s ease-in-out infinite;
 }
 
+/* Text Banner Animation Keyframes */
+@keyframes text-banner-right {
+  0% { transform: translateX(-150px); }
+  100% { transform: translateX(calc(100vw + 150px)); }
+}
+
+@keyframes text-banner-left {
+  0% { transform: translateX(calc(100vw + 150px)); }
+  100% { transform: translateX(-150px); }
+}
+
+@keyframes text-banner-right-slow {
+  0% { transform: translateX(-120px); }
+  100% { transform: translateX(calc(100vw + 120px)); }
+}
+
+@keyframes text-banner-left-slow {
+  0% { transform: translateX(calc(100vw + 120px)); }
+  100% { transform: translateX(-120px); }
+}
+
+/* Text Banner Animation Classes */
+.text-banner-right {
+  animation: text-banner-right 15s linear infinite;
+}
+
+.text-banner-left {
+  animation: text-banner-left 18s linear infinite;
+}
+
+.text-banner-right-slow {
+  animation: text-banner-right-slow 22s linear infinite;
+}
+
+.text-banner-left-slow {
+  animation: text-banner-left-slow 25s linear infinite;
+}
+
+/* Ship Animation Classes for remaining elements */
+.ship-sail-right {
+  animation: text-banner-right 20s linear infinite;
+}
+
+.ship-sail-left {
+  animation: text-banner-left 25s linear infinite;
+}
+
+.ship-sail-right-slow {
+  animation: text-banner-right-slow 30s linear infinite;
+}
+
+.ship-sail-left-slow {
+  animation: text-banner-left-slow 35s linear infinite;
+}
+
+/* Bird Flight Animation */
+@keyframes bird-fly-right {
+  0% { transform: translateX(-50px); }
+  100% { transform: translateX(calc(100vw + 50px)); }
+}
+
+@keyframes bird-fly-left {
+  0% { transform: translateX(calc(100vw + 50px)); }
+  100% { transform: translateX(-50px); }
+}
+
+.bird-fly-right {
+  animation: bird-fly-right 12s linear infinite;
+}
+
+.bird-fly-left {
+  animation: bird-fly-left 15s linear infinite;
+}
+
 /* Advanced Click Animations */
 .click-ripple {
   position: relative;

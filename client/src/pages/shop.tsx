@@ -71,10 +71,15 @@ Please provide more details and availability.`;
         customerName: customerForm.name,
         customerEmail: customerForm.email,
         customerPhone: customerForm.phone,
-        customerAddress: customerForm.address,
+        shippingAddress: {
+          street: customerForm.address,
+          city: "Kashmir",
+          state: "Jammu & Kashmir",
+          zipCode: "190001",
+          country: "India"
+        },
         totalAmount: buyNowProduct.price * customerForm.quantity,
-        status: "pending",
-        orderNotes: customerForm.message || "",
+        notes: customerForm.message || "",
         items: [{
           productId: buyNowProduct.id,
           quantity: customerForm.quantity,

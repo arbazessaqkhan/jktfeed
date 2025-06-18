@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 hover-glow click-ripple smooth-transition">
-              <h1 className="text-2xl font-bold text-primary text-glow">JK Trout Feed</h1>
+              <h1 className="text-2xl font-bold text-primary">JK Trout Feed</h1>
               <p className="text-xs text-neutral -mt-1 fade-in">GREEN GLOBE AGAIN</p>
             </Link>
           </div>

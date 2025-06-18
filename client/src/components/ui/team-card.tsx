@@ -27,7 +27,7 @@ export default function TeamCard({
       <h3 className="text-2xl font-bold mb-2 hover-rubber text-[#064e87]">{name}</h3>
       <p className="text-neutral mb-4 hover-fade">{position}</p>
       {/* Social Media Icons in a row */}
-      <div className="flex justify-center space-x-4 mb-4">
+      <div className="flex justify-center space-x-4 mb-4 text-[#07508f]">
         <a 
           href="#" 
           className={`${color} hover:opacity-70 transition-opacity hover-wiggle hover-glow`}

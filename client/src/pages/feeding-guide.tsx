@@ -212,7 +212,7 @@ export default function FeedingGuidePage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Advanced Feeding Calculator */}
-        <section className="mb-16">
+        <section id="calculator" className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
               <Calculator className="inline w-8 h-8 mr-2" />

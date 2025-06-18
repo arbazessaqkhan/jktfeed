@@ -54,11 +54,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-blue-100">
-              <li><Link href="/feeding-guide" className="hover:text-white transition-colors">Feeding Calculator</Link></li>
+              <li><a href="/feeding-guide#calculator" className="hover:text-white transition-colors">Feeding Calculator</a></li>
               <li><Link href="/products" className="hover:text-white transition-colors">Technical Specifications</Link></li>
               <li><Link href="/about" className="hover:text-white transition-colors">Quality Assurance</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Product Catalog</a></li>
-              <li><Link href="/dashboard" className="hover:text-white transition-colors text-xs">Admin Dashboard</Link></li>
             </ul>
           </div>
         </div>

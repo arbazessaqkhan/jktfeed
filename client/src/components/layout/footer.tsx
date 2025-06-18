@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Mail, Phone, MessageCircle, Facebook, Instagram, Twitter } from "lucide-react";
 import { FaPinterest } from "react-icons/fa";
+import logoImage from "@assets/rect5_1750246217514.png";
 
 export default function Footer() {
 
@@ -66,9 +67,12 @@ export default function Footer() {
           <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
           <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4 mt-2 md:mt-0">
             <p className="text-blue-200 text-sm">Manufacturing Excellence in Jammu & Kashmir</p>
-            <p className="text-blue-200 text-sm">
-              Designed by <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-100 transition-colors underline">QuantaFONS</a>
-            </p>
+            <div className="flex items-center text-blue-200 text-sm">
+              <span className="mr-2">Designed by</span>
+              <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                <img src={logoImage} alt="QuantaFONS" className="h-4 w-auto inline-block" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

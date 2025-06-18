@@ -196,8 +196,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/orders", async (req, res) => {
     try {
-      const orderData = insertOrderSchema.parse(req.body);
       const { items, ...orderInfo } = req.body;
+      const orderData = insertOrderSchema.parse(orderInfo);
       
       // Create order
       const order = await storage.createOrder(orderInfo);

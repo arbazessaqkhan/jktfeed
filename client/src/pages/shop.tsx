@@ -45,6 +45,48 @@ Please provide more details and availability.`;
     window.open(whatsappUrl, '_blank');
   };
 
+  // Function to send product inquiry to admin portal
+  const sendToAdmin = async (product: any) => {
+    try {
+      const specifications = product.specifications;
+      const features = Object.entries(specifications || {}).map(([key, value]) => `${key}: ${value}`).join(", ");
+      
+      const inquiryData = {
+        name: "Product Inquiry",
+        email: "customer@inquiry.com",
+        phone: "",
+        subject: `Product Inquiry: ${product.name}`,
+        message: `Customer interested in:
+
+Product: ${product.name}
+Category: ${product.category}
+Price: ₹${product.price.toLocaleString()}
+Weight: ${product.weight}
+SKU: ${product.sku}
+Specifications: ${features}
+
+Description: ${product.description}
+
+Customer requested more details and availability.`
+      };
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inquiryData)
+      });
+
+      if (response.ok) {
+        // Redirect to admin portal after successful submission
+        window.open('/secure-portal-jk2024', '_blank');
+      }
+    } catch (error) {
+      console.error('Failed to send inquiry:', error);
+    }
+  };
+
   useEffect(() => {
     document.title = "Shop Premium Trout Feed - JK Trout Feed";
   }, []);
@@ -61,7 +103,7 @@ Please provide more details and availability.`;
     return matchesSearch && matchesCategory;
   }) || [];
 
-  const categories = Array.from(new Set(products?.map((p: any) => p.category) || []));
+  const categories = Array.from(new Set(products?.map((p: any) => p.category) || [])) as string[];
 
   const getStockStatus = (stock: number) => {
     if (stock === 0) return { label: "Out of Stock", color: "bg-red-100 text-red-800" };
@@ -104,7 +146,7 @@ Please provide more details and availability.`;
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((category) => (
+              {categories.map((category: string) => (
                 <SelectItem key={category} value={category}>
                   {category}
                 </SelectItem>
@@ -177,23 +219,33 @@ Please provide more details and availability.`;
                         </div>
                       </div>
 
-                      <div className="flex gap-2">
+                      <div className="space-y-2">
                         <Button
                           variant="outline"
-                          className="flex-1"
+                          className="w-full"
                           onClick={() => setSelectedProduct(product)}
                         >
                           <Eye className="w-4 h-4 mr-2" />
                           View Details
                         </Button>
-                        <Button
-                          className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                          onClick={() => shareOnWhatsApp(product)}
-                          disabled={product.stockQuantity === 0}
-                        >
-                          <MessageCircle className="w-4 h-4 mr-2" />
-                          Order Now
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                            onClick={() => shareOnWhatsApp(product)}
+                            disabled={product.stockQuantity === 0}
+                          >
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            WhatsApp
+                          </Button>
+                          <Button
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                            onClick={() => sendToAdmin(product)}
+                            disabled={product.stockQuantity === 0}
+                          >
+                            <Package className="w-4 h-4 mr-2" />
+                            Buy Now
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -283,25 +335,38 @@ Please provide more details and availability.`;
                 </div>
               )}
 
-              <div className="flex gap-2 pt-4 border-t">
+              <div className="space-y-2 pt-4 border-t">
                 <Button
                   variant="outline"
-                  className="flex-1"
+                  className="w-full"
                   onClick={() => setSelectedProduct(null)}
                 >
                   Close
                 </Button>
-                <Button
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                  onClick={() => {
-                    shareOnWhatsApp(selectedProduct);
-                    setSelectedProduct(null);
-                  }}
-                  disabled={selectedProduct.stockQuantity === 0}
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Order on WhatsApp
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                    onClick={() => {
+                      shareOnWhatsApp(selectedProduct);
+                      setSelectedProduct(null);
+                    }}
+                    disabled={selectedProduct.stockQuantity === 0}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    WhatsApp
+                  </Button>
+                  <Button
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    onClick={() => {
+                      sendToAdmin(selectedProduct);
+                      setSelectedProduct(null);
+                    }}
+                    disabled={selectedProduct.stockQuantity === 0}
+                  >
+                    <Package className="w-4 h-4 mr-2" />
+                    Buy Now
+                  </Button>
+                </div>
               </div>
             </div>
           )}

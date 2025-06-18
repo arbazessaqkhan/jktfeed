@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Star, Truck } from "lucide-react";
+import { MessageCircle, Star, Truck, Package } from "lucide-react";
 
 export default function ShopProducts() {
   // WhatsApp function to share product details
@@ -169,14 +169,52 @@ Please provide more details and availability.`;
                   </div>
                 </div>
 
-                <Button 
-                  className="w-full bg-green-600 hover:bg-green-700 text-white" 
-                  disabled={!product.inStock}
-                  onClick={() => shareOnWhatsApp(product)}
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  {product.inStock ? "Order on WhatsApp" : "Inquire on WhatsApp"}
-                </Button>
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Button 
+                      className="flex-1 bg-green-600 hover:bg-green-700 text-white" 
+                      disabled={!product.inStock}
+                      onClick={() => shareOnWhatsApp(product)}
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      WhatsApp
+                    </Button>
+                    <Button 
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" 
+                      disabled={!product.inStock}
+                      onClick={() => {
+                        // Send product inquiry to admin portal
+                        const inquiryData = {
+                          name: "Product Inquiry",
+                          email: "customer@inquiry.com",
+                          phone: "",
+                          subject: `Product Inquiry: ${product.name}`,
+                          message: `Customer interested in:
+
+Product: ${product.name}
+Category: ${product.category}
+Price: ₹${product.price.toLocaleString()}
+Features: ${product.features.join(", ")}
+
+${product.description}
+
+Customer requested more details and availability.`
+                        };
+
+                        fetch('/api/contact', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify(inquiryData)
+                        }).then(() => {
+                          window.open('/secure-portal-jk2024', '_blank');
+                        });
+                      }}
+                    >
+                      <Package className="w-4 h-4 mr-2" />
+                      Buy Now
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}

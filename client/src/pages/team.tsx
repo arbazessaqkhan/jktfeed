@@ -8,7 +8,58 @@ import { Mail, Phone, MapPin, Award } from "lucide-react";
 
 export default function TeamPage() {
   useEffect(() => {
-    document.title = "Expert Team - JK Trout Feed | Manufacturing & Technical Specialists";
+    // Advanced SEO for Team Page
+    document.title = "Expert Team - JK Trout Feed Aquaculture Professionals | Kashmir Specialists";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Meet our expert team of aquaculture professionals at JK Trout Feed Kashmir. Experienced specialists in trout nutrition, feed formulation, and aquaculture management with proven industry expertise.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Expert Team - JK Trout Feed Aquaculture Professionals | Kashmir');
+    }
+    
+    // Team Page Structured Data
+    const teamStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Expert Team - JK Trout Feed",
+      "description": "Meet our team of aquaculture professionals and trout nutrition specialists",
+      "url": "https://jktroutfeed.com/team",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Team",
+            "item": "https://jktroutfeed.com/team"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(teamStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"name":"Expert Team - JK Trout Feed"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const teamMembers = [

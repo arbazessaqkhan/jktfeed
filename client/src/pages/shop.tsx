@@ -168,7 +168,102 @@ ${customerForm.message || "No additional message"}`
   };
 
   useEffect(() => {
-    document.title = "Shop Premium Trout Feed - JK Trout Feed";
+    // Advanced SEO for Shop Page
+    document.title = "Buy Premium Trout Feed Online - Early, Small & Stock Stage Feeds | JK Trout Feed Kashmir";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Buy premium trout feed online from Kashmir\'s leading manufacturer. Early Stage (₹2,500), Small Stage (₹2,750), Stock Stage (₹3,000) feeds with proven results. Fast delivery across India.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Buy Premium Trout Feed Online - Early, Small & Stock Stage Feeds | JK Trout Feed');
+    }
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Shop premium trout feed online with fast delivery. Specialized nutrition for every stage of trout development from Kashmir\'s trusted manufacturer.');
+    }
+    
+    // Shop Page Structured Data
+    const shopStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "JK Trout Feed Online Shop",
+      "description": "Online store for premium trout feed products with delivery across India",
+      "url": "https://jktroutfeed.com/shop",
+      "currenciesAccepted": "INR",
+      "paymentAccepted": ["Cash", "Credit Card", "Bank Transfer"],
+      "priceRange": "₹₹",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Trout Feed Products",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Premium Early Stage Trout Feed",
+              "category": "Aquaculture Feed"
+            },
+            "price": "2500",
+            "priceCurrency": "INR"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Advanced Small Stage Trout Feed",
+              "category": "Aquaculture Feed"
+            },
+            "price": "2750",
+            "priceCurrency": "INR"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Professional Stock Stage Trout Feed",
+              "category": "Aquaculture Feed"
+            },
+            "price": "3000",
+            "priceCurrency": "INR"
+          }
+        ]
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Shop",
+            "item": "https://jktroutfeed.com/shop"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(shopStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"Store"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const { data: products, isLoading } = useQuery({

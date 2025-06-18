@@ -21,7 +21,66 @@ export default function ContactPage() {
   });
 
   useEffect(() => {
-    document.title = "Contact Us - JK Trout Feed | Get in Touch with Our Experts";
+    // Advanced SEO for Contact Page
+    document.title = "Contact JK Trout Feed - Expert Aquaculture Consultation & Support | Kashmir";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Contact JK Trout Feed for expert aquaculture consultation in Kashmir. Get professional advice on trout feeding, nutrition planning, and premium feed solutions. SIDCO Estate, Lassipora facility.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Contact JK Trout Feed - Expert Aquaculture Consultation & Support');
+    }
+    
+    // Contact Page Structured Data
+    const contactStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact JK Trout Feed",
+      "description": "Contact information and consultation services for aquaculture feed solutions",
+      "url": "https://jktroutfeed.com/contact",
+      "mainEntity": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+91-123-456-7890",
+        "email": "info@jktroutfeed.com",
+        "availableLanguage": ["English", "Hindi", "Urdu"],
+        "areaServed": "Kashmir, India"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contact",
+            "item": "https://jktroutfeed.com/contact"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(contactStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"ContactPage"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const { toast } = useToast();

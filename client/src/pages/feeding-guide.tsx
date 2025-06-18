@@ -21,7 +21,85 @@ export default function FeedingGuidePage() {
   });
 
   useEffect(() => {
-    document.title = "Professional Feeding Guide - JK Trout Feed | Optimal Nutrition Standards";
+    // Advanced SEO for Feeding Guide Page
+    document.title = "Complete Trout Feeding Guide - Expert Nutrition Guidelines | JK Trout Feed Kashmir";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Comprehensive trout feeding guide with expert nutrition guidelines from JK Trout Feed Kashmir. Learn optimal feeding schedules, water temperature effects, growth stages, and feed conversion ratios for maximum trout production.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Complete Trout Feeding Guide - Expert Nutrition Guidelines | JK Trout Feed');
+    }
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Master trout feeding with our comprehensive nutrition guide. Expert guidelines for optimal growth, feeding schedules, and aquaculture best practices.');
+    }
+    
+    // Feeding Guide Structured Data
+    const feedingGuideStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Complete Trout Feeding Guide",
+      "description": "Comprehensive guide to optimal trout feeding practices and nutrition management",
+      "url": "https://jktroutfeed.com/feeding-guide",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "INR",
+        "value": "2500-3000"
+      },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Determine Fish Size and Stage",
+          "text": "Identify the growth stage of your trout to select appropriate feed type"
+        },
+        {
+          "@type": "HowToStep", 
+          "name": "Calculate Feed Amount",
+          "text": "Use body weight and water temperature to determine daily feed quantity"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Schedule Feeding Times",
+          "text": "Establish regular feeding schedule based on fish age and environmental conditions"
+        }
+      ],
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Feeding Guide",
+            "item": "https://jktroutfeed.com/feeding-guide"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(feedingGuideStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"HowTo"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const feedingData = [

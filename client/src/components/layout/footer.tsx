@@ -16,25 +16,25 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a href="mailto:info@jktroutfeed.com" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Email Us">
-                <Mail className="w-6 h-6 float-gentle" />
+                <Mail className="w-6 h-6" />
               </a>
               <a href="tel:+91-123-456-7890" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Call Us">
-                <Phone className="w-6 h-6 float-gentle" />
+                <Phone className="w-6 h-6" />
               </a>
               <a href="https://wa.me/923369976123" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="WhatsApp">
-                <MessageCircle className="w-6 h-6 float-gentle" />
+                <MessageCircle className="w-6 h-6" />
               </a>
               <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Facebook">
-                <Facebook className="w-6 h-6 float-gentle" />
+                <Facebook className="w-6 h-6" />
               </a>
               <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Instagram">
-                <Instagram className="w-6 h-6 float-gentle" />
+                <Instagram className="w-6 h-6" />
               </a>
               <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Twitter">
-                <Twitter className="w-6 h-6 float-gentle" />
+                <Twitter className="w-6 h-6" />
               </a>
               <a href="#" className="text-blue-200 hover:text-white transition-colors hover-glow click-ripple btn-bounce" title="Pinterest">
-                <FaPinterest className="w-6 h-6 float-gentle" />
+                <FaPinterest className="w-6 h-6" />
               </a>
             </div>
           </div>

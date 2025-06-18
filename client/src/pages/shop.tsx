@@ -118,7 +118,23 @@ ${customerForm.message || "No additional message"}`
         body: JSON.stringify(contactData)
       });
 
-      if (response.ok && orderResponse.ok) {
+      // Create real-time notification for admin portal
+      const notificationData = {
+        title: "New Order Received",
+        message: `Order from ${customerForm.name} for ${buyNowProduct.name} - ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}`,
+        type: "info",
+        isRead: false
+      };
+
+      const notificationResponse = await fetch('/api/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(notificationData)
+      });
+
+      if (response.ok && orderResponse.ok && notificationResponse.ok) {
         // Reset form and close modal
         setCustomerForm({
           name: "",

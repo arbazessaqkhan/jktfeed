@@ -93,7 +93,7 @@ export default function NotificationSystem() {
         variant="outline"
         size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative"
+        className="relative text-[#3d445c]"
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (

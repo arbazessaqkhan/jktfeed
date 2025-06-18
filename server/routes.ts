@@ -441,8 +441,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/visitors", async (req, res) => {
     try {
       const visitorData = {
-        sessionId: req.body.sessionId || req.sessionID,
-        ipAddress: req.ip || req.connection.remoteAddress,
+        sessionId: req.body.sessionId || 'session_' + Date.now(),
+        ipAddress: req.ip || req.socket?.remoteAddress,
         userAgent: req.get('User-Agent'),
         referrer: req.get('Referer'),
         country: req.body.country,

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
@@ -11,10 +12,67 @@ import FAQ from "@/components/sections/faq";
 import Contact from "@/components/sections/contact";
 
 export default function Home() {
+  useEffect(() => {
+    // SEO Meta Tags for Home Page
+    document.title = "JK Trout Feed - Premium Aquaculture Feed Manufacturing in Kashmir | QuantaFONS";
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'JK Trout Feed manufactures premium quality trout feed in Kashmir with advanced nutritional profiles. Specialized feeds for early stage, small stage, and stock trout with proven results in aquaculture farming.');
+    }
+    
+    // Update Open Graph title
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'JK Trout Feed - Premium Aquaculture Feed Manufacturing in Kashmir');
+    }
+    
+    // Add structured data for homepage
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "JK Trout Feed - Premium Aquaculture Feed Manufacturing",
+      "description": "Premium quality trout feed manufacturing in Kashmir with specialized feeds for all stages of trout development.",
+      "url": "https://jktroutfeed.com/",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "JK Trout Feed",
+        "description": "Leading aquaculture feed manufacturer in Kashmir specializing in premium trout feed production."
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      // Cleanup script on unmount
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"WebPage"')) {
+          script.remove();
+        }
+      });
+    };
+  }, []);
+
   return (
     <div className="min-h-screen page-enter">
       <Navbar />
-      <main>
+      <main itemScope itemType="https://schema.org/WebPage">
         <Hero />
         <section className="py-16 bg-white/70 backdrop-blur-sm fade-in">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

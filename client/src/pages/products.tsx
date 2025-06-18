@@ -18,7 +18,63 @@ export default function ProductsPage() {
   });
 
   useEffect(() => {
-    document.title = "Premium Trout Feed Products - JK Trout Feed | Early, Small & Stock Stage";
+    // Advanced SEO for Products Page
+    document.title = "Premium Trout Feed Products - Early, Small & Stock Stage Feeds | JK Trout Feed Kashmir";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Explore our premium trout feed products in Kashmir - Early Stage Feed (45% protein), Small Stage Feed (48% protein), and Stock Stage Feed (52% protein). Advanced nutritional profiles for optimal trout growth and feed conversion.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Premium Trout Feed Products - Early, Small & Stock Stage Feeds | JK Trout Feed');
+    }
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Discover our complete range of premium trout feed products manufactured in Kashmir with specialized nutrition for every stage of trout development.');
+    }
+    
+    // Add Products Page Structured Data
+    const productsStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Premium Trout Feed Products",
+      "description": "Complete range of premium trout feed products for all stages of trout development",
+      "url": "https://jktroutfeed.com/products",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Products",
+            "item": "https://jktroutfeed.com/products"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(productsStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"CollectionPage"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const products = [

@@ -7,7 +7,73 @@ import { Progress } from "@/components/ui/progress";
 
 export default function AboutPage() {
   useEffect(() => {
-    document.title = "About Us - JK Trout Feed | Advanced Manufacturing Facility in Kashmir";
+    // Advanced SEO for About Page
+    document.title = "About JK Trout Feed - Leading Aquaculture Feed Manufacturer in Kashmir | QuantaFONS";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Learn about JK Trout Feed - Kashmir\'s premier aquaculture feed manufacturer. Advanced SIDCO facility producing premium trout feed with proven results since 2020. Expert team dedicated to aquaculture nutrition excellence.');
+    }
+    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'About JK Trout Feed - Leading Aquaculture Feed Manufacturer in Kashmir');
+    }
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Discover the story behind Kashmir\'s premier trout feed manufacturer. Advanced manufacturing facility and expert team dedicated to aquaculture excellence.');
+    }
+    
+    // About Page Structured Data
+    const aboutStructuredData = {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About JK Trout Feed",
+      "description": "Learn about Kashmir's leading aquaculture feed manufacturer and our commitment to premium trout nutrition",
+      "url": "https://jktroutfeed.com/about",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "JK Trout Feed",
+        "foundingDate": "2020",
+        "location": {
+          "@type": "Place",
+          "name": "SIDCO Estate, Lassipora, Kashmir"
+        },
+        "description": "Leading aquaculture feed manufacturer in Kashmir specializing in premium trout feed production with advanced nutritional profiles."
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://jktroutfeed.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About",
+            "item": "https://jktroutfeed.com/about"
+          }
+        ]
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(aboutStructuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      scripts.forEach(script => {
+        if (script.textContent?.includes('"@type":"AboutPage"')) {
+          script.remove();
+        }
+      });
+    };
   }, []);
 
   const milestones = [

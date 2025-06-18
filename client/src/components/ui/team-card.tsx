@@ -18,20 +18,20 @@ export default function TeamCard({
   color
 }: TeamCardProps) {
   return (
-    <div className={`bg-gradient-to-br ${bgColor} p-8 rounded-xl shadow-lg text-center group hover:shadow-xl transition-shadow`}>
+    <div className={`bg-gradient-to-br ${bgColor} p-8 rounded-xl shadow-lg text-center group hover:shadow-xl transition-shadow hover-lift hover-tilt click-ripple smooth-transition`}>
       <img 
         src={image} 
         alt={`Professional headshot of ${name}`}
-        className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg"
+        className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg hover-zoom hover-saturate float-gentle"
       />
-      <h3 className={`text-2xl font-bold ${color} mb-2`}>{name}</h3>
-      <p className="text-neutral mb-4">{position}</p>
+      <h3 className={`text-2xl font-bold ${color} mb-2 hover-rubber`}>{name}</h3>
+      <p className="text-neutral mb-4 hover-fade">{position}</p>
       <div className="flex justify-center space-x-4">
         <a 
           href={`mailto:${email}`} 
-          className={`${color} hover:opacity-70 transition-opacity`}
+          className={`${color} hover:opacity-70 transition-opacity hover-wiggle hover-glow`}
         >
-          <Mail className="w-6 h-6" />
+          <Mail className="w-6 h-6 hover-shake" />
         </a>
         <a 
           href="#" 

@@ -6,23 +6,23 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">About JK Trout Feed</h2>
-            <p className="text-lg text-neutral mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 hover-heartbeat">About JK Trout Feed</h2>
+            <p className="text-lg text-neutral mb-6 hover-fade">
               We at "JK Trout Feed" operate one of the most advanced Manufacturing Facilities to produce premium Trout Feed. Our facility is strategically located at Lassipora inside the SIDCO Estate, Jammu & Kashmir.
             </p>
-            <p className="text-neutral mb-6">
+            <p className="text-neutral mb-6 hover-slide-right">
               Our feed ranges are meticulously designed to meet the comprehensive nutritional requirements of farmed fish during each critical stage of their life cycle. We maintain an unwavering commitment to supply our customers with products formulated using superior quality raw materials.
             </p>
             <div className="grid grid-cols-2 gap-4">
-              <Card className="shadow-md">
+              <Card className="shadow-md hover-lift hover-scale click-ripple smooth-transition">
                 <CardContent className="p-4">
                   <div className="flex items-center mb-2">
-                    <svg className="w-8 h-8 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-primary mr-2 hover-rotate float-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                     </svg>
                   </div>
-                  <h4 className="font-semibold">Premium Quality</h4>
-                  <p className="text-sm text-neutral">High protein levels & balanced amino acids</p>
+                  <h4 className="font-semibold hover-wiggle">Premium Quality</h4>
+                  <p className="text-sm text-neutral hover-fade">High protein levels & balanced amino acids</p>
                 </CardContent>
               </Card>
               <Card className="shadow-md">

@@ -67,8 +67,11 @@ export default function Footer() {
           <p className="text-blue-200 text-sm">&copy; 2024 JK Trout Feed. All rights reserved.</p>
           <div className="flex items-center text-blue-200 text-sm">
             <span className="mr-2">Designed by</span>
-            <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity mr-1">
               <img src={logoImage} alt="QuantaFONS" className="h-4 w-auto inline-block" />
+            </a>
+            <a href="https://www.quantafons.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-100 transition-colors underline">
+              QuantaFONS
             </a>
           </div>
           <p className="text-blue-200 text-sm">Manufacturing Excellence in Kashmir</p>

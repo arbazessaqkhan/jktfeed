@@ -280,10 +280,7 @@ export default function FeedingGuidePage() {
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
               Science-based feeding protocols for optimal trout growth and health
             </p>
-            <Button className="bg-white text-primary hover:bg-gray-100">
-              <Download className="w-4 h-4 mr-2" />
-              Download Complete Guide
-            </Button>
+            
           </div>
         </div>
       </section>

@@ -137,30 +137,38 @@ export default function Navbar() {
                     {/* Fins */}
                     <path d="M105 82 L103 87 L107 87 Z" fill="#8b7355"/>
                     
-                    {/* Hand Feeding */}
-                    <g transform="translate(85, 5)">
-                      {/* Arm */}
-                      <ellipse cx="10" cy="15" rx="8" ry="4" fill="#fdbcb4" transform="rotate(-30 10 15)"/>
+                    {/* Large Hand Coming from Right Side */}
+                    <g>
+                      {/* Wrist/Arm coming from right edge */}
+                      <rect x="160" y="8" width="25" height="16" rx="8" fill="#fdbcb4"/>
                       
-                      {/* Hand */}
-                      <ellipse cx="20" cy="8" rx="6" ry="4" fill="#fdbcb4" transform="rotate(-15 20 8)"/>
+                      {/* Palm */}
+                      <ellipse cx="145" cy="16" rx="15" ry="10" fill="#fdbcb4"/>
                       
                       {/* Fingers */}
-                      <ellipse cx="24" cy="6" rx="2" ry="1" fill="#fdbcb4" transform="rotate(-10 24 6)"/>
-                      <ellipse cx="25" cy="8" rx="2" ry="1" fill="#fdbcb4" transform="rotate(5 25 8)"/>
-                      <ellipse cx="24" cy="10" rx="2" ry="1" fill="#fdbcb4" transform="rotate(15 24 10)"/>
+                      <ellipse cx="135" cy="8" rx="8" ry="3" fill="#fdbcb4" transform="rotate(-10 135 8)"/>
+                      <ellipse cx="130" cy="12" rx="9" ry="3" fill="#fdbcb4" transform="rotate(-5 130 12)"/>
+                      <ellipse cx="128" cy="17" rx="8" ry="3" fill="#fdbcb4"/>
+                      <ellipse cx="130" cy="22" rx="7" ry="3" fill="#fdbcb4" transform="rotate(5 130 22)"/>
                       
                       {/* Thumb */}
-                      <ellipse cx="18" cy="5" rx="1.5" ry="1" fill="#fdbcb4" transform="rotate(-45 18 5)"/>
+                      <ellipse cx="140" cy="25" rx="6" ry="3" fill="#fdbcb4" transform="rotate(25 140 25)"/>
+                      
+                      {/* Finger details */}
+                      <line x1="135" y1="8" x2="125" y2="6" stroke="#e6a68a" strokeWidth="0.5"/>
+                      <line x1="130" y1="12" x2="120" y2="10" stroke="#e6a68a" strokeWidth="0.5"/>
+                      <line x1="128" y1="17" x2="118" y2="16" stroke="#e6a68a" strokeWidth="0.5"/>
                     </g>
                     
-                    {/* Fish Feed Pellets Falling */}
-                    <circle cx="105" cy="25" r="1" fill="#8b4513"/>
-                    <circle cx="108" cy="28" r="0.8" fill="#654321"/>
-                    <circle cx="102" cy="30" r="0.9" fill="#8b4513"/>
-                    <circle cx="110" cy="32" r="0.7" fill="#654321"/>
-                    <circle cx="106" cy="35" r="1" fill="#8b4513"/>
-                    <circle cx="103" cy="37" r="0.8" fill="#654321"/>
+                    {/* Fish Feed Pellets Falling from Hand */}
+                    <circle cx="125" cy="20" r="1.2" fill="#8b4513"/>
+                    <circle cx="122" cy="24" r="1" fill="#654321"/>
+                    <circle cx="118" cy="28" r="1.1" fill="#8b4513"/>
+                    <circle cx="115" cy="32" r="0.9" fill="#654321"/>
+                    <circle cx="112" cy="36" r="1" fill="#8b4513"/>
+                    <circle cx="108" cy="40" r="0.8" fill="#654321"/>
+                    <circle cx="105" cy="44" r="1" fill="#8b4513"/>
+                    <circle cx="102" cy="48" r="0.9" fill="#654321"/>
                     
                     {/* Water ripples from feed */}
                     <ellipse cx="105" cy="33" rx="3" ry="1" fill="none" stroke="#4a90e2" strokeWidth="1" opacity="0.5"/>

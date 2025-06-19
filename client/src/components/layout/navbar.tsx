@@ -66,47 +66,10 @@ export default function Navbar() {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="relative overflow-hidden bg-white z-[100]">
+              <SheetContent className="bg-white">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <SheetDescription className="sr-only">Mobile navigation menu with site links</SheetDescription>
                 
-                {/* Animated Seabed at Bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none">
-                  {/* Sandy Ocean Floor */}
-                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-yellow-200/40 via-yellow-100/30 to-transparent"></div>
-                  
-                  {/* Coral Formations */}
-                  <div className="absolute bottom-0 left-4 w-8 h-12 bg-gradient-to-t from-orange-400/50 via-orange-300/40 to-transparent rounded-t-full transform rotate-12"></div>
-                  <div className="absolute bottom-0 right-8 w-6 h-10 bg-gradient-to-t from-red-400/40 via-red-300/30 to-transparent rounded-t-2xl transform -rotate-8"></div>
-                  <div className="absolute bottom-0 left-1/3 w-5 h-8 bg-gradient-to-t from-pink-400/40 via-pink-300/30 to-transparent rounded-t-xl transform rotate-6"></div>
-                  
-                  {/* Seaweed/Kelp */}
-                  <div className="absolute bottom-0 left-12 w-1.5 h-16 bg-gradient-to-t from-green-600/60 via-green-500/50 to-green-400/20 rounded-t-full transform -rotate-12 seaweed-sway"></div>
-                  <div className="absolute bottom-0 right-16 w-1 h-12 bg-gradient-to-t from-green-500/50 via-green-400/40 to-green-300/15 rounded-t-full transform rotate-8 seaweed-sway" style={{animationDelay: '1.5s'}}></div>
-                  <div className="absolute bottom-0 left-2/3 w-1.5 h-14 bg-gradient-to-t from-emerald-600/50 via-emerald-500/40 to-emerald-400/20 rounded-t-full transform rotate-15 seaweed-sway" style={{animationDelay: '3s'}}></div>
-                  
-                  {/* Small Fish Swimming */}
-                  <div className="absolute bottom-8 left-0 w-4 h-2 fish-swim-right" style={{animationDelay: '2s'}}>
-                    <svg viewBox="0 0 16 8" className="w-4 h-2 fill-blue-500/60">
-                      <path d="M2 4 Q6 2 12 4 Q14 4 15 5 L14 6 Q12 5 6 6 Q2 5 2 4 Z" />
-                      <circle cx="12" cy="4" r="0.5" className="fill-black/50" />
-                    </svg>
-                  </div>
-                  
-                  <div className="absolute bottom-12 right-0 w-3 h-1.5 fish-swim-left" style={{animationDelay: '4s'}}>
-                    <svg viewBox="0 0 16 8" className="w-3 h-1.5 fill-yellow-500/60 transform scale-x-[-1]">
-                      <path d="M2 4 Q6 2 12 4 Q14 4 15 5 L14 6 Q12 5 6 6 Q2 5 2 4 Z" />
-                      <circle cx="12" cy="4" r="0.5" className="fill-black/50" />
-                    </svg>
-                  </div>
-                  
-                  {/* Floating Bubbles */}
-                  <div className="bubble-float absolute bottom-10 left-8 w-1.5 h-1.5 bg-blue-300/30 rounded-full"></div>
-                  <div className="bubble-float absolute bottom-6 right-12 w-1 h-1 bg-blue-400/25 rounded-full" style={{animationDelay: '2s'}}></div>
-                  <div className="bubble-float absolute bottom-14 left-1/2 w-1 h-1 bg-cyan-300/30 rounded-full" style={{animationDelay: '3s'}}></div>
-                </div>
-                
-                {/* Navigation Content */}
                 <div className="flex flex-col space-y-4 mt-8">
                   {navItems.map((item) => (
                     <Link

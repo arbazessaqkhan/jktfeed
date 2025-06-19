@@ -37,12 +37,12 @@ export default function Products() {
   ];
 
   const specifications = [
-    { composition: "Crude Protein", early: "45%", small: "48%", stock: "52%" },
-    { composition: "Fibre", early: "3% max", small: "3% max", stock: "3% max" },
-    { composition: "Carbohydrate", early: "25%", small: "22%", stock: "20%" },
-    { composition: "Energy", early: "15 KJ/GM", small: "14 KJ/GM", stock: "13 KJ/GM" },
-    { composition: "Moisture", early: "8%", small: "8%", stock: "8%" },
-    { composition: "Pellet Size", early: "0.5mm", small: "1.5mm", stock: "3.0mm" }
+    { composition: "Particular (approx)", early: "38/8", small: "42/8", stock: "46/8" },
+    { composition: "Crude Protein (min)", early: "38%", small: "42%", stock: "46%" },
+    { composition: "Crude Fat (min)", early: "+/- 10%", small: "+/- 10%%", stock: "+/- 10%" },
+    { composition: "Moisture (min)", early: "+/- 8%", small: "+/- 8%", stock: "+/- 8%" },
+    { composition: "Size", early: "4.0 mm", small: "2.5 mm", stock: "1.5 mm" },
+    { composition: "Fibre (max)", early: "4%", small: "4%", stock: "4%" }
   ];
 
   return (

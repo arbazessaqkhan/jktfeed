@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown } from "lucide-react";
+import jkBankLogo from "@assets/1657774001103_1750248099539.png";
 
 export default function FAQ() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -77,7 +78,7 @@ export default function FAQ() {
               {/* Bank Logo */}
               <div className="flex-shrink-0">
                 <img 
-                  src="/attached_assets/1657774001103_1750248099539.png" 
+                  src={jkBankLogo} 
                   alt="J&K Bank" 
                   className="h-16 w-auto"
                 />

@@ -88,8 +88,8 @@ export default function Navbar() {
                 </div>
                 
                 {/* Sea Scene at Bottom */}
-                <div className="mt-auto mb-0">
-                  <svg width="100%" height="120" viewBox="0 0 300 120" className="opacity-90" preserveAspectRatio="none">
+                <div className="mt-auto -mx-6 -mb-6">
+                  <svg width="100%" height="120" viewBox="0 0 300 120" className="opacity-90" preserveAspectRatio="none" style={{display: 'block'}}>
                     {/* Water Body - Full Width */}
                     <rect x="0" y="30" width="300" height="90" fill="#4a90e2" opacity="0.8"/>
                     <rect x="0" y="35" width="300" height="85" fill="#3b7dd8" opacity="0.6"/>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 export default function Navbar() {
@@ -67,6 +67,8 @@ export default function Navbar() {
                 </Button>
               </SheetTrigger>
               <SheetContent className="relative overflow-hidden bg-white">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                
                 {/* Animated Seabed at Bottom */}
                 <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none">
                   {/* Sandy Ocean Floor */}

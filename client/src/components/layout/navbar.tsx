@@ -89,7 +89,7 @@ export default function Navbar() {
                 
                 {/* Cartoonish Aquarium at Bottom */}
                 <div className="mt-auto mb-4 flex justify-center">
-                  <svg width="180" height="120" viewBox="0 0 180 120" className="opacity-80">
+                  <svg width="180" height="140" viewBox="0 0 180 140" className="opacity-80">
                     {/* Aquarium Tank */}
                     <rect x="15" y="30" width="150" height="75" rx="8" fill="#e6f3ff" stroke="#4a90e2" strokeWidth="4"/>
                     
@@ -137,6 +137,35 @@ export default function Navbar() {
                     {/* Fins */}
                     <path d="M105 82 L103 87 L107 87 Z" fill="#8b7355"/>
                     
+                    {/* Hand Feeding */}
+                    <g transform="translate(85, 5)">
+                      {/* Arm */}
+                      <ellipse cx="10" cy="15" rx="8" ry="4" fill="#fdbcb4" transform="rotate(-30 10 15)"/>
+                      
+                      {/* Hand */}
+                      <ellipse cx="20" cy="8" rx="6" ry="4" fill="#fdbcb4" transform="rotate(-15 20 8)"/>
+                      
+                      {/* Fingers */}
+                      <ellipse cx="24" cy="6" rx="2" ry="1" fill="#fdbcb4" transform="rotate(-10 24 6)"/>
+                      <ellipse cx="25" cy="8" rx="2" ry="1" fill="#fdbcb4" transform="rotate(5 25 8)"/>
+                      <ellipse cx="24" cy="10" rx="2" ry="1" fill="#fdbcb4" transform="rotate(15 24 10)"/>
+                      
+                      {/* Thumb */}
+                      <ellipse cx="18" cy="5" rx="1.5" ry="1" fill="#fdbcb4" transform="rotate(-45 18 5)"/>
+                    </g>
+                    
+                    {/* Fish Feed Pellets Falling */}
+                    <circle cx="105" cy="25" r="1" fill="#8b4513"/>
+                    <circle cx="108" cy="28" r="0.8" fill="#654321"/>
+                    <circle cx="102" cy="30" r="0.9" fill="#8b4513"/>
+                    <circle cx="110" cy="32" r="0.7" fill="#654321"/>
+                    <circle cx="106" cy="35" r="1" fill="#8b4513"/>
+                    <circle cx="103" cy="37" r="0.8" fill="#654321"/>
+                    
+                    {/* Water ripples from feed */}
+                    <ellipse cx="105" cy="33" rx="3" ry="1" fill="none" stroke="#4a90e2" strokeWidth="1" opacity="0.5"/>
+                    <ellipse cx="105" cy="33" rx="6" ry="2" fill="none" stroke="#4a90e2" strokeWidth="0.8" opacity="0.3"/>
+                    
                     {/* Bubbles */}
                     <circle cx="45" cy="52" r="2" fill="#ffffff" opacity="0.8"/>
                     <circle cx="52" cy="42" r="1.5" fill="#ffffff" opacity="0.6"/>
@@ -144,8 +173,8 @@ export default function Navbar() {
                     <circle cx="75" cy="45" r="1.2" fill="#ffffff" opacity="0.5"/>
                     
                     {/* Aquarium Stand */}
-                    <rect x="8" y="105" width="164" height="12" rx="3" fill="#8b4513"/>
-                    <rect x="8" y="114" width="164" height="3" fill="#654321"/>
+                    <rect x="8" y="125" width="164" height="12" rx="3" fill="#8b4513"/>
+                    <rect x="8" y="134" width="164" height="3" fill="#654321"/>
                   </svg>
                 </div>
               </SheetContent>

@@ -320,6 +320,70 @@ input, textarea, [contenteditable="true"] {
   100% { transform: translateX(100%); }
 }
 
+/* Marine Life Animations */
+@keyframes fish-swim-right {
+  0% { transform: translateX(-50px); }
+  100% { transform: translateX(350px); }
+}
+
+@keyframes fish-swim-left {
+  0% { transform: translateX(350px) scaleX(-1); }
+  100% { transform: translateX(-50px) scaleX(-1); }
+}
+
+@keyframes fish-school-right {
+  0% { transform: translateX(-30px); }
+  100% { transform: translateX(330px); }
+}
+
+@keyframes big-fish-slow {
+  0% { transform: translateX(-80px); }
+  100% { transform: translateX(380px); }
+}
+
+@keyframes boat-sail-right {
+  0% { transform: translateX(-60px); }
+  100% { transform: translateX(360px); }
+}
+
+@keyframes boat-sail-left {
+  0% { transform: translateX(360px) scaleX(-1); }
+  100% { transform: translateX(-60px) scaleX(-1); }
+}
+
+@keyframes fishing-boat {
+  0% { transform: translateX(-50px); }
+  100% { transform: translateX(350px); }
+}
+
+.fish-swim-right {
+  animation: fish-swim-right 12s linear infinite;
+}
+
+.fish-swim-left {
+  animation: fish-swim-left 15s linear infinite;
+}
+
+.fish-school-right {
+  animation: fish-school-right 8s linear infinite;
+}
+
+.big-fish-slow {
+  animation: big-fish-slow 20s linear infinite;
+}
+
+.boat-sail-right {
+  animation: boat-sail-right 18s linear infinite;
+}
+
+.boat-sail-left {
+  animation: boat-sail-left 22s linear infinite;
+}
+
+.fishing-boat {
+  animation: fishing-boat 16s linear infinite;
+}
+
 .aquatic-container {
   position: relative;
   overflow: hidden;

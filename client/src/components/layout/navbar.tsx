@@ -87,67 +87,83 @@ export default function Navbar() {
                   ))}
                 </div>
                 
-                {/* Cartoonish Aquarium at Bottom */}
-                <div className="mt-auto mb-4 flex justify-center">
-                  <svg width="180" height="140" viewBox="0 0 180 140" className="opacity-80">
-                    {/* Aquarium Tank */}
-                    <rect x="15" y="30" width="150" height="75" rx="8" fill="#e6f3ff" stroke="#4a90e2" strokeWidth="4"/>
+                {/* Sea Scene at Bottom */}
+                <div className="mt-auto mb-0">
+                  <svg width="100%" height="120" viewBox="0 0 300 120" className="opacity-90" preserveAspectRatio="none">
+                    {/* Water Body - Full Width */}
+                    <rect x="0" y="30" width="300" height="90" fill="#4a90e2" opacity="0.8"/>
+                    <rect x="0" y="35" width="300" height="85" fill="#3b7dd8" opacity="0.6"/>
                     
-                    {/* Water Level */}
-                    <rect x="18" y="33" width="144" height="69" rx="5" fill="#b3d9ff" opacity="0.7"/>
+                    {/* Seabed - Full Width */}
+                    <rect x="0" y="90" width="300" height="30" fill="#f4d03f"/>
                     
-                    {/* Sand/Gravel */}
-                    <rect x="18" y="87" width="144" height="15" rx="3" fill="#f4d03f"/>
+                    {/* Rocks and Coral across seabed */}
+                    <circle cx="30" cy="100" r="5" fill="#999"/>
+                    <circle cx="80" cy="105" r="4" fill="#bbb"/>
+                    <circle cx="150" cy="102" r="6" fill="#888"/>
+                    <circle cx="220" cy="98" r="4.5" fill="#aaa"/>
+                    <circle cx="270" cy="104" r="3.5" fill="#999"/>
                     
-                    {/* Small Rocks */}
-                    <circle cx="35" cy="95" r="4" fill="#a6a6a6"/>
-                    <circle cx="50" cy="97" r="3" fill="#bfbfbf"/>
-                    <circle cx="135" cy="96" r="3.5" fill="#999"/>
+                    {/* Seaweed across the sea */}
+                    <path d="M20 90 Q17 80 20 70 Q23 60 20 50" stroke="#2ecc71" strokeWidth="2" fill="none"/>
+                    <path d="M70 90 Q73 75 70 60 Q67 50 70 40" stroke="#27ae60" strokeWidth="2" fill="none"/>
+                    <path d="M130 90 Q127 78 130 66 Q133 55 130 45" stroke="#2ecc71" strokeWidth="2" fill="none"/>
+                    <path d="M200 90 Q203 75 200 60 Q197 48 200 38" stroke="#27ae60" strokeWidth="2" fill="none"/>
+                    <path d="M250 90 Q247 80 250 68 Q253 58 250 48" stroke="#2ecc71" strokeWidth="2" fill="none"/>
                     
-                    {/* Seaweed */}
-                    <path d="M30 87 Q27 75 30 63 Q33 51 30 39" stroke="#2ecc71" strokeWidth="3" fill="none"/>
-                    <path d="M142 87 Q145 72 142 57 Q139 45 142 36" stroke="#27ae60" strokeWidth="3" fill="none"/>
+                    {/* Trout Fish Swimming */}
+                    <g transform="translate(50, 60)">
+                      <ellipse cx="0" cy="0" rx="12" ry="5" fill="#ff9999" transform="rotate(-5 0 0)"/>
+                      <ellipse cx="-2" cy="0" rx="10" ry="4" fill="#ffb3b3" transform="rotate(-5 -2 0)"/>
+                      <circle cx="-7" cy="-2" r="1" fill="#cc6666"/>
+                      <circle cx="2" cy="2" r="1" fill="#cc6666"/>
+                      <circle cx="7" cy="-2" r="1.5" fill="#000"/>
+                      <path d="M-12 0 L-18 -4 L-18 4 Z" fill="#ff9999"/>
+                    </g>
                     
-                    {/* Trout Fish 1 - Rainbow Trout */}
-                    <ellipse cx="60" cy="60" rx="12" ry="5" fill="#ff9999" transform="rotate(-10 60 60)"/>
-                    <ellipse cx="58" cy="60" rx="10" ry="4" fill="#ffb3b3" transform="rotate(-10 58 60)"/>
-                    {/* Trout spots */}
-                    <circle cx="55" cy="58" r="1" fill="#cc6666"/>
-                    <circle cx="62" cy="62" r="1" fill="#cc6666"/>
-                    <circle cx="58" cy="64" r="0.8" fill="#cc6666"/>
-                    {/* Eye */}
-                    <circle cx="65" cy="58" r="1.5" fill="#000"/>
-                    {/* Tail */}
-                    <path d="M48 60 L42 56 L42 64 Z" fill="#ff9999"/>
-                    {/* Fins */}
-                    <path d="M60 66 L58 70 L62 70 Z" fill="#ff9999"/>
+                    <g transform="translate(180, 70)">
+                      <ellipse cx="0" cy="0" rx="14" ry="6" fill="#8b7355" transform="rotate(10 0 0)"/>
+                      <ellipse cx="2" cy="0" rx="12" ry="5" fill="#a0845c" transform="rotate(10 2 0)"/>
+                      <circle cx="-5" cy="-2" r="1.2" fill="#654321"/>
+                      <circle cx="3" cy="2" r="1" fill="#654321"/>
+                      <circle cx="10" cy="-1" r="1.5" fill="#000"/>
+                      <path d="M-14 0 L-22 -4 L-22 4 Z" fill="#8b7355"/>
+                    </g>
                     
-                    {/* Trout Fish 2 - Brown Trout */}
-                    <ellipse cx="105" cy="75" rx="14" ry="6" fill="#8b7355" transform="rotate(15 105 75)"/>
-                    <ellipse cx="107" cy="75" rx="12" ry="5" fill="#a0845c" transform="rotate(15 107 75)"/>
-                    {/* Trout spots */}
-                    <circle cx="100" cy="73" r="1.2" fill="#654321"/>
-                    <circle cx="108" cy="77" r="1" fill="#654321"/>
-                    <circle cx="104" cy="79" r="0.9" fill="#654321"/>
-                    <circle cx="112" cy="74" r="1.1" fill="#654321"/>
-                    {/* Eye */}
-                    <circle cx="115" cy="73" r="1.5" fill="#000"/>
-                    {/* Tail */}
-                    <path d="M92 75 L85 71 L85 79 Z" fill="#8b7355"/>
-                    {/* Fins */}
-                    <path d="M105 82 L103 87 L107 87 Z" fill="#8b7355"/>
+                    <g transform="translate(120, 55)">
+                      <ellipse cx="0" cy="0" rx="10" ry="4" fill="#4ecdc4" transform="rotate(-15 0 0)"/>
+                      <circle cx="-3" cy="-1" r="0.8" fill="#2c9fb3"/>
+                      <circle cx="5" cy="-1" r="1" fill="#000"/>
+                      <path d="M-10 0 L-15 -3 L-15 3 Z" fill="#4ecdc4"/>
+                    </g>
                     
-
+                    {/* Bubbles throughout water */}
+                    <circle cx="40" cy="50" r="1.5" fill="#ffffff" opacity="0.7"/>
+                    <circle cx="90" cy="45" r="1" fill="#ffffff" opacity="0.5"/>
+                    <circle cx="160" cy="52" r="1.8" fill="#ffffff" opacity="0.6"/>
+                    <circle cx="230" cy="48" r="1.2" fill="#ffffff" opacity="0.8"/>
+                    <circle cx="280" cy="55" r="1" fill="#ffffff" opacity="0.4"/>
                     
-                    {/* Bubbles */}
-                    <circle cx="45" cy="52" r="2" fill="#ffffff" opacity="0.8"/>
-                    <circle cx="52" cy="42" r="1.5" fill="#ffffff" opacity="0.6"/>
-                    <circle cx="120" cy="48" r="1.8" fill="#ffffff" opacity="0.7"/>
-                    <circle cx="75" cy="45" r="1.2" fill="#ffffff" opacity="0.5"/>
-                    
-                    {/* Aquarium Stand */}
-                    <rect x="8" y="125" width="164" height="12" rx="3" fill="#8b4513"/>
-                    <rect x="8" y="134" width="164" height="3" fill="#654321"/>
+                    {/* Boat on Water Surface */}
+                    <g transform="translate(60, 25)">
+                      {/* Boat Hull */}
+                      <ellipse cx="0" cy="0" rx="25" ry="6" fill="#8b4513"/>
+                      <ellipse cx="0" cy="-2" rx="23" ry="4" fill="#a0522d"/>
+                      
+                      {/* Boat Cabin */}
+                      <rect x="-8" y="-8" width="16" height="6" rx="2" fill="#654321"/>
+                      <rect x="-6" y="-6" width="12" height="3" fill="#8b4513"/>
+                      
+                      {/* Mast */}
+                      <line x1="0" y1="-8" x2="0" y2="-20" stroke="#654321" strokeWidth="1.5"/>
+                      
+                      {/* Sail */}
+                      <path d="M2 -18 Q12 -15 10 -10 Q8 -12 2 -8" fill="#e6e6e6" stroke="#ccc" strokeWidth="0.5"/>
+                      
+                      {/* Water wake */}
+                      <path d="M25 0 Q30 2 35 0" stroke="#ffffff" strokeWidth="1" fill="none" opacity="0.6"/>
+                      <path d="M25 2 Q32 4 38 2" stroke="#ffffff" strokeWidth="0.8" fill="none" opacity="0.4"/>
+                    </g>
                   </svg>
                 </div>
               </SheetContent>

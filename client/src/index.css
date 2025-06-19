@@ -407,6 +407,10 @@ input, textarea, [contenteditable="true"] {
   animation: bubble-rise 8s infinite linear;
 }
 
+.bubble-float {
+  animation: bubble-rise 6s infinite linear;
+}
+
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }

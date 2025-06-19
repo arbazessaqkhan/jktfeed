@@ -411,6 +411,36 @@ input, textarea, [contenteditable="true"] {
   animation: bubble-rise 6s infinite linear;
 }
 
+/* Starfish and Octopus Animations */
+.starfish-wiggle {
+  animation: starfish-wiggle 4s ease-in-out infinite;
+}
+
+.octopus-tentacles {
+  animation: octopus-bob 6s ease-in-out infinite;
+}
+
+.tentacle-wave {
+  animation: tentacle-wave 3s ease-in-out infinite;
+}
+
+@keyframes starfish-wiggle {
+  0%, 100% { transform: translate(60px, 85px) rotate(0deg); }
+  25% { transform: translate(62px, 83px) rotate(5deg); }
+  50% { transform: translate(58px, 87px) rotate(-3deg); }
+  75% { transform: translate(61px, 84px) rotate(2deg); }
+}
+
+@keyframes octopus-bob {
+  0%, 100% { transform: translate(220px, 82px) translateY(0px); }
+  50% { transform: translate(220px, 82px) translateY(-2px); }
+}
+
+@keyframes tentacle-wave {
+  0%, 100% { d: path("M-6 6 Q-8 10 -6 14"); }
+  50% { d: path("M-6 6 Q-10 8 -8 14"); }
+}
+
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }

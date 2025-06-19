@@ -128,8 +128,8 @@ export default function Navbar() {
                     <path d="M200 90 Q203 75 200 60 Q197 48 200 38" stroke="#27ae60" strokeWidth="2" fill="none" className="seaweed-sway" style={{animationDelay: '0.5s'}}/>
                     <path d="M250 90 Q247 80 250 68 Q253 58 250 48" stroke="#2ecc71" strokeWidth="2" fill="none" className="seaweed-sway" style={{animationDelay: '1.5s'}}/>
                     
-                    {/* Main Swimming Trout Fish */}
-                    <g className="fish-swim-right">
+                    {/* Main Swimming Trout Fish - positioned inside water */}
+                    <g className="fish-swim-right" transform="translate(0, 60)">
                       <ellipse cx="0" cy="0" rx="12" ry="5" fill="#ff9999" transform="rotate(-5 0 0)"/>
                       <ellipse cx="-2" cy="0" rx="10" ry="4" fill="#ffb3b3" transform="rotate(-5 -2 0)"/>
                       <circle cx="-7" cy="-2" r="1" fill="#cc6666"/>
@@ -138,7 +138,7 @@ export default function Navbar() {
                       <path d="M-12 0 L-18 -4 L-18 4 Z" fill="#ff9999"/>
                     </g>
                     
-                    <g className="fish-swim-left" style={{animationDelay: '2s'}}>
+                    <g className="fish-swim-left" style={{animationDelay: '2s'}} transform="translate(0, 70)">
                       <ellipse cx="0" cy="0" rx="14" ry="6" fill="#8b7355" transform="rotate(10 0 0)"/>
                       <ellipse cx="2" cy="0" rx="12" ry="5" fill="#a0845c" transform="rotate(10 2 0)"/>
                       <circle cx="-5" cy="-2" r="1.2" fill="#654321"/>
@@ -147,27 +147,27 @@ export default function Navbar() {
                       <path d="M-14 0 L-22 -4 L-22 4 Z" fill="#8b7355"/>
                     </g>
                     
-                    {/* Small School of Fish */}
-                    <g className="fish-school-right" style={{animationDelay: '4s'}}>
+                    {/* Small School of Fish - swimming mid-water */}
+                    <g className="fish-school-right" style={{animationDelay: '4s'}} transform="translate(0, 55)">
                       <ellipse cx="0" cy="0" rx="6" ry="2.5" fill="#4ecdc4"/>
                       <circle cx="4" cy="0" r="0.8" fill="#000"/>
                       <path d="M-6 0 L-9 -2 L-9 2 Z" fill="#4ecdc4"/>
                     </g>
                     
-                    <g className="fish-school-right" style={{animationDelay: '4.2s'}}>
+                    <g className="fish-school-right" style={{animationDelay: '4.2s'}} transform="translate(0, 58)">
                       <ellipse cx="0" cy="0" rx="5" ry="2" fill="#95e1d3"/>
                       <circle cx="3" cy="0" r="0.6" fill="#000"/>
                       <path d="M-5 0 L-7 -1.5 L-7 1.5 Z" fill="#95e1d3"/>
                     </g>
                     
-                    <g className="fish-school-right" style={{animationDelay: '4.4s'}}>
+                    <g className="fish-school-right" style={{animationDelay: '4.4s'}} transform="translate(0, 53)">
                       <ellipse cx="0" cy="0" rx="4" ry="1.8" fill="#6ac4aa"/>
                       <circle cx="2.5" cy="0" r="0.5" fill="#000"/>
                       <path d="M-4 0 L-6 -1 L-6 1 Z" fill="#6ac4aa"/>
                     </g>
                     
-                    {/* Large Predator Fish */}
-                    <g className="big-fish-slow" style={{animationDelay: '6s'}}>
+                    {/* Large Predator Fish - deep water */}
+                    <g className="big-fish-slow" style={{animationDelay: '6s'}} transform="translate(0, 75)">
                       <ellipse cx="0" cy="0" rx="20" ry="8" fill="#2c3e50"/>
                       <ellipse cx="3" cy="0" rx="17" ry="6" fill="#34495e"/>
                       <circle cx="12" cy="-2" r="2" fill="#000"/>
@@ -175,14 +175,30 @@ export default function Navbar() {
                       <path d="M0 8 L-3 12 L3 12 Z" fill="#2c3e50"/>
                     </g>
                     
-                    {/* Animated Bubbles */}
-                    <circle cx="40" cy="50" r="1.5" fill="#ffffff" opacity="0.7" className="bubble-float"/>
-                    <circle cx="90" cy="45" r="1" fill="#ffffff" opacity="0.5" className="bubble-float" style={{animationDelay: '1s'}}/>
-                    <circle cx="160" cy="52" r="1.8" fill="#ffffff" opacity="0.6" className="bubble-float" style={{animationDelay: '2s'}}/>
-                    <circle cx="230" cy="48" r="1.2" fill="#ffffff" opacity="0.8" className="bubble-float" style={{animationDelay: '0.5s'}}/>
-                    <circle cx="280" cy="55" r="1" fill="#ffffff" opacity="0.4" className="bubble-float" style={{animationDelay: '1.5s'}}/>
-                    <circle cx="120" cy="60" r="0.8" fill="#ffffff" opacity="0.6" className="bubble-float" style={{animationDelay: '3s'}}/>
-                    <circle cx="200" cy="65" r="1.3" fill="#ffffff" opacity="0.5" className="bubble-float" style={{animationDelay: '2.5s'}}/>
+                    {/* Animated Bubbles - positioned inside water */}
+                    <circle cx="40" cy="70" r="1.5" fill="#ffffff" opacity="0.7" className="bubble-float"/>
+                    <circle cx="90" cy="65" r="1" fill="#ffffff" opacity="0.5" className="bubble-float" style={{animationDelay: '1s'}}/>
+                    <circle cx="160" cy="72" r="1.8" fill="#ffffff" opacity="0.6" className="bubble-float" style={{animationDelay: '2s'}}/>
+                    <circle cx="230" cy="68" r="1.2" fill="#ffffff" opacity="0.8" className="bubble-float" style={{animationDelay: '0.5s'}}/>
+                    <circle cx="280" cy="75" r="1" fill="#ffffff" opacity="0.4" className="bubble-float" style={{animationDelay: '1.5s'}}/>
+                    <circle cx="120" cy="80" r="0.8" fill="#ffffff" opacity="0.6" className="bubble-float" style={{animationDelay: '3s'}}/>
+                    <circle cx="200" cy="85" r="1.3" fill="#ffffff" opacity="0.5" className="bubble-float" style={{animationDelay: '2.5s'}}/>
+                    
+                    {/* Starfish and Octopus on Seabed */}
+                    <g className="starfish-wiggle" transform="translate(60, 85)">
+                      <path d="M0 0 L-8 -3 L-6 -8 L0 -5 L6 -8 L8 -3 L5 0 L8 3 L6 8 L0 5 L-6 8 L-8 3 Z" fill="#f39c12" stroke="#e67e22" strokeWidth="1"/>
+                      <circle cx="0" cy="0" r="2" fill="#e67e22"/>
+                    </g>
+                    
+                    <g className="octopus-tentacles" style={{animationDelay: '3s'}} transform="translate(220, 82)">
+                      <ellipse cx="0" cy="0" rx="8" ry="6" fill="#9b59b6"/>
+                      <circle cx="-2" cy="-1" r="1" fill="#000"/>
+                      <circle cx="2" cy="-1" r="1" fill="#000"/>
+                      <path d="M-6 6 Q-8 10 -6 14" stroke="#8e44ad" strokeWidth="2" fill="none" className="tentacle-wave"/>
+                      <path d="M-2 6 Q-4 12 -2 16" stroke="#8e44ad" strokeWidth="2" fill="none" className="tentacle-wave" style={{animationDelay: '0.5s'}}/>
+                      <path d="M2 6 Q4 12 2 16" stroke="#8e44ad" strokeWidth="2" fill="none" className="tentacle-wave" style={{animationDelay: '1s'}}/>
+                      <path d="M6 6 Q8 10 6 14" stroke="#8e44ad" strokeWidth="2" fill="none" className="tentacle-wave" style={{animationDelay: '0.3s'}}/>
+                    </g>
                     
                     {/* Moving Boats */}
                     <g className="boat-sail-right">

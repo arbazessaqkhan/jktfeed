@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 // Allow CORS for frontend during development
 app.use(cors({
-  origin: "http://localhost:5173", // Update this to your frontend domain on Render
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173", // Use env var or default to localhost
   credentials: false,
 }));
 

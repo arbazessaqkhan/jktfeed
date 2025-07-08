@@ -1,3 +1,25 @@
+# Deploying to Render
+
+1. Set the following environment variables in your Render dashboard:
+   - `DATABASE_URL` (your Postgres connection string)
+   - `CORS_ORIGIN` (your frontend URL, e.g., https://your-app.onrender.com)
+
+2. Set the build command:
+   ```
+   cd TroutFeedPro && npm install && npm run build
+   ```
+
+3. Set the start command:
+   ```
+   cd TroutFeedPro && npm run start
+   ```
+
+4. Make sure your Postgres database is provisioned and accessible.
+
+5. The backend will serve the frontend from `client/dist`.
+
+---
+
 # JK Trout Feed - Complete Admin Portal
 
 ## Project Overview

@@ -137,8 +137,7 @@ export default function ContactPage() {
       title: "Email Addresses",
       details: [
         "sales@jktroutfeed.com",
-        "technical@jktroutfeed.com",
-        "support@jktroutfeed.com"
+        "jktfeed@gmail.com",
       ],
       color: "text-secondary"
     },
@@ -146,9 +145,8 @@ export default function ContactPage() {
       icon: <Phone className="w-6 h-6" />,
       title: "Phone Numbers",
       details: [
-        "Sales: +91 9419 500 600",
-        "Technical: +91 9419 500 601", 
-        "Support: +91 9419 500 602"
+        "Technical: +91 9103766738",
+        "Sales: +91 7889828265",
       ],
       color: "text-accent"
     },
@@ -225,16 +223,15 @@ export default function ContactPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                onClick={() => window.open('tel:+919419500600')}
+                onClick={() => window.open('tel:+919103766738')}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                Call Now: +91 9419 500 600
+                Call Now
               </Button>
               <Button 
                 onClick={() => window.open('mailto:sales@jktroutfeed.com')}
-                variant="outline"
-                className="border-2 border-white text-white px-8 py-3 text-lg font-semibold hover:bg-white hover:text-primary"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
               >
                 <Mail className="w-5 h-5 mr-2" />
                 Email Us

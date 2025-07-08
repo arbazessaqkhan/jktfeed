@@ -189,6 +189,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold text-gray-900">Email</h4>
                     <p className="text-neutral">sales@jktroutfeed.com</p>
+                    <p className="text-neutral">jktfeed@gmail.com</p>
                   </div>
                 </div>
               </CardContent>

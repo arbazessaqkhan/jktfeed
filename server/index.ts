@@ -1,20 +1,32 @@
-import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
+import express, { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { db } from "./db"; // ✅ adjust if db is from somewhere else
+import { products } from "@shared/schema"; // ✅ needed for /api/health test route
 
 const app = express();
+
+// Enable CORS for frontend access
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: false,
+}));
+
+// Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Request logging
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+  const originalJson = res.json;
+  res.json = function (body, ...args) {
+    capturedJsonResponse = body;
+    return originalJson.apply(res, [body, ...args]);
   };
 
   res.on("finish", () => {
@@ -24,11 +36,9 @@ app.use((req, res, next) => {
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
-
       if (logLine.length > 80) {
         logLine = logLine.slice(0, 79) + "…";
       }
-
       log(logLine);
     }
   });
@@ -36,35 +46,39 @@ app.use((req, res, next) => {
   next();
 });
 
+// ✅ Debug route: check DB connection and product table
+app.get("/api/health", async (_req: Request, res: Response) => {
+  try {
+    const result = await db.select().from(products).limit(1);
+    res.json({ ok: true, result });
+  } catch (error) {
+    console.error("❌ Health check failed:", error);
+    res.status(500).json({ error: "Database connection failed" });
+  }
+});
+
+// Register all routes
 (async () => {
   const server = await registerRoutes(app);
 
+  // Global error handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+    console.error("❌ Global Error Handler:", err);
+    res.status(status).json({ error: message }); // ⛔️ Don’t rethrow!
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+  // Serve frontend (if needed)
+  // if (app.get("env") === "development") {
+  //   await setupVite(app, server);
+  // } else {
+  //   serveStatic(app);
+  // }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
+  // Start server on port 5000
   const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+  server.listen({ port, host: "0.0.0.0" }, () => {
+    log(`✅ Server running on http://localhost:${port}`);
   });
 })();

@@ -197,12 +197,15 @@ export default function AdminProductsPage() {
     }
   };
 
-  const filteredProducts = products?.filter((product: any) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.sku.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = filterCategory === "all" || product.category === filterCategory;
-    return matchesSearch && matchesCategory;
-  }) || [];
+  const filteredProducts = Array.isArray(products)
+  ? products.filter((product: any) => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            product.sku.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = filterCategory === "all" || product.category === filterCategory;
+      return matchesSearch && matchesCategory;
+    })
+  : [];
+
 
   const getStockStatus = (stock: number) => {
     if (stock === 0) return { label: "Out of Stock", color: "bg-red-100 text-red-800" };
@@ -210,12 +213,18 @@ export default function AdminProductsPage() {
     return { label: "In Stock", color: "bg-green-100 text-green-800" };
   };
 
-  const stats = {
-    totalProducts: products?.length || 0,
-    activeProducts: products?.filter((p: any) => p.isActive).length || 0,
-    lowStockProducts: products?.filter((p: any) => p.stockQuantity < 10).length || 0,
-    totalValue: products?.reduce((sum: number, p: any) => sum + (parseFloat(p.price) * p.stockQuantity), 0) || 0
-  };
+const isArray = Array.isArray(products);
+const safeProducts = isArray ? products : [];
+
+const stats = {
+  totalProducts: safeProducts.length,
+  activeProducts: safeProducts.filter((p: any) => p.isActive).length,
+  lowStockProducts: safeProducts.filter((p: any) => p.stockQuantity < 10).length,
+  totalValue: safeProducts.reduce(
+    (sum: number, p: any) => sum + (parseFloat(p.price) * p.stockQuantity),
+    0
+  )
+};
 
   return (
     <div className="min-h-screen bg-gray-50">

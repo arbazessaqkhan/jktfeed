@@ -169,7 +169,7 @@ export default function ProductsPage() {
                 <Download className="w-4 h-4 mr-2" />
                 Download Brochure
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+              <Button variant="outline" className="border-white text-primary hover:bg-white hover:text-primary">
                 <FileText className="w-4 h-4 mr-2" />
                 Technical Specs
               </Button>

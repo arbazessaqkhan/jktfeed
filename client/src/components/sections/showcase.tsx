@@ -9,7 +9,10 @@ export default function Showcase() {
   });
 
   // Filter only active images
-  const activeImages = showcaseImages?.filter((image: any) => image.isActive) || [];
+  // const activeImages = showcaseImages?.filter((image: any) => image.isActive) || [];
+  const activeImages = Array.isArray(showcaseImages)
+    ? showcaseImages.filter((image: any) => image.isActive)
+    : [];
 
   if (isLoading || activeImages.length === 0) {
     return null; // Don't show the section if no images or loading

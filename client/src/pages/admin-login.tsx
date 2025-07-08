@@ -63,9 +63,12 @@ export default function AdminLoginPage() {
     }, 1000);
   };
 
-  const recentContacts = contacts?.slice(0, 5) || [];
-  const unreadNotifications = notifications?.filter((n: any) => !n.isRead).length || 0;
-  const productInquiries = contacts?.filter((c: any) => c.subject?.includes("Product Inquiry")) || [];
+  // const recentContacts = contacts?.slice(0, 5) || [];
+  const recentContacts = Array.isArray(contacts) ? contacts.slice(0, 5) : [];
+  // const unreadNotifications = notifications?.filter((n: any) => !n.isRead).length || 0;
+  const unreadNotifications = Array.isArray(notifications) ? notifications.filter((n: any) => !n.isRead).length : 0;
+  // const productInquiries = contacts?.filter((c: any) => c.subject?.includes("Product Inquiry")) || [];
+  const productInquiries = Array.isArray(contacts) ? contacts.filter((c: any) => c.subject?.includes("Product Inquiry")) : [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary to-secondary p-4">

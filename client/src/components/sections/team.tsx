@@ -1,28 +1,33 @@
 import TeamCard from "@/components/ui/team-card";
+import muneer from "@/images/muneer.jpg"
+import tanveer from "@/images/tanveer.jpg";
+import zahoor from "@/images/zahoor.jpg";
 
 export default function Team() {
   const teamMembers = [
     {
       name: "Muneer Ahmed",
       position: "Manufacturing Director",
-      email: "muneer@jktroutfeed.com",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "macchist@gmail.com",
+      image: muneer,
       bgColor: "from-blue-50 to-blue-100",
       color: "text-primary"
     },
     {
       name: "Tanveer Chishti",
       position: "Technical Specialist",
-      email: "tanveer@jktroutfeed.com",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "tanveer.dri@gmail.com",
+      phone: "+91 9103766738",
+      image: tanveer,
       bgColor: "from-green-50 to-green-100",
       color: "text-secondary"
     },
     {
       name: "Zahoor Wani",
       position: "Operations Manager",
-      email: "wani@jktroutfeed.com",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "wzahoor360@gmail.com",
+      phone: "+91 7889828265",
+      image: zahoor,
       bgColor: "from-teal-50 to-teal-100",
       color: "text-accent"
     }

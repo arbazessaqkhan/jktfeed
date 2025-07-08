@@ -99,13 +99,13 @@ Please provide more details and availability.`;
         subject: `New Order: ${buyNowProduct.name}`,
         message: `NEW ORDER PLACED:
 
-Customer: ${customerForm.name}
-Product: ${buyNowProduct.name}
-Quantity: ${customerForm.quantity}
-Total: ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}
-Address: ${customerForm.address}
+        Customer: ${customerForm.name}
+        Product: ${buyNowProduct.name}
+        Quantity: ${customerForm.quantity}
+        Total: ₹${(buyNowProduct.price * customerForm.quantity).toLocaleString()}
+        Address: ${customerForm.address}
 
-${customerForm.message || "No additional message"}`
+        ${customerForm.message || "No additional message"}`
       };
 
       // Submit order to orders API
@@ -141,8 +141,11 @@ ${customerForm.message || "No additional message"}`
         },
         body: JSON.stringify(notificationData)
       });
-
-      if (response.ok && orderResponse.ok && notificationResponse.ok) {
+      console.log('all responses')
+      console.log(notificationResponse);
+      console.log(response);
+      console.log(orderResponse);
+      if (response.ok || orderResponse.ok || notificationResponse.ok) {
         // Reset form and close modal
         setCustomerForm({
           name: "",
@@ -161,6 +164,7 @@ ${customerForm.message || "No additional message"}`
       }
     } catch (error) {
       console.error('Failed to submit order:', error);
+      console.log(error);
       alert('Failed to submit order. Please try again.');
     } finally {
       setIsSubmitting(false);

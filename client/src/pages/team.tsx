@@ -5,6 +5,9 @@ import TeamCard from "@/components/ui/team-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, Award } from "lucide-react";
+import muneer from "@/images/muneer.jpg"
+import tanveer from "@/images/tanveer.jpg";
+import zahoor from "@/images/zahoor.jpg";
 
 export default function TeamPage() {
   useEffect(() => {
@@ -66,9 +69,8 @@ export default function TeamPage() {
     {
       name: "Muneer Ahmed",
       position: "Manufacturing Director",
-      email: "muneer@jktroutfeed.com",
-      phone: "+91 9419 XXX XXX",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "macchist@gmail.com",
+      image: muneer,
       bgColor: "from-blue-50 to-blue-100",
       color: "text-primary",
       experience: "15+ years",
@@ -79,9 +81,9 @@ export default function TeamPage() {
     {
       name: "Tanveer Chishti",
       position: "Technical Specialist",
-      email: "tanveer@jktroutfeed.com", 
-      phone: "+91 9419 XXX XXX",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "tanveer@dri.com", 
+      phone: "+91 9103766738",
+      image: tanveer,
       bgColor: "from-green-50 to-green-100",
       color: "text-secondary",
       experience: "12+ years",
@@ -92,9 +94,9 @@ export default function TeamPage() {
     {
       name: "Zahoor Wani",
       position: "Operations Manager",
-      email: "wani@jktroutfeed.com",
-      phone: "+91 9419 XXX XXX", 
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      email: "wani@wzahoor360.com",
+      phone: "+91 7889828265",
+      image: zahoor,
       bgColor: "from-teal-50 to-teal-100",
       color: "text-accent",
       experience: "10+ years",
@@ -325,7 +327,7 @@ export default function TeamPage() {
                 <div className="text-center">
                   <Phone className="w-8 h-8 mx-auto mb-3" />
                   <h4 className="font-semibold mb-2">Technical Support</h4>
-                  <p className="text-blue-200">+91 9419 XXX XXX</p>
+                  <p className="text-blue-200">+91 9103766738</p>
                 </div>
                 <div className="text-center">
                   <MapPin className="w-8 h-8 mx-auto mb-3" />

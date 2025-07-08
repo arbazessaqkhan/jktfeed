@@ -4,6 +4,7 @@ interface TeamCardProps {
   name: string;
   position: string;
   email: string;
+  phone?: string; 
   image: string;
   bgColor: string;
   color: string;
@@ -13,6 +14,7 @@ export default function TeamCard({
   name,
   position,
   email,
+  phone,
   image,
   bgColor,
   color
@@ -22,7 +24,7 @@ export default function TeamCard({
       <img 
         src={image} 
         alt={`Professional headshot of ${name}`}
-        className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg hover-zoom hover-saturate float-gentle"
+        className="w-36 h-36 rounded-full mx-auto mb-6 object-center shadow-lg hover-zoom hover-saturate float-gentle"
       />
       <h3 className="text-2xl font-bold mb-2 hover-rubber text-[#064e87]">{name}</h3>
       <p className="text-neutral mb-4 hover-fade">{position}</p>
@@ -69,6 +71,7 @@ export default function TeamCard({
         </a>
       </div>
       <p className="text-sm text-neutral mt-3">{email}</p>
+      {phone && <p className="text-sm text-neutral mt-1">{phone}</p>}
     </div>
   );
 }

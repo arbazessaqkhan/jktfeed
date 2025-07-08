@@ -1,4 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import fishfeed from "@/images/fishfeed.jpg";
+import fishfeed2 from "@/images/fishfeed2.jpg";
 
 export default function About() {
   return (
@@ -40,12 +42,12 @@ export default function About() {
           </div>
           <div className="space-y-4">
             <img 
-              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=800" 
+              src={fishfeed} 
               alt="Advanced fish feed manufacturing facility" 
               className="rounded-xl shadow-lg w-full h-auto"
             />
             <img 
-              src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" 
+              src={fishfeed2} 
               alt="Professional trout farming facility with organized pools" 
               className="rounded-xl shadow-lg w-full h-auto"
             />

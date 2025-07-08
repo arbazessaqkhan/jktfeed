@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MessageCircle, Star, Truck, Package } from "lucide-react";
+import { Navigation } from "react-router-dom";
+
 
 export default function ShopProducts() {
   const [buyNowProduct, setBuyNowProduct] = useState<any>(null);
@@ -309,7 +311,7 @@ Please provide more details and availability.`;
                     <Button 
                       className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" 
                       disabled={!product.inStock}
-                      onClick={() => setBuyNowProduct(product)}
+                      onClick={() => window.location.href = "/shop"}
                     >
                       <Package className="w-4 h-4 mr-2" />
                       Buy Now

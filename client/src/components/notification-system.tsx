@@ -25,6 +25,8 @@ export default function NotificationSystem() {
     queryFn: async () => {
       try {
         const res = await fetch('/api/notifications');
+        console.log('Fetching notifications from API');
+        console.log(res);
         if (!res.ok) {
           console.warn('Notifications API not available');
           return [];

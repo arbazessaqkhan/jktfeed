@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 
 import { registerRoutes } from "./routes";
 import { db } from "./db";
-import { products } from "@shared/schema";
+import { products } from "../shared/schema";
 
 const app = express();
 

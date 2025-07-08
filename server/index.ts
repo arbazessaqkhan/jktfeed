@@ -1,23 +1,29 @@
-import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
-import { db } from "./db"; // ✅ adjust if db is from somewhere else
-import { products } from "@shared/schema"; // ✅ needed for /api/health test route
+import { db } from "./db";
+import { products } from "@shared/schema";
 
 const app = express();
 
-// Enable CORS for frontend access
+// __dirname fix for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Allow CORS for frontend during development
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "http://localhost:5173", // Update this to your frontend domain on Render
   credentials: false,
 }));
 
-// Middleware to parse JSON and URL-encoded bodies
+// Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Request logging
+// Log API requests
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -36,28 +42,26 @@ app.use((req, res, next) => {
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-      log(logLine);
+      if (logLine.length > 120) logLine = logLine.slice(0, 119) + "…";
+      console.log(logLine);
     }
   });
 
   next();
 });
 
-// ✅ Debug route: check DB connection and product table
+// ✅ Optional: Health check
 app.get("/api/health", async (_req: Request, res: Response) => {
   try {
     const result = await db.select().from(products).limit(1);
     res.json({ ok: true, result });
-  } catch (error) {
-    console.error("❌ Health check failed:", error);
+  } catch (err) {
+    console.error("❌ DB error:", err);
     res.status(500).json({ error: "Database connection failed" });
   }
 });
 
-// Register all routes
+// ✅ Main function to register routes and start server
 (async () => {
   const server = await registerRoutes(app);
 
@@ -65,20 +69,20 @@ app.get("/api/health", async (_req: Request, res: Response) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-    console.error("❌ Global Error Handler:", err);
-    res.status(status).json({ error: message }); // ⛔️ Don’t rethrow!
+    console.error("❌ Global Error:", err);
+    res.status(status).json({ error: message });
   });
 
-  // Serve frontend (if needed)
-  // if (app.get("env") === "development") {
-  //   await setupVite(app, server);
-  // } else {
-  //   serveStatic(app);
-  // }
+  // ✅ Serve frontend build (after `vite build`)
+  app.use(express.static(path.join(__dirname, "../client/dist")));
 
-  // Start server on port 5000
-  const port = 5000;
+  // ✅ For SPA: serve index.html fallback
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  });
+
+  const port = process.env.PORT || 5000;
   server.listen({ port, host: "0.0.0.0" }, () => {
-    log(`✅ Server running on http://localhost:${port}`);
+    console.log(`✅ Server running at http://localhost:${port}`);
   });
 })();
